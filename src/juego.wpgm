@@ -1,8 +1,18 @@
 import wollok.game.*
-import pepita.*
+import personajePrincipal.*
+import direcciones.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	
+	game.height(14)
+	game.width(20)
+	game.boardGround("fondo1.png") //imagen random hasta conseguir alguna
+	game.title("Endles Wollokween")
+	game.addVisual(personajePrincipal)
+	keyboard.left().onPressDo({ personajePrincipal.mover(izquierda) })
+	keyboard.right().onPressDo({ personajePrincipal.mover(derecha) })
+	keyboard.up().onPressDo({ personajePrincipal.mover(arriba) })
+	keyboard.down().onPressDo({ personajePrincipal.mover(abajo) })	
+	//inicio del juego
 	game.start()
 }
