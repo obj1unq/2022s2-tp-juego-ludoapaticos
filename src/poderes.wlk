@@ -16,6 +16,13 @@ class Calabaza { //elegir los poderes a crear
 	const property image = "cacac.png"
 	var property positionInicial = game.at(5,5)
 	
+	
+	method serUsado(){
+		self.position(personajePrincipal.position())
+		self.positionInicial(personajePrincipal.position())
+		self.disparar()
+		game.onTick(500, "movimientoDisparo", { self.movimientoProyectil()})
+	}
 	method disparar() {
 		position = game.at((position.x() + 1), position.y())
 		game.addVisual(self)
@@ -32,6 +39,10 @@ class Calabaza { //elegir los poderes a crear
 	
 	method limiteDelDisparo(){
 		return position.x() == positionInicial.x() + 3
+	}
+	
+	method darPaso(){
+		//por polimorfismo
 	}
 }
 

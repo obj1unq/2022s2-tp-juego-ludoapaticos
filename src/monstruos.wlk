@@ -1,30 +1,39 @@
-class Monstruo { // superclase para uso de herencia, sé que no lo vimos aún pero seguro en las próximas clases sí
+import wollok.game.*
+import direcciones.*
 
-	var vida
-	var position
-	var image
+//class Monstruo { // superclase para uso de herencia, sé que no lo vimos aún pero seguro en las próximas clases sí
+//
+//	var vida
+//	var position
+//	var image
+//
+//	method atacar() {
+//	}
+//
+//}
 
-	method atacar() {
+class Esqueleto  {
+ 
+}
+
+class Vampiro  {
+
+}
+
+class Zombie  {
+	var property position = game.at((game.width() -1), (0.randomUpTo(game.height()-1)))
+	method image() = "Zombie_izquierda.png"
+	
+	method darPaso(){
+		position = izquierda.siguientes(position)
 	}
-
-}
-
-class Esqueleto inherits Monstruo {
-
-}
-
-class Vampiro inherits Monstruo {
-
-}
-
-class Zombie inherits Monstruo {
 
 }
 
 object esqueleto {
 
 	method nuevo() {
-		return new Esqueleto()
+		return new Esqueleto() 
 	}
 
 }
@@ -40,7 +49,7 @@ object vampiro {
 object zombie {
 
 	method nuevo() {
-		return new Zombie()
+		return new Zombie() 
 	}
 
 }
