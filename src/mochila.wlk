@@ -1,4 +1,0 @@
-object mochila {
-	var posesiones = []
-	
-}

@@ -1,4 +1,4 @@
-import personajePrincipal.*
+
 
 object izquierda {
 

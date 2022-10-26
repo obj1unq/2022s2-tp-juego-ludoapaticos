@@ -1,6 +1,6 @@
 import wollok.game.*
 import direcciones.*
-import personajePrincipal.*
+import wolly.*
 
 //class Monstruo { // superclase para uso de herencia, sé que no lo vimos aún pero seguro en las próximas clases sí
 //
@@ -16,8 +16,8 @@ class Esqueleto {
 
 	var vida = 100
 	var property position = game.at(0.randomUpTo(game.width() - 1), 0)
-	const direcciones = [ derecha, izquierda ]
-
+	var enemigo = wolly
+	
 	method image() = "esqueleto.jpg"
 
 	method darPaso() {
@@ -36,6 +36,11 @@ class Esqueleto {
 			position = arriba.siguientes(position)
 		}
 	}
+		
+	method matarA(){
+			enemigo.morir()
+	}
+	
 
 	method serDaniado() {
 		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
@@ -63,6 +68,7 @@ class Fantasma {
 	var vida = 50
 	var property position = game.at(0.randomUpTo(game.width() - 1), (game.height() - 1))
 	const direcciones = [ izquierda, derecha, arriba, abajo ]
+	var enemigo = wolly
 
 	method image() = "Fantasma_izquierda.jpg"
 
@@ -88,6 +94,10 @@ class Fantasma {
 	method fuerza() {
 		return 0
 	}
+	
+	method matarA(){
+			enemigo.morir()
+	}
 
 }
 
@@ -95,6 +105,7 @@ class Zombie {
 
 	var vida = 10
 	var property position = game.at((game.width() - 1), (0.randomUpTo(game.height() - 1)))
+	var enemigo = wolly
 
 	method image() = "Zombie_izquierda.png"
 
@@ -119,6 +130,10 @@ class Zombie {
 
 	method fuerza() {
 		return 0
+	}
+	
+	method matarA(){
+			enemigo.morir()
 	}
 
 }

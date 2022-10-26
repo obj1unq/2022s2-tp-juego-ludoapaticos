@@ -1,28 +1,43 @@
 import wollok.game.*
-import personajePrincipal.*
 import direcciones.*
-import poderes.*
 import monstruos.*
+import wolly.*
+import proyectiles.*
+
 
 program juego {
-	
-	game.height(14)
-	game.width(20)
-	game.boardGround("fondo1.png") //imagen random hasta conseguir alguna
-	game.title("Endless Wollokween")
-	game.addVisualCharacter(wolly)
 	//keyboard.left().onPressDo({ personajePrincipal.mover(izquierda) })
 	//keyboard.right().onPressDo({ personajePrincipal.mover(derecha) })
 	//keyboard.up().onPressDo({ personajePrincipal.mover(arriba) })
 	//keyboard.down().onPressDo({ personajePrincipal.mover(abajo) })	
 
-	keyboard.d().onPressDo({wolly.pegar()})
+		//inicio del juego
+
+	game.title("Endless Wollokween")
+	game.height(15)
+	game.width(15)
+	game.ground("fondo1.png")//imagen random hasta conseguir alguna
+	
+	// VISUAL
+	game.addVisualCharacter(wolly)
+	
+	// COMPORTAMIENTO MONSTRUOS
 	game.onTick(4000, "nace zombie", {=> game.addVisual(zombie.nuevo())})
 	game.onTick(8000, "nace fantasma", {=> game.addVisual(fantasma.nuevo())})
 	game.onTick(10000, "nace esqueleto", {=> game.addVisual(esqueleto.nuevo())})
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach( {elemento=> elemento.darPaso()}) } )
-		//inicio del juego
 
+	// TECLADO
+	keyboard.enter().onPressDo({game.say(wolly, "¡A cazar monstruos!")})
+	keyboard.space().onPressDo({wolly.disparar(calabaza)})
+	keyboard.c().onPressDo({game.addVisual(calabaza.nuevo())})
+	keyboard.r().onPressDo({wolly.rotarSentidoAntihorario()})
+	keyboard.f().onPressDo({wolly.rotarSentidoHorario()})
+
+	// STOP
+	game.onCollideDo(wolly, {monstruo => monstruo.matarA()})
+
+	// PLAY
 	game.start()
 }
 
