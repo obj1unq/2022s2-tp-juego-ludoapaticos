@@ -17,7 +17,7 @@ program juego {
 	game.addVisualCharacter(wolly)
 		// COMPORTAMIENTO MONSTRUOS
 	game.onTick(4000, "nace zombie", {=> game.addVisual(zombie.nuevo()) })
-	game.onTick(8000, "nace fantasma", {=> game.addVisual(fantasma.nuevo()) })
+	game.onTick(6000, "nace fantasma", {=> game.addVisual(fantasma.nuevo()) })
 	game.onTick(10000, "nace esqueleto", {=> game.addVisual(esqueleto.nuevo()) })
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
 		// TECLADO

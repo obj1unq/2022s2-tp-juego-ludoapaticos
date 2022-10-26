@@ -1,25 +1,43 @@
 import wollok.game.*
 import wolly.*
 
-//class Monstruo { // superclase para uso de herencia, sé que no lo vimos aún pero seguro en las próximas clases sí
-//
-//	var vida
-//	var position
-//	var image
-//
-//	method atacar() {
-//	}
-//
-//}
-class Esqueleto {
+class Monstruo {
 
-	var vida = 100
-	var property position = game.at(0.randomUpTo(game.width() - 1), 0)
+	var property vida
+	var property position
+	var property image
 	const enemigo = wolly
 
-	method image() = "esqueleto.jpg"
+	method matarA() {
+		enemigo.morir()
+	}
 
-	method darPaso() {
+	method serDaniado() {
+		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
+		if (vida <= 0) {
+			self.morir()
+		}
+	}
+
+	method morir() {
+		game.removeVisual(self)
+	}
+
+	method elementoEnColision() {
+		return game.uniqueCollider(self)
+	}
+
+	method fuerza() {
+		return 0
+	}
+	
+	method darPaso()
+
+}
+
+class Esqueleto inherits Monstruo(vida = 100, position = tablero.bordeInferior(), image = "esqueleto.jpg") {
+
+	override method darPaso() {
 		self.acercarseAWolly()
 	}
 
@@ -36,108 +54,28 @@ class Esqueleto {
 		}
 	}
 
-	method matarA() {
-		enemigo.morir()
-	}
-
-	method serDaniado() {
-		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
-		if (vida <= 0) {
-			self.morir()
-		}
-	}
-
-	method morir() {
-		game.removeVisual(self)
-	}
-
-	method elementoEnColision() {
-		return game.uniqueCollider(self)
-	}
-
-	method fuerza() {
-		return 0
-	}
-
 }
 
-class Fantasma {
+class Fantasma inherits Monstruo(vida = 100, position = tablero.bordeSuperior(), image = "Fantasma_izquierda.jpg") {
 
-	var vida = 50
-	var property position = game.at(0.randomUpTo(game.width() - 1), (game.height() - 1))
 	const direcciones = [ norte, este, sur, oeste ]
-	const enemigo = wolly
 
-	method image() = "Fantasma_izquierda.jpg"
-
-	method darPaso() {
+	override method darPaso() {
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
 
-	method serDaniado() {
-		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
-		if (vida <= 0) {
-			self.morir()
-		}
-	}
-
-	method morir() {
-		game.removeVisual(self)
-	}
-
-	method elementoEnColision() {
-		return game.uniqueCollider(self)
-	}
-
-	method fuerza() {
-		return 0
-	}
-
-	method matarA() {
-		enemigo.morir()
-	}
 
 }
 
-class Zombie {
+class Zombie inherits Monstruo(vida = 10, position = tablero.bordeDerecha(), image = "Zombie_izquierda.png") {
 
-	var vida = 10
-	var property position = game.at((game.width() - 1), (0.randomUpTo(game.height() - 1)))
-	const enemigo = wolly
-
-	method image() = "Zombie_izquierda.png"
-
-	method darPaso() {
+	override method darPaso() {
 		position = oeste.avanzar(position, 1)
-	}
-
-	method serDaniado() {
-		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
-		if (vida <= 0) {
-			self.morir()
-		}
-	}
-
-	method morir() {
-		game.removeVisual(self)
-	}
-
-	method elementoEnColision() {
-		return game.uniqueCollider(self)
-	}
-
-	method fuerza() {
-		return 0
-	}
-
-	method matarA() {
-		enemigo.morir()
 	}
 
 }
 
 // factories
-
 object esqueleto {
 
 	method nuevo() {
@@ -160,5 +98,20 @@ object zombie {
 		return new Zombie()
 	}
 
+}
+
+object tablero{
+	method bordeSuperior(){
+		return game.at(0.randomUpTo(game.width()-1),game.height()-1)
+	}
+	method bordeInferior(){
+		return game.at(0.randomUpTo(game.width()-1),0)
+	}
+	method bordeIzquierda(){
+		return game.at(0,0.randomUpTo(game.height()-1))
+	}
+	method bordeDerecha(){
+		return game.at(game.width()-1,0.randomUpTo(game.height()-1))
+	}
 }
 
