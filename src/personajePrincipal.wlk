@@ -2,7 +2,7 @@ import wollok.game.*
 import poderes.*
 import poderes.*
 
-object personajePrincipal { // ver nombre
+object wolly { // ver nombre
 	// atributos
 
 	var vida = 100 // por setearle un valor cualquiera

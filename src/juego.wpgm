@@ -10,15 +10,16 @@ program juego {
 	game.width(20)
 	game.boardGround("fondo1.png") //imagen random hasta conseguir alguna
 	game.title("Endless Wollokween")
-	game.addVisualCharacter(personajePrincipal)
+	game.addVisualCharacter(wolly)
 	//keyboard.left().onPressDo({ personajePrincipal.mover(izquierda) })
 	//keyboard.right().onPressDo({ personajePrincipal.mover(derecha) })
 	//keyboard.up().onPressDo({ personajePrincipal.mover(arriba) })
 	//keyboard.down().onPressDo({ personajePrincipal.mover(abajo) })	
 
-	keyboard.d().onPressDo({personajePrincipal.pegar()})
+	keyboard.d().onPressDo({wolly.pegar()})
 	game.onTick(4000, "nace zombie", {=> game.addVisual(zombie.nuevo())})
-	game.onTick(4000, "nace fantasma", {=> game.addVisual(fantasma.nuevo())})
+	game.onTick(8000, "nace fantasma", {=> game.addVisual(fantasma.nuevo())})
+	game.onTick(10000, "nace esqueleto", {=> game.addVisual(esqueleto.nuevo())})
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach( {elemento=> elemento.darPaso()}) } )
 		//inicio del juego
 
