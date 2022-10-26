@@ -1,5 +1,4 @@
 import wollok.game.*
-import direcciones.*
 import wolly.*
 
 //class Monstruo { // superclase para uso de herencia, sé que no lo vimos aún pero seguro en las próximas clases sí
@@ -26,14 +25,14 @@ class Esqueleto {
 
 	method acercarseAWolly() {
 		if (wolly.position().x() < self.position().x()) {
-			position = izquierda.siguientes(position)
+			position = este.avanzar(position,1)
 		} else {
-			position = derecha.siguientes(position)
+			position = oeste.avanzar(position,1)
 		}
 		if (wolly.position().y() < self.position().y()) {
-			position = abajo.siguientes(position)
+			position = sur.avanzar(position,1)
 		} else {
-			position = arriba.siguientes(position)
+			position = norte.avanzar(position,1)
 		}
 	}
 		
@@ -67,13 +66,13 @@ class Fantasma {
 
 	var vida = 50
 	var property position = game.at(0.randomUpTo(game.width() - 1), (game.height() - 1))
-	const direcciones = [ izquierda, derecha, arriba, abajo ]
+	const direcciones = [ norte, este, sur, oeste ]
 	var enemigo = wolly
 
 	method image() = "Fantasma_izquierda.jpg"
 
 	method darPaso() {
-		position = direcciones.anyOne().siguientes(position)
+		position = direcciones.anyOne().avanzar(position,1)
 	}
 
 	method serDaniado() {
@@ -110,7 +109,7 @@ class Zombie {
 	method image() = "Zombie_izquierda.png"
 
 	method darPaso() {
-		position = izquierda.siguientes(position)
+		position = oeste.avanzar(position,1)
 	}
 
 	method serDaniado() {
