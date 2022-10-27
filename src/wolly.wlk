@@ -1,4 +1,5 @@
 import wollok.game.*
+import direcciones.*
 
 object wolly {
 
@@ -53,10 +54,10 @@ object wolly {
 	method darPaso() {
 	// no hace nada
 	}
+
 	method serImpactadoPor(arma){
 		
 	}
-
 }
 
 // ############################################################################################
@@ -78,6 +79,7 @@ object wolly {
 //	const positionARegar = game.at( position.x() + dx, position.y() + dy)
 //	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
 //}
+<<<<<<< HEAD
 //############################################################################################
 //factories
 object norte {
@@ -128,3 +130,5 @@ object este {
 
 }
 
+=======
+>>>>>>> branch 'master' of https://github.com/obj1unq/2022s2-tp-juego-ludoapaticos.git

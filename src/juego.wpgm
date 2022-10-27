@@ -3,12 +3,8 @@ import monstruos.*
 import wolly.*
 import proyectiles.*
 
-program juego  {
-	// keyboard.left().onPressDo({ personajePrincipal.mover(izquierda) })
-	// keyboar d.right().onPressDo({ personajePrincipal.mover(derecha) })
-	// keyboard.up().onPressDo({ personajePrincipal.mover(arriba) })
-	// keyboard.down().onPressDo({ personajePrincipal.mover(abajo) })	
-	// inicio del juego
+program juego {
+
 	game.title("Endless Wollokween")
 	game.height(15)
 	game.width(15)

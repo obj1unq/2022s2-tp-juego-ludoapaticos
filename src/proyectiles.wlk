@@ -1,5 +1,6 @@
 import wollok.game.*
 import wolly.*
+import direcciones.*
 
 //factories
 object calabaza {
@@ -20,6 +21,8 @@ class Calabaza {
 	const distancia = lanzador.distanciaDeDisparoDe(peso)
 	const property fuerza = 10
 	
+
+
 	method serDisparadoPor(personaje) {
 		self.lanzador(personaje)
 		self.moverse(distancia)
@@ -41,7 +44,7 @@ class Calabaza {
 
 	method impactar() {
 		game.colliders(self).forEach({ cosa => cosa.serImpactadoPor(self)})
-	}
+}
 
 	// POR POLIMORFISMO
 	method darPaso() {
