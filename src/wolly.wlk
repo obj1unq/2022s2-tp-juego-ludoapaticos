@@ -18,13 +18,9 @@ object wolly {
 	}
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
-		self.sacar(tipoDeProyectil)
+		self.agregar(tipoDeProyectil)
 		self.cargarProyectil()
 		proyectilActual.serDisparadoPor(self)
-	}
-
-	method sacar(tipoDeProyectil) {
-		self.agregar(tipoDeProyectil)
 	}
 
 	method cargarProyectil() {
@@ -59,6 +55,9 @@ object wolly {
 	// no hace nada
 	}
 
+	method serImpactadoPor(arma){
+		
+	}
 }
 
 // ############################################################################################

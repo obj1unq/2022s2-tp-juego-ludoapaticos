@@ -1,5 +1,6 @@
 import wollok.game.*
 import wolly.*
+import direcciones.*
 
 class Monstruo {
 
@@ -10,6 +11,13 @@ class Monstruo {
 
 	method matarA() {
 		enemigo.morir()
+	}
+
+	method serImpactadoPor(arma) {
+		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
+		if (vida <= 0) {
+			self.morir()
+		}
 	}
 
 	method serDaniado() {
@@ -30,12 +38,12 @@ class Monstruo {
 	method fuerza() {
 		return 0
 	}
-	
+
 	method darPaso()
 
 }
 
-class Esqueleto inherits Monstruo(vida = 100, position = tablero.bordeInferior(), image = "esqueleto.jpg") {
+class Esqueleto inherits Monstruo(vida = 30, position = tablero.bordeInferior(), image = "esqueleto.jpg") {
 
 	override method darPaso() {
 		self.acercarseAWolly()
@@ -56,6 +64,7 @@ class Esqueleto inherits Monstruo(vida = 100, position = tablero.bordeInferior()
 
 }
 
+
 class Fantasma inherits Monstruo(vida = 100, position = tablero.bordeSuperior(), image = "Fantasma_izquierda.jpg") {
 
 	const direcciones = [ norte, este, sur, oeste ]
@@ -63,7 +72,6 @@ class Fantasma inherits Monstruo(vida = 100, position = tablero.bordeSuperior(),
 	override method darPaso() {
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
-
 
 }
 
@@ -100,18 +108,23 @@ object zombie {
 
 }
 
-object tablero{
-	method bordeSuperior(){
-		return game.at(0.randomUpTo(game.width()-1),game.height()-1)
+object tablero {
+
+	method bordeSuperior() {
+		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
 	}
-	method bordeInferior(){
-		return game.at(0.randomUpTo(game.width()-1),0)
+
+	method bordeInferior() {
+		return game.at(0.randomUpTo(game.width() - 1), 0)
 	}
-	method bordeIzquierda(){
-		return game.at(0,0.randomUpTo(game.height()-1))
+
+	method bordeIzquierda() {
+		return game.at(0, 0.randomUpTo(game.height() - 1))
 	}
-	method bordeDerecha(){
-		return game.at(game.width()-1,0.randomUpTo(game.height()-1))
+
+	method bordeDerecha() {
+		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
 	}
+
 }
 
