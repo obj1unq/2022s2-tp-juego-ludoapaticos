@@ -2,7 +2,7 @@ import wollok.game.*
 import monstruos.*
 import wolly.*
 import proyectiles.*
-
+ 
 program juego {
 
 	game.title("Endless Wollokween")
