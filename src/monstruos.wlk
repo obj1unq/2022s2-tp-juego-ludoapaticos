@@ -1,6 +1,8 @@
 import wollok.game.*
 import wolly.*
 import direcciones.*
+import proyectiles.*
+import niveles.*
 
 class Monstruo {
 
@@ -14,7 +16,7 @@ class Monstruo {
 	}
 
 	method serImpactadoPor(arma) {
-		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
+		vida -= arma.fuerza() 
 		if (vida <= 0) {
 			self.morir()
 		}
@@ -28,6 +30,7 @@ class Monstruo {
 	}
 
 	method morir() {
+		enemigo.sumarPuntos(self)
 		game.removeVisual(self)
 	}
 
@@ -39,11 +42,13 @@ class Monstruo {
 		return 0
 	}
 
+	method puntosQueOtorga()
 	method darPaso()
 
 }
 
-class Esqueleto inherits Monstruo(vida = 30, position = tablero.bordeInferior(), image = "esqueleto.jpg") {
+
+class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueleto.jpg") {
 
 	override method darPaso() {
 		self.acercarseAWolly()
@@ -61,11 +66,11 @@ class Esqueleto inherits Monstruo(vida = 30, position = tablero.bordeInferior(),
 			position = norte.avanzar(position, 1)
 		}
 	}
-
+	
+	  override method puntosQueOtorga() = 300
 }
 
-
-class Fantasma inherits Monstruo(vida = 100, position = tablero.bordeSuperior(), image = "Fantasma_izquierda.jpg") {
+class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "Fantasma_izquierda.jpg") {
 
 	const direcciones = [ norte, este, sur, oeste ]
 
@@ -73,14 +78,20 @@ class Fantasma inherits Monstruo(vida = 100, position = tablero.bordeSuperior(),
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
 
+	
+	override method puntosQueOtorga() = 200
+
 }
 
-class Zombie inherits Monstruo(vida = 10, position = tablero.bordeDerecha(), image = "Zombie_izquierda.png") {
+class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie_izquierda.png") {
+
 
 	override method darPaso() {
 		position = oeste.avanzar(position, 1)
 	}
 
+	
+	override method puntosQueOtorga() = 100
 }
 
 // factories
@@ -108,23 +119,22 @@ object zombie {
 
 }
 
-object tablero {
 
-	method bordeSuperior() {
+object limite {
+
+	method superior() {
 		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
 	}
 
-	method bordeInferior() {
+	method inferior() {
 		return game.at(0.randomUpTo(game.width() - 1), 0)
 	}
 
-	method bordeIzquierda() {
+	method lateralIzq() {
 		return game.at(0, 0.randomUpTo(game.height() - 1))
 	}
 
-	method bordeDerecha() {
-		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
+	method lateralDer() {
+    return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
 	}
-
-}
-
+  }

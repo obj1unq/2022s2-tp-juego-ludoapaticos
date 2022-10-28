@@ -1,5 +1,9 @@
 import wollok.game.*
 import direcciones.*
+import monstruos.*
+import proyectiles.*
+
+
 
 object wolly {
 
@@ -49,6 +53,11 @@ object wolly {
 			self.error("Hay algo sobre mí que no me deja accionar.")
 		}
 	}
+	
+	method sumarPuntos(monstruo){
+		puntos += monstruo.puntosQueOtorga()
+	}
+
 
 	// por polimorfismo
 	method darPaso() {
@@ -58,6 +67,24 @@ object wolly {
 	method serImpactadoPor(arma){
 		
 	}
+
+	
+	method moverse(direccion){
+		if(self.puedeMover(direccion)){
+			position = direccion.avanzar(position,1)
+		}
+	}
+	
+	method puedeMover(direccion){
+
+
+		return direccion.avanzar(position,1).y() <= limite.superior().y() and
+			   direccion.avanzar(position,1).y() >= limite.inferior().y() and
+			   direccion.avanzar(position,1).x() >= limite.lateralIzq().x() and
+			   direccion.avanzar(position,1).x() <= limite.lateralDer().x()
+	}
+	
+
 }
 
 // ############################################################################################
@@ -78,4 +105,4 @@ object wolly {
 //method tirarAgua(dx,dy) {
 //	const positionARegar = game.at( position.x() + dx, position.y() + dy)
 //	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
-//}
+
