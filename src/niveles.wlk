@@ -2,20 +2,26 @@ import wollok.game.*
 import wolly.*
 import proyectiles.*
 
-object demo1 {
+object nivel1 {
+
 	method nueva() {
-		return new Demo1()
+		return new Nivel1()
 	}
+
 }
 
-class Demo { // clase abstracta
+class NivelBase { // clase abstracta
+
 	method iniciar() {
 		self.escenario()
 		self.visuales()
 		self.configuracion()
 	}
 
-	method configuracion() // metodo abstracto
+	method configuracion() {
+		self.teclas()
+		self.terminarJuego()
+	}
 
 	method escenario() {
 		game.title("Endless Wollokween")
@@ -24,9 +30,18 @@ class Demo { // clase abstracta
 	method visuales() {
 		game.addVisual(wolly)
 	}
+
+	method teclas() {
+		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
+		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
+	}
+
+	method terminarJuego()
+
 }
 
-class Demo1 inherits Demo {
+class Nivel1 inherits NivelBase {
+
 	override method escenario() {
 		super()
 		game.height(15)
@@ -34,31 +49,16 @@ class Demo1 inherits Demo {
 		game.ground("ground.png")
 	}
 
-	override method configuracion() {
-		const config = new ConfigDemo1()
-		config.teclas()
-		config.gameOver()
-	}
-}
-
-
-class Config { // clase abstracta
-	method teclas() {
-		keyboard.enter().onPressDo({game.say(wolly, "¡A cazar monstruos!")})
-		keyboard.space().onPressDo({wolly.disparar(calabaza)})
-	}
-	method gameOver()
-}
-
-
-class ConfigDemo1 inherits Config {
 	override method teclas() {
 		super()
-		keyboard.c().onPressDo({game.addVisual(calabaza.nuevo())})
-		keyboard.r().onPressDo({wolly.rotarSentidoAntihorario()})
-		keyboard.f().onPressDo({wolly.rotarSentidoHorario()})
+		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
+		keyboard.r().onPressDo({ wolly.rotarSentidoAntihorario()})
+		keyboard.f().onPressDo({ wolly.rotarSentidoHorario()})
 	}
-	override method gameOver() {
-		game.onCollideDo(wolly, {monstruo => monstruo.matarA(wolly)})
+
+	override method terminarJuego() {
+		game.onCollideDo(wolly, { monstruo => monstruo.matarA(wolly)})
 	}
+
 }
+
