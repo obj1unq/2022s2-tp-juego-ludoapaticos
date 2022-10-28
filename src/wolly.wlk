@@ -4,6 +4,7 @@ import monstruos.*
 import proyectiles.*
 
 
+
 object wolly {
 
 	var property position = game.center() // arbitrario
@@ -57,6 +58,7 @@ object wolly {
 		puntos += monstruo.puntosQueOtorga()
 	}
 
+
 	// por polimorfismo
 	method darPaso() {
 	// no hace nada
@@ -65,6 +67,7 @@ object wolly {
 	method serImpactadoPor(arma){
 		
 	}
+
 	
 	method moverse(direccion){
 		if(self.puedeMover(direccion)){
@@ -81,6 +84,7 @@ object wolly {
 			   direccion.avanzar(position,1).x() <= limite.lateralDer().x()
 	}
 	
+
 }
 
 // ############################################################################################
@@ -101,3 +105,4 @@ object wolly {
 //method tirarAgua(dx,dy) {
 //	const positionARegar = game.at( position.x() + dx, position.y() + dy)
 //	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
+

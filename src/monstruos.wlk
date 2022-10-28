@@ -1,6 +1,8 @@
 import wollok.game.*
 import wolly.*
 import direcciones.*
+import proyectiles.*
+import niveles.*
 
 class Monstruo {
 
@@ -14,7 +16,14 @@ class Monstruo {
 	}
 
 	method serImpactadoPor(arma) {
-		vida -= arma.fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
+		vida -= arma.fuerza() 
+		if (vida <= 0) {
+			self.morir()
+		}
+	}
+
+	method serDaniado() {
+		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
 		if (vida <= 0) {
 			self.morir()
 		}
@@ -32,12 +41,12 @@ class Monstruo {
 	method fuerza() {
 		return 0
 	}
-	
-	method puntosQueOtorga()
 
+	method puntosQueOtorga()
 	method darPaso()
 
 }
+
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueleto.jpg") {
 
@@ -58,7 +67,7 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 		}
 	}
 	
-	override method puntosQueOtorga() = 300
+	  override method puntosQueOtorga() = 300
 }
 
 class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "Fantasma_izquierda.jpg") {
@@ -68,6 +77,7 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 	override method darPaso() {
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
+
 	
 	override method puntosQueOtorga() = 200
 
@@ -75,12 +85,13 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 
 class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie_izquierda.png") {
 
+
 	override method darPaso() {
 		position = oeste.avanzar(position, 1)
 	}
+
 	
 	override method puntosQueOtorga() = 100
-
 }
 
 // factories
@@ -108,6 +119,7 @@ object zombie {
 
 }
 
+
 object limite {
 
 	method superior() {
@@ -123,8 +135,6 @@ object limite {
 	}
 
 	method lateralDer() {
-		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
+    return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
 	}
-
-}
-
+  }

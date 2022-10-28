@@ -3,10 +3,9 @@ import monstruos.*
 import wolly.*
 import proyectiles.* 
 import direcciones.*
-
+ 
 program juego {
 
-	// inicio del juego
 	game.title("Endless Wollokween")
 	game.height(15)
 	game.width(15)
