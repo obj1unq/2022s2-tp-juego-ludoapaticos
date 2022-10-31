@@ -3,8 +3,6 @@ import direcciones.*
 import monstruos.*
 import proyectiles.*
 
-
-
 object wolly {
 
 	var property position = game.center() // arbitrario
@@ -22,9 +20,13 @@ object wolly {
 	}
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
-		self.agregar(tipoDeProyectil)
+		self.sacar(tipoDeProyectil)
 		self.cargarProyectil()
 		proyectilActual.serDisparadoPor(self)
+	}
+
+	method sacar(tipoDeProyectil) {
+		self.agregar(tipoDeProyectil)
 	}
 
 	method cargarProyectil() {
@@ -53,22 +55,6 @@ object wolly {
 			self.error("Hay algo sobre mí que no me deja accionar.")
 		}
 	}
-	
-	method sumarPuntos(monstruo){
-		puntos += monstruo.puntosQueOtorga()
-	}
-
-
-	// por polimorfismo
-	method darPaso() {
-	// no hace nada
-	}
-
-	method serImpactadoPor(arma){
-		
-	}
-
-	
 	method moverse(direccion){
 		if(self.puedeMover(direccion)){
 			position = direccion.avanzar(position,1)
@@ -84,6 +70,10 @@ object wolly {
 			   direccion.avanzar(position,1).x() <= limite.lateralDer().x()
 	}
 	
+	// por polimorfismo
+	method darPaso() {
+	// no hace nada
+	}
 
 }
 
@@ -105,4 +95,4 @@ object wolly {
 //method tirarAgua(dx,dy) {
 //	const positionARegar = game.at( position.x() + dx, position.y() + dy)
 //	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
-
+//}
