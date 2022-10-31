@@ -1,11 +1,10 @@
 import wollok.game.*
 import monstruos.*
 import wolly.*
-import proyectiles.* 
+import proyectiles.*
 import direcciones.*
- 
-program juego {
 
+program juego {
 	game.title("Endless Wollokween")
 	game.height(15)
 	game.width(15)
@@ -13,14 +12,13 @@ program juego {
 		// VISUAL
 	game.addVisual(wolly)
 		// COMPORTAMIENTO MONSTRUOS
-	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([esqueleto,zombie,fantasma].anyOne().nuevo()) })
-	
+	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
 		// TECLADO
 	keyboard.left().onPressDo({ wolly.moverse(oeste) })
 	keyboard.right().onPressDo({ wolly.moverse(este) })
 	keyboard.up().onPressDo({ wolly.moverse(norte) })
-	keyboard.down().onPressDo({ wolly.moverse(sur) })	
+	keyboard.down().onPressDo({ wolly.moverse(sur) })
 	keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!") })
 	keyboard.space().onPressDo({ wolly.disparar(calabaza) })
 	keyboard.r().onPressDo({ wolly.rotarSentidoAntihorario() })
