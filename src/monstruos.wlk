@@ -16,7 +16,7 @@ class Monstruo {
 	}
 
 	method serImpactadoPor(arma) {
-		vida -= arma.fuerza() 
+		vida -= arma.fuerza()
 		if (vida <= 0) {
 			self.morir()
 		}
@@ -43,10 +43,10 @@ class Monstruo {
 	}
 
 	method puntosQueOtorga()
+
 	method darPaso()
 
 }
-
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueleto.jpg") {
 
@@ -66,8 +66,9 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 			position = norte.avanzar(position, 1)
 		}
 	}
-	
-	  override method puntosQueOtorga() = 300
+
+	override method puntosQueOtorga() = 300
+
 }
 
 class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "Fantasma_izquierda.jpg") {
@@ -78,20 +79,18 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
 
-	
 	override method puntosQueOtorga() = 200
 
 }
 
 class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie_izquierda.png") {
 
-
 	override method darPaso() {
 		position = oeste.avanzar(position, 1)
 	}
 
-	
 	override method puntosQueOtorga() = 100
+
 }
 
 // factories
@@ -119,7 +118,6 @@ object zombie {
 
 }
 
-
 object limite {
 
 	method superior() {
@@ -135,6 +133,8 @@ object limite {
 	}
 
 	method lateralDer() {
-    return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
+		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
 	}
-  }
+
+}
+

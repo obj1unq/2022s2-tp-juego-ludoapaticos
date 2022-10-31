@@ -1,5 +1,3 @@
-
-
 //factories
 object norte {
 
@@ -47,10 +45,5 @@ object este {
 		return _position.right(cantidad)
 	}
 
-}
-
-	method avanzar(_position, cantidad) {
-		return _position.right(cantidad)
-	}
 }
 
