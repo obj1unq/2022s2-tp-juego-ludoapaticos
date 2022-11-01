@@ -69,12 +69,12 @@ class Nivel1 inherits NivelBase {
 
 }
 
-	override method configuracion() {
-		const config = new ConfigDemo1()
-		config.teclas()
-		config.gameOver()
-	}
-}
+//	override method configuracion() {
+//		const config = new ConfigDemo1()
+//		config.teclas()
+//		config.gameOver()
+//	}
+//}
 
 
 class Config { // clase abstracta

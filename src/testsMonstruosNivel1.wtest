@@ -1,0 +1,54 @@
+import wollok.game.*
+import monstruos.*
+import wolly.*
+import direcciones.*
+import proyectiles.*
+import niveles.*
+import extras.*
+
+describe "comportamiento de monstruos"{
+	method initialize(){
+		game.clear()
+		
+	}
+	test "creacion de Monstruos" {
+	
+		assert.that(game.allVisuals().isEmpty())
+		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
+		assert.notThat(game.allVisuals().isEmpty())
+	}
+	test "esqueleto muere por 3 impactos de calabaza"{
+		game.addVisual(esqueleto.nuevo())
+		assert.notThat(game.allVisuals().isEmpty())
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.that(game.allVisuals().isEmpty())
+	}
+	
+		test "fantasma muere por 2 impactos de calabaza"{
+		game.addVisual(fantasma.nuevo())
+		assert.notThat(game.allVisuals().isEmpty())
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.that(game.allVisuals().isEmpty())
+	}
+	
+	test "zombie muere por impacto de calabaza"{
+		game.addVisual(zombie.nuevo())
+		game.addVisual(zombie.nuevo())
+		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.that(game.allVisuals().isEmpty())	
+	}
+	
+	test "monstruo muere y suma puntos a su enemigo"{
+		
+		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
+		assert.notThat(game.allVisuals().isEmpty())
+		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
+		game.allVisuals().forEach({monstruo => monstruo.morir()})
+		assert.that(game.allVisuals().isEmpty())
+		assert.that(wolly.puntos() != 0)
+	}
+}
+	

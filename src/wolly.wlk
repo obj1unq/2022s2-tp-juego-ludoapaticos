@@ -3,12 +3,10 @@ import direcciones.*
 import monstruos.*
 import proyectiles.*
 
-
-
 object wolly {
 
-	var property position = game.center() // arbitrario
-	var property image = "player.png" // "wolly.png"
+	var property position = game.center()
+	var property image = "wolly.png" 
 	var property puntos = 0
 	var property ultimaDireccionVista = norte
 	var property proyectilActual
@@ -22,9 +20,13 @@ object wolly {
 	}
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
-		self.agregar(tipoDeProyectil)
+		self.sacar(tipoDeProyectil)
 		self.cargarProyectil()
 		proyectilActual.serDisparadoPor(self)
+	}
+
+	method sacar(tipoDeProyectil) {
+		self.agregar(tipoDeProyectil)
 	}
 
 	method cargarProyectil() {
@@ -53,37 +55,25 @@ object wolly {
 			self.error("Hay algo sobre mí que no me deja accionar.")
 		}
 	}
-	
-	method sumarPuntos(monstruo){
-		puntos += monstruo.puntosQueOtorga()
+
+	method moverse(direccion) {
+		if (self.puedeMover(direccion)) {
+			position = direccion.avanzar(position, 1)
+		}
 	}
 
+	method puedeMover(direccion) {
+		return direccion.avanzar(position, 1).y() <= limite.superior().y() and direccion.avanzar(position, 1).y() >= limite.inferior().y() and direccion.avanzar(position, 1).x() >= limite.lateralIzq().x() and direccion.avanzar(position, 1).x() <= limite.lateralDer().x()
+	}
+
+	method sumarPuntos(monstruo) {
+		puntos += monstruo.puntosQueOtorga()
+	}
 
 	// por polimorfismo
 	method darPaso() {
 	// no hace nada
 	}
-
-	method serImpactadoPor(arma){
-		
-	}
-
-	
-	method moverse(direccion){
-		if(self.puedeMover(direccion)){
-			position = direccion.avanzar(position,1)
-		}
-	}
-	
-	method puedeMover(direccion){
-
-
-		return direccion.avanzar(position,1).y() <= limite.superior().y() and
-			   direccion.avanzar(position,1).y() >= limite.inferior().y() and
-			   direccion.avanzar(position,1).x() >= limite.lateralIzq().x() and
-			   direccion.avanzar(position,1).x() <= limite.lateralDer().x()
-	}
-	
 
 }
 
@@ -105,4 +95,4 @@ object wolly {
 //method tirarAgua(dx,dy) {
 //	const positionARegar = game.at( position.x() + dx, position.y() + dy)
 //	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
-
+//}
