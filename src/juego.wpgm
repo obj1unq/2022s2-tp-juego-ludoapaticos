@@ -3,6 +3,7 @@ import monstruos.*
 import wolly.*
 import proyectiles.*
 import direcciones.*
+import extras.*
 
 program juego {
 	game.title("Endless Wollokween")
@@ -11,6 +12,7 @@ program juego {
 	game.ground("lava.png") // imagen random hasta conseguir alguna
 		// VISUAL
 	game.addVisual(wolly)
+	game.addVisual(visorPuntaje)
 		// COMPORTAMIENTO MONSTRUOS
 	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
