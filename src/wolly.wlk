@@ -5,8 +5,8 @@ import proyectiles.*
 
 object wolly {
 
-	var property position = game.center() // arbitrario
-	var property image = "player.png" // "wolly.png"
+	var property position = game.center()
+	var property image = "wolly.png" 
 	var property puntos = 0
 	var property ultimaDireccionVista = norte
 	var property proyectilActual

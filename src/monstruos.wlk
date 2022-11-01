@@ -48,7 +48,7 @@ class Monstruo {
 
 }
 
-class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueleto.jpg") {
+class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
 
 	override method darPaso() {
 		self.acercarseAWolly()
@@ -71,7 +71,7 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 
 }
 
-class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "Fantasma_izquierda.jpg") {
+class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "fantasmita.png") {
 
 	const direcciones = [ norte, este, sur, oeste ]
 
@@ -83,7 +83,7 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 
 }
 
-class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie_izquierda.png") {
+class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie.png") {
 
 	override method darPaso() {
 		position = oeste.avanzar(position, 1)

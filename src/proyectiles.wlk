@@ -14,7 +14,7 @@ object calabaza {
 class Calabaza {
 
 	const property peso = 2
-	const property image = "cacac.png"
+	const property image = "calabazaProyectil.png"
 	var property lanzador = wolly
 	var property position = lanzador.position()
 	var property direccion = lanzador.ultimaDireccionVista()
