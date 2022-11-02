@@ -8,7 +8,7 @@ object wolly {
 	var property position = game.center()
 	var property image = "wolly.png" 
 	var property puntos = 0
-	var property ultimaSentidoDeDireccionVisto = norte
+	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
@@ -68,23 +68,3 @@ object wolly {
 	}
 
 }
-
-// ############################################################################################
-// Objeto controlador
-//method tirarAgua() { // 
-//	todos.forEach({aspersor => aspersor.tirarAgua()})
-//}
-// definición en Class
-//method tirarAgua() {
-//	
-//	(-1..1).forEach( { x =>
-//		 (-1..1).forEach ( {y =>
-//		 	 self.tirarAgua(x,y)
-//		})
-//	})
-//}
-//
-//method tirarAgua(dx,dy) {
-//	const positionARegar = game.at( position.x() + dx, position.y() + dy)
-//	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
-//}

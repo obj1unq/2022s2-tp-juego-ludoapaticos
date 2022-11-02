@@ -45,10 +45,10 @@ class NivelBase { // clase abstracta
 		keyboard.down().onPressDo({ wolly.moverse(sur) })
 		// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
-		keyboard.w().onPressDo({ wolly.ultimaSentidoDeDireccionVisto(norte) })
-		keyboard.a().onPressDo({ wolly.ultimaSentidoDeDireccionVisto(oeste) })
-		keyboard.s().onPressDo({ wolly.ultimaSentidoDeDireccionVisto(sur) })
-		keyboard.d().onPressDo({ wolly.ultimaSentidoDeDireccionVisto(este) })		
+		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte) })
+		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste) })
+		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur) })
+		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este) })		
 		// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
