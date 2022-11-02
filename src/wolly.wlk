@@ -8,16 +8,8 @@ object wolly {
 	var property position = game.center()
 	var property image = "wolly.png" 
 	var property puntos = 0
-	var property ultimaDireccionVista = norte
+	var property ultimaSentidoDeDireccionVisto = norte
 	var property proyectilActual
-
-	method rotarSentidoHorario() {
-		self.ultimaDireccionVista(ultimaDireccionVista.anterior())
-	}
-
-	method rotarSentidoAntihorario() {
-		self.ultimaDireccionVista(ultimaDireccionVista.siguiente())
-	}
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
 		self.sacar(tipoDeProyectil)
