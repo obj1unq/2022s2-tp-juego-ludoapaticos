@@ -5,13 +5,14 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import niveles.*
+import pausa.*
 
 program juego {
 	nivel1.nuevo().iniciar()
 		// VISUAL
 		// COMPORTAMIENTO MONSTRUOS
-	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
-	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
+	handlerOnTick.crearMonstruos(2000)
+	handlerOnTick.moverMonstruos(1000)
 		// TECLADO
 		// STOP
 		// PLAY
