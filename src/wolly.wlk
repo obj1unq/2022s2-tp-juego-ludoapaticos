@@ -2,22 +2,15 @@ import wollok.game.*
 import direcciones.*
 import monstruos.*
 import proyectiles.*
+import extras.*
 
 object wolly {
 
 	var property position = game.center()
 	var property image = "wolly.png" 
 	var property puntos = 0
-	var property ultimaDireccionVista = norte
+	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
-
-	method rotarSentidoHorario() {
-		self.ultimaDireccionVista(ultimaDireccionVista.anterior())
-	}
-
-	method rotarSentidoAntihorario() {
-		self.ultimaDireccionVista(ultimaDireccionVista.siguiente())
-	}
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
 		self.sacar(tipoDeProyectil)
@@ -76,23 +69,3 @@ object wolly {
 	}
 
 }
-
-// ############################################################################################
-// Objeto controlador
-//method tirarAgua() { // 
-//	todos.forEach({aspersor => aspersor.tirarAgua()})
-//}
-// definición en Class
-//method tirarAgua() {
-//	
-//	(-1..1).forEach( { x =>
-//		 (-1..1).forEach ( {y =>
-//		 	 self.tirarAgua(x,y)
-//		})
-//	})
-//}
-//
-//method tirarAgua(dx,dy) {
-//	const positionARegar = game.at( position.x() + dx, position.y() + dy)
-//	game.getObjectsIn(positionARegar).forEach( { posibleCultivo => posibleCultivo.regar() })
-//}

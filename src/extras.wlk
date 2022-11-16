@@ -1,6 +1,7 @@
-import wolly.*
+
 import monstruos.*
 import wollok.game.*
+import wolly.*
 
 object visorPuntaje {
 	

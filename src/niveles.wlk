@@ -1,11 +1,13 @@
 import wollok.game.*
 import wolly.*
 import proyectiles.*
+import direcciones.*
+import extras.*
 
 
 object nivel1 {
 
-	method nueva() {
+	method nuevo() {
 		return new Nivel1()
 	}
 
@@ -33,12 +35,24 @@ class NivelBase { // clase abstracta
 
 	method visuales() {
 		game.addVisual(wolly)
+		game.addVisual(visorPuntaje)
 	}
 
 
 	method teclas() {
-		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
+		// Comandos de movimientos de Wolly
+		keyboard.left().onPressDo({ wolly.moverse(oeste) })
+		keyboard.right().onPressDo({ wolly.moverse(este) })
+		keyboard.up().onPressDo({ wolly.moverse(norte) })
+		keyboard.down().onPressDo({ wolly.moverse(sur) })
+		// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
+		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte) })
+		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste) })
+		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur) })
+		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este) })		
+		// Comandos de acción de Wolly
+		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
 
 	method terminarJuego()
@@ -52,39 +66,18 @@ class Nivel1 inherits NivelBase {
 		super()
 		game.height(15)
 		game.width(15)
-		game.ground("ground.png")
+		game.ground("lava.png")
 	}
 
 
 	override method teclas() {
 		super()
 		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
-		keyboard.r().onPressDo({ wolly.rotarSentidoAntihorario()})
-		keyboard.f().onPressDo({ wolly.rotarSentidoHorario()})
+
 	}
 
 	override method terminarJuego() {
-		game.onCollideDo(wolly, { monstruo => monstruo.matarA(wolly)})
+		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
 	}
 
 }
-
-//	override method configuracion() {
-//		const config = new ConfigDemo1()
-//		config.teclas()
-//		config.gameOver()
-//	}
-//}
-
-
-class Config { // clase abstracta
-	method teclas() {
-		keyboard.enter().onPressDo({game.say(wolly, "¡A cazar monstruos!")})
-		keyboard.space().onPressDo({wolly.disparar(calabaza)})
-	}
-	method gameOver()
-}
-
-
-}
-

@@ -17,7 +17,7 @@ class Calabaza {
 	const property image = "calabazaProyectil.png"
 	var property lanzador = wolly
 	var property position = lanzador.position()
-	var property direccion = lanzador.ultimaDireccionVista()
+	var property direccion = lanzador.ultimoSentidoDeDireccionVisto()
 	const distancia = lanzador.distanciaDeDisparoDe(peso)
 	const property fuerza = 10
 
