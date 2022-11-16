@@ -1,5 +1,7 @@
-import wolly.*
+
+import monstruos.*
 import wollok.game.*
+import wolly.*
 
 object visorPuntaje {
 	
@@ -15,8 +17,13 @@ object visorPuntaje {
 		return "ff0000ff"
 	}
 	
+	// por polimorfismo
 	method matarA(personaje) {
-		// No hace nada. Completitud por polimorfismo
+		
+	}
+	
+	method darPaso(){
+		
 	}
 }
 
