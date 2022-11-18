@@ -7,13 +7,16 @@ import extras.*
 object wolly {
 
 	var property position = game.center()
-	var property image = "wolly.png" 
+	var property image = "wolly.png"
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
+	var vida = 5
+
+	method vida() = vida
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
-		self.sacar(tipoDeProyectil)
+		self.agregar(tipoDeProyectil)
 		self.cargarProyectil()
 		proyectilActual.serDisparadoPor(self)
 	}
@@ -34,7 +37,7 @@ object wolly {
 	}
 
 	method hayMonstruo() {
-		game.onCollideDo(self, { monstruo => monstruo.matarA()})
+		game.onCollideDo(self, { monstruo => monstruo.daniarA()})
 	}
 
 	method distanciaDeDisparoDe(_peso) {
@@ -63,9 +66,32 @@ object wolly {
 		puntos += monstruo.puntosQueOtorga()
 	}
 
+	method recibirDanio(danio) {
+		if (vida <= danio) {
+			self.morir()
+			//visorVida.longitud(0)
+		} else {
+			vida -= danio
+			//visorVida.perderVidas(danio)
+		}
+	}
+	
+	method recuperarVida(cantidad){
+		if(vida + cantidad<=5){
+			vida += cantidad
+		} else {vida = 5}
+	}
+	
+	method perderVida(cantidad){
+		if (vida - cantidad >0){
+			vida -= cantidad
+		} else {self.morir()}
+	}
+
 	// por polimorfismo
 	method darPaso() {
 	// no hace nada
 	}
 
 }
+

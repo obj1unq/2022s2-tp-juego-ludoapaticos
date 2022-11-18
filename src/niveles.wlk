@@ -36,6 +36,8 @@ class NivelBase { // clase abstracta
 	method visuales() {
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
+		game.addVisual(visorVida)
+
 	}
 
 
@@ -66,7 +68,7 @@ class Nivel1 inherits NivelBase {
 		super()
 		game.height(15)
 		game.width(15)
-		game.ground("lava.png")
+		game.boardGround("lava.png")
 	}
 
 
@@ -77,7 +79,7 @@ class Nivel1 inherits NivelBase {
 	}
 
 	override method terminarJuego() {
-		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
+		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
 }

@@ -3,28 +3,53 @@ import monstruos.*
 import wollok.game.*
 import wolly.*
 
-object visorPuntaje {
+
+class Visor {
+	method image()
 	
-	method position() {
-		return game.at(0,game.height() - 1)
-	}
-	
-	method text() {
-		return "" + wolly.puntos()
-	}
+	method position()
 	
 	method textColor() {
 		return "ff0000ff"
 	}
-	
-	// por polimorfismo
-	method matarA(personaje) {
+		
+		// por polimorfismo
+	method daniarA() {
 		
 	}
 	
 	method darPaso(){
 		
 	}
+	method serImpactadoPor(algo){
+		
+	}
+}
+object visorPuntaje inherits Visor{
+	
+	override method image()="visorPuntaje.png"
+	override method position() {
+		return game.at(0,game.height()-1)
+	}
+	
+	method text() {
+		return "" + wolly.puntos()
+	}
+}
+
+object visorVida inherits Visor{
+	var property longitud = 5
+	
+	override method image()= "vida"+ wolly.vida() +".png"
+	
+	override method position()=game.at(game.width()-6, game.height()-1)
+	
+
+	
+	method perderVidas(cantidad){
+		longitud -= cantidad
+	}
+	
 }
 
 object randomizer {
