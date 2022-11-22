@@ -17,10 +17,15 @@ object nivel1 {
 class NivelBase { // clase abstracta
 
 
-	method iniciar() {
+	method base() {
 		self.escenario()
 		self.visuales()
 		self.configuracion()
+	}
+
+	method iniciar() {
+		self.base()
+		self.pausa()
 	}
 
 	method escenario() {
@@ -35,7 +40,6 @@ class NivelBase { // clase abstracta
 	method configuracion() {
 		self.teclas()
 		self.terminarJuego()
-		self.pausa()
 	}
 
 	method teclas() {
@@ -67,10 +71,7 @@ class NivelBase { // clase abstracta
 	}
 
 	method reanudar() {
-		self.escenario()
-		self.visuales()
-		self.teclas()
-		self.terminarJuego()
+		self.base()
 	}
 }
 
