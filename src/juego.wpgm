@@ -5,14 +5,10 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import niveles.*
-import pausa.*
 
 program juego {
 	nivel1.nuevo().iniciar()
 		// VISUAL
-		// COMPORTAMIENTO MONSTRUOS
-	handlerOnTick.crearMonstruos(2000)
-	handlerOnTick.moverMonstruos(1000)
 		// TECLADO
 		// STOP
 		// PLAY

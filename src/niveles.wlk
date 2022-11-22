@@ -3,6 +3,7 @@ import wolly.*
 import proyectiles.*
 import direcciones.*
 import extras.*
+import pausa.*
 
 
 object nivel1 {
@@ -22,13 +23,6 @@ class NivelBase { // clase abstracta
 		self.configuracion()
 	}
 
-
-	method configuracion() {
-		self.teclas()
-		self.terminarJuego()
-	}
-
-
 	method escenario() {
 		game.title("Endless Wollokween")
 	}
@@ -38,6 +32,11 @@ class NivelBase { // clase abstracta
 		game.addVisual(visorPuntaje)
 	}
 
+	method configuracion() {
+		self.teclas()
+		self.terminarJuego()
+		self.pausa()
+	}
 
 	method teclas() {
 		// Comandos de movimientos de Wolly
@@ -57,27 +56,60 @@ class NivelBase { // clase abstracta
 
 	method terminarJuego()
 
+	method pausa () {
+		// Comandos de usuario
+		keyboard.p().onPressDo({ handlerOnTick.switch() })
+	}
+	method pausar() {
+		self.activarTeclasPausa()
+	}
+
+	method reanudar() {
+		self.teclas()
+	}
+
+	method activarTeclasPausa() {
+		// Comandos de movimientos de Wolly
+		keyboard.left().onPressDo()
+		keyboard.right().onPressDo()
+		keyboard.up().onPressDo()
+		keyboard.down().onPressDo()
+		// Comandos de disparo de Wolly
+		keyboard.space().onPressDo()
+		keyboard.w().onPressDo()
+		keyboard.a().onPressDo()
+		keyboard.s().onPressDo()
+		keyboard.d().onPressDo()		
+		// Comandos de acción de Wolly
+		keyboard.enter().onPressDo()
+	}
+
 }
 
 class Nivel1 inherits NivelBase {
-
+	const property nacimientoMonstruos = 2000
+	const property movimientoMonstruos = 1000
 
 	override method escenario() {
 		super()
 		game.height(15)
 		game.width(15)
 		game.ground("lava.png")
+		handlerOnTick.nivel(self)
+		handlerOnTick.iniciar(nacimientoMonstruos, movimientoMonstruos)
 	}
-
 
 	override method teclas() {
 		super()
 		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
-
 	}
 
 	override method terminarJuego() {
 		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
 	}
 
+	override method reanudar() {
+		super()
+		handlerOnTick.iniciar(nacimientoMonstruos, movimientoMonstruos)
+	}
 }
