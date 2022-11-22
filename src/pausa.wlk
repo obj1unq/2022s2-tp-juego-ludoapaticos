@@ -13,7 +13,8 @@ class OnTick {
 object handlerOnTick {
 	var property nivel
 	var property onTicks = #{}
-	const property onTicksMonstruos = #{}
+	const property tipoMonstruos = #{esqueleto, zombie, fantasma}
+	var property monstruosCreados = #{}
 	var property enPausa = false
 
 	method crearOnTick(_onTick) {
@@ -23,7 +24,7 @@ object handlerOnTick {
 	method crearMonstruos(_valor)	{
 //		const onTick = new OnTick(nombre="nacimiento Monstruos", valor=_valor.randomUpTo(_valor*3))
 		const valor=_valor.randomUpTo(_valor*3)
-		game.onTick(valor, "nacimiento Monstruos", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
+		game.onTick(valor, "nacimiento Monstruos", {=> game.addVisual(self.crearMonstruo()) })
 		onTicks.add("nacimiento Monstruos")
 	}
 
@@ -47,5 +48,14 @@ object handlerOnTick {
 		if (enPausa) { nivel.reanudar() } 
 		else { nivel.pausar() }
 		enPausa = not enPausa
+	}
+	method crearMonstruo() {
+		const unTipoMonstruo = tipoMonstruos.anyOne()
+		const monstruo = unTipoMonstruo.nuevo()
+		monstruosCreados.add(monstruo)
+		return monstruo
+	}
+	method agregar() {
+		monstruosCreados.forEach({monstruo => game.addVisual(monstruo)})
 	}
 }

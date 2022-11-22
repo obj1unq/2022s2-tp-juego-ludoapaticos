@@ -67,7 +67,10 @@ class NivelBase { // clase abstracta
 	}
 
 	method reanudar() {
-		self.iniciar()
+		self.escenario()
+		self.visuales()
+		self.teclas()
+		self.terminarJuego()
 	}
 }
 
@@ -96,5 +99,10 @@ class Nivel1 inherits NivelBase {
 	override method pausar() {
 		super()
 		handlerOnTick.remover()
+	}
+
+	override method reanudar() {
+		super()
+		handlerOnTick.agregar()
 	}
 }
