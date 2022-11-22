@@ -33,14 +33,6 @@ object handlerOnTick {
 		onTicks.add("avance de Monstruos")
 	}
 
-	method pararJuego()	{
-		nivel.pausar()
-	}
-
-	method reanudarJuego()	{
-		nivel.reanudar()
-	}
-
 	method iniciar(nacimientoMonstruos, movimientoMonstruos)	{
 		self.crearMonstruos(nacimientoMonstruos)
 		self.moverMonstruos(movimientoMonstruos)
@@ -53,10 +45,10 @@ object handlerOnTick {
 	// Sistema on/off (switch)
 	method switch() {
 		if (enPausa) {
-			self.reanudarJuego()
+			nivel.reanudar()
 		} 
 		else { 
-			self.pararJuego()
+			nivel.pausar()
 		}
 		enPausa = not enPausa
 	}
