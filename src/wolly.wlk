@@ -69,10 +69,10 @@ object wolly {
 	method recibirDanio(danio) {
 		if (vida <= danio) {
 			self.morir()
-			//visorVida.longitud(0)
+			visorVida.longitud(0)
 		} else {
 			vida -= danio
-			//visorVida.perderVidas(danio)
+			visorVida.perderVidas(danio)
 		}
 	}
 	
@@ -91,6 +91,14 @@ object wolly {
 	// por polimorfismo
 	method darPaso() {
 	// no hace nada
+	}
+	
+	method daniarA(){
+		// no hace nada
+	}
+	
+	method causarEfecto(){
+		// no hace nada
 	}
 
 }
