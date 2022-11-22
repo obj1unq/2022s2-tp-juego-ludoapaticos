@@ -13,7 +13,7 @@ class OnTick {
 object handlerOnTick {
 	var property nivel
 	var property onTicks = #{}
-	const property tipoMonstruos = #{esqueleto, zombie, fantasma}
+	const property tipoMonstruos = [esqueleto, zombie, fantasma]
 	var property monstruosCreados = #{}
 	var property enPausa = false
 
