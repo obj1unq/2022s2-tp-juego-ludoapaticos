@@ -70,18 +70,18 @@ class NivelBase { // clase abstracta
 
 	method activarTeclasPausa() {
 		// Comandos de movimientos de Wolly
-		keyboard.left().onPressDo()
-		keyboard.right().onPressDo()
-		keyboard.up().onPressDo()
-		keyboard.down().onPressDo()
+		keyboard.left().onPressDo({})
+		keyboard.right().onPressDo({})
+		keyboard.up().onPressDo({})
+		keyboard.down().onPressDo({})
 		// Comandos de disparo de Wolly
-		keyboard.space().onPressDo()
-		keyboard.w().onPressDo()
-		keyboard.a().onPressDo()
-		keyboard.s().onPressDo()
-		keyboard.d().onPressDo()		
+		keyboard.space().onPressDo({})
+		keyboard.w().onPressDo({})
+		keyboard.a().onPressDo({})
+		keyboard.s().onPressDo({})
+		keyboard.d().onPressDo({})		
 		// Comandos de acción de Wolly
-		keyboard.enter().onPressDo()
+		keyboard.enter().onPressDo({})
 	}
 
 }
@@ -111,5 +111,9 @@ class Nivel1 inherits NivelBase {
 	override method reanudar() {
 		super()
 		handlerOnTick.iniciar(nacimientoMonstruos, movimientoMonstruos)
+	}
+	override method pausar() {
+		super()
+		handlerOnTick.remover()
 	}
 }

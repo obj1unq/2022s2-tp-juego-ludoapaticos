@@ -34,13 +34,10 @@ object handlerOnTick {
 	}
 
 	method pararJuego()	{
-		enPausa = not enPausa
-		onTicks.forEach({onTickName => game.removeTickEvent(onTickName)})
 		nivel.pausar()
 	}
 
 	method reanudarJuego()	{
-		enPausa = not enPausa
 		nivel.reanudar()
 	}
 
@@ -49,13 +46,18 @@ object handlerOnTick {
 		self.moverMonstruos(movimientoMonstruos)
 	}
 
+	method remover() {
+		onTicks.forEach({onTickName => game.removeTickEvent(onTickName)})
+	}
+
 	// Sistema on/off (switch)
 	method switch() {
-		return if (enPausa) {
+		if (enPausa) {
 			self.reanudarJuego()
 		} 
 		else { 
 			self.pararJuego()
 		}
+		enPausa = not enPausa
 	}
 }
