@@ -42,7 +42,7 @@ object visorVida inherits Visor{
 	
 	override method image()= "vida"+ wolly.vida() +".png"
 	
-	override method position()=game.at(game.width()-6, game.height()-1)
+	override method position()=game.at(game.width()-4, game.height()-1)
 	
 
 	
