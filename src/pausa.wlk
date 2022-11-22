@@ -44,12 +44,8 @@ object handlerOnTick {
 
 	// Sistema on/off (switch)
 	method switch() {
-		if (enPausa) {
-			nivel.reanudar()
-		} 
-		else { 
-			nivel.pausar()
-		}
+		if (enPausa) { nivel.reanudar() } 
+		else { nivel.pausar() }
 		enPausa = not enPausa
 	}
 }
