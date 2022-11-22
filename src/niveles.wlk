@@ -97,13 +97,4 @@ class Nivel1 inherits NivelBase {
 		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
 	}
 
-	override method pausar() {
-		super()
-		handlerOnTick.remover()
-	}
-
-	override method reanudar() {
-		super()
-		handlerOnTick.agregar()
-	}
 }

@@ -17,31 +17,29 @@ object handlerOnTick {
 	var property monstruosCreados = #{}
 	var property enPausa = false
 
-	method crearOnTick(_onTick) {
-		if (_onTick.nombre() == "nacimiento Monstruos") { self.creardorMonstruos(_onTick.valor()) } else { self.moverMonstruos(_onTick.valor()) }
+	method creardorMonstruos(_valor) {
+		const valorRandom=_valor.randomUpTo(_valor*3)
+		const onTick = new OnTick(nombre="nacimiento Monstruos", valor=valorRandom)
+		self.agregarOnTickSiNoEsta(onTick)
+		self.aplicarOnTick(onTick)
 	}
 
-	method creardorMonstruos(_valor)	{
-//		const onTick = new OnTick(nombre="nacimiento Monstruos", valor=_valor.randomUpTo(_valor*3))
-		const valor=_valor.randomUpTo(_valor*3)
-		game.onTick(valor, "nacimiento Monstruos", {=> game.addVisual(self.unNuevoMonstruoRandom()) })
-		onTicks.add("nacimiento Monstruos")
+	method moverMonstruos(_valor) {
+		const onTick = new OnTick(nombre="avance de monstruos", valor=_valor)
+		self.agregarOnTickSiNoEsta(onTick)
+		self.aplicarOnTick(onTick)
 	}
 
-	method moverMonstruos(_valor)	{
-//		const onTick = new OnTick(nombre="avance de monstruos", valor=_valor)
-		game.onTick(_valor, "avance de Monstruos", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
-		onTicks.add("avance de Monstruos")
+	method iniciar(nacimientoMonstruos, movimientoMonstruos) {
+		if (onTicks.isEmpty()) {
+			self.creardorMonstruos(nacimientoMonstruos)
+			self.moverMonstruos(movimientoMonstruos)
+		} else { self.reanudar() }
 	}
 
-	method iniciar(nacimientoMonstruos, movimientoMonstruos)	{
-		self.creardorMonstruos(nacimientoMonstruos)
-		self.moverMonstruos(movimientoMonstruos)
-	}
-
-	method remover() {
-		onTicks.forEach({onTickName => game.removeTickEvent(onTickName)})
-	}
+//	method remover() {
+//		onTicks.forEach({onTick => game.removeTickEvent(onTick.nombre())})
+//	}
 
 	// Sistema on/off (switch)
 	method switch() {
@@ -49,21 +47,58 @@ object handlerOnTick {
 		else { nivel.pausar() }
 		enPausa = not enPausa
 	}
+
 	method unNuevoMonstruoRandom() {
 		const monstruo = self.unMonstruo()
 		self.agregarMonstruo(monstruo)
 		return monstruo
 	}
+
 	method unMonstruo() {
 		return tipoMonstruos.anyOne().nuevo()
 	}
-	method agregar() {
-		monstruosCreados.forEach({monstruo => game.addVisual(monstruo)})
+
+	method reanudar() {
+		self.aplicarOnTicks()
+		self.aplicarVisuales()
 	}
+
 	method agregarMonstruo(_monstruo) {
 		monstruosCreados.add(_monstruo)
 	}
+
 	method removerMonstruo(_monstruo) {
 		monstruosCreados.remove(_monstruo)
+	}
+
+	method agregarOnTickSiNoEsta(_onTick) {
+		if (not self.estaOnTick(_onTick)) {
+			onTicks.add(_onTick)
+		}
+	}
+
+	method estaOnTick(_onTick) {
+		return not onTicks.filter({onTick => onTick == _onTick}).isEmpty()
+	}
+
+	method aplicarOnTick(_onTick) {
+		if (_onTick.nombre() == "nacimiento Monstruos") {
+			self.aplicarOnTickMonstruo(_onTick)
+		} else { self.aplicarOnTickMoverMonstruo(_onTick) }
+	}
+	method aplicarOnTickMonstruo(_onTick) {
+		game.onTick(_onTick.valor(), _onTick.nombre(), {=> const monstruo = self.unMonstruo(); game.addVisual(monstruo); self.agregarMonstruo(monstruo) })
+	}
+
+	method aplicarOnTickMoverMonstruo(_onTick) {
+		game.onTick(_onTick.valor(), _onTick.nombre(), {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
+	}
+
+	method aplicarOnTicks() {
+		onTicks.forEach({onTick => self.aplicarOnTick(onTick)})
+	}
+
+	method aplicarVisuales() {
+		monstruosCreados.forEach({monstruo => game.addVisual(monstruo)})
 	}
 }
