@@ -63,6 +63,10 @@ object handlerMonstruos {
 	method get(_monstruo) {
 		return monstruos.find({monstruo => monstruo == _monstruo})
 	}
+	method remover(monstruo) {
+		monstruos.remover(monstruo)
+	}
+
 }
 
 object handlerOnTicks {

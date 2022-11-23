@@ -33,7 +33,7 @@ class Monstruo {
 	method morir() {
 		enemigo.sumarPuntos(self)
 		game.removeVisual(self)
-		handleMonstruos.remover(self)
+		handlerMonstruos.remover(self)
 	}
 
 	method elementoEnColision() {
