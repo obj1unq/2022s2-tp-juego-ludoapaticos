@@ -3,7 +3,7 @@ import wolly.*
 import proyectiles.*
 import direcciones.*
 import extras.*
-import pausa.*
+import handlers.*
 
 
 object nivel1 {
@@ -25,7 +25,7 @@ class NivelBase { // clase abstracta
 
 	method iniciar() {
 		self.base()
-		self.pausa()
+		self.pausaJuego()
 	}
 
 	method escenario() {
@@ -60,14 +60,14 @@ class NivelBase { // clase abstracta
 
 	method terminarJuego()
 
-	method pausa () {
+	method pausaJuego () {
 		// Comandos de usuario
-		keyboard.p().onPressDo({ handlerOnTick.switch() })
+		keyboard.p().onPressDo({ pausa.switch() })
 	}
 
 	method pausar() {
 		game.clear()
-		self.pausa()
+		self.pausaJuego()
 	}
 
 	method reanudar() {
@@ -84,8 +84,8 @@ class Nivel1 inherits NivelBase {
 		game.height(15)
 		game.width(15)
 		game.ground("lava.png")
-		handlerOnTick.nivel(self)
-		handlerOnTick.iniciar(nacimientoMonstruos, movimientoMonstruos)
+		pausa.nivel(self)
+		handlerOnTicks.iniciar(nacimientoMonstruos, movimientoMonstruos)
 	}
 
 	override method teclas() {

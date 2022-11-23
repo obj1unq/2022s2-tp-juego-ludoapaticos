@@ -3,7 +3,7 @@ import wolly.*
 import direcciones.*
 import proyectiles.*
 import niveles.*
-import pausa.*
+import handlers.*
 
 class Monstruo {
 
@@ -33,7 +33,7 @@ class Monstruo {
 	method morir() {
 		enemigo.sumarPuntos(self)
 		game.removeVisual(self)
-		handlerOnTick.removerMonstruo(self)
+		handleMonstruos.remover(self)
 	}
 
 	method elementoEnColision() {
