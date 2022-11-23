@@ -18,6 +18,18 @@ object pausa {
 	}
 }
 
+object handlerVisuales {
+	var property nivel
+	method activar() {
+		nivel.visuales()
+		handlerMonstruos.activarVisuales()
+	}
+	method desactivar() {
+		nivel.desactivarVisuales()
+		handlerMonstruos.desactivarVisuales()
+	}
+}
+
 object handlerMonstruos {
 	const property tipos = [esqueleto, zombie, fantasma]
 	var property monstruos = #{} // Son los monstruos actuales en el juego
@@ -45,11 +57,11 @@ object handlerMonstruos {
 	method activarVisualDe(_monstruo) {
 		game.addVisual(self.get(_monstruo))
 	}
-	method get(_monstruo) {
-		return monstruos.find({monstruo => monstruo == _monstruo})
-	}
 	method darPasos() {
 		monstruos.forEach({ monstruo => monstruo.darPaso()})
+	}
+	method get(_monstruo) {
+		return monstruos.find({monstruo => monstruo == _monstruo})
 	}
 }
 
@@ -60,20 +72,12 @@ object handlerOnTicks {
 
 	method nuevo(onTick, valor) {
 		const newOnTick = onTick.nuevo(valor)
-		self.agregar(newOnTick)
+		onTicks.add(newOnTick)
 		newOnTick.aplicar()
 	}
 
 	method aplicarOnTicks() {
 		onTicks.forEach({onTick => onTick.aplicar()})
-	}
-
-	method agregar(_onTick) {
-		onTicks.add(_onTick)
-	}
-
-	method remover(_onTick) {
-		onTicks.remove(_onTick)
 	}
 
 	method iniciar(valorAparicionMonstruos, valorAvanceMonstruos) {
@@ -85,12 +89,11 @@ object handlerOnTicks {
 
 	method reanudar() {
 		self.aplicarOnTicks()
-		self.aplicarVisuales()
 	}
 
-	method aplicarVisuales() {
-		handlerMonstruos.activarVisuales()
-//		game.allVisuals().forEach({objeto => game.addVisual(objeto)})
-	}
+//	method aplicarVisuales() {
+//		handlerMonstruos.activarVisuales()
+////		game.allVisuals().forEach({objeto => game.addVisual(objeto)})
+//	}
 
 }

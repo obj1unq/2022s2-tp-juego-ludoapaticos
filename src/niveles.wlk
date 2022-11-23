@@ -60,10 +60,17 @@ class NivelBase { // clase abstracta
 	method pausar() {
 		game.clear()
 		self.pausaJuego()
+		handlerVisuales.activar()
 	}
 
 	method reanudar() {
-		self.base()
+		self.escenario()
+		self.configuracion()
+	}
+
+	method desactivarVisuales() {
+		game.removeVisual(wolly)
+		game.removeVisual(visorPuntaje)
 	}
 
 	method nacimientoMonstruos()
@@ -81,6 +88,7 @@ class Nivel1 inherits NivelBase {
 		game.width(15)
 		game.ground("lava.png")
 		pausa.nivel(self)
+		handlerVisuales.nivel(self)
 		handlerOnTicks.iniciar(nacimientoMonstruos, movimientoMonstruos)
 	}
 

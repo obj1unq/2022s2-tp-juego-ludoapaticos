@@ -5,10 +5,11 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import niveles.*
+import consola.*
 
 program juego {
-//	consola.iniciar()
-	nivel1.nuevo().iniciar()
+	consola.iniciar()
+//	nivel1.nuevo().iniciar()
 		// VISUAL
 		// TECLADO
 		// STOP
