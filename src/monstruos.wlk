@@ -48,6 +48,7 @@ class Monstruo {
 
 	method darPaso()
 
+	method acercarseAWolly() {}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {

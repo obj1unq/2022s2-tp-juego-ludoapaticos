@@ -18,28 +18,20 @@ object pausa {
 	}
 }
 
-
-object handleMonstruos {
+object handlerMonstruos {
 	const property tipos = [esqueleto, zombie, fantasma]
 	var property monstruos = #{} // Son los monstruos actuales en el juego
 
 	method nuevo() { // Crea un monstruo random nuevo en el juego
 		const monstruo = tipos.anyOne().nuevo()
-		self.agregar(monstruo)
+		monstruos.add(monstruo)
 		self.activarVisualDe(monstruo)
 		return monstruo
 	}
 	method nuevo(monstruo) { // Crea un nuevo monstruo dado en el juego
-		self.validarCreacion(monstruo)
-		self.agregar(monstruo)
+		monstruos.add(monstruo)
 		self.activarVisualDe(monstruo)
 		return monstruo
-	}
-	method agregar(monstruo) {
-		monstruos.add(monstruo)
-	}
-	method remover(_monstruo) {
-		monstruos.remove(_monstruo)
 	}
 	method activarVisuales() {
 		monstruos.forEach({monstruo => game.addVisual(monstruo)})
@@ -56,13 +48,8 @@ object handleMonstruos {
 	method get(_monstruo) {
 		return monstruos.find({monstruo => monstruo == _monstruo})
 	}
-	method esTipoMonstruo(_monstruo) {
-		return tipos.any({tipo => tipo == _monstruo})
-	}
-	method validarCreacion(_monstruo) {
-		if (not self.esTipoMonstruo(_monstruo)) {
-			self.error("Error: "+_monstruo+" no es un tipo de monstruo válido. Opciones válidas: "+tipos)
-		}
+	method darPasos() {
+		monstruos.forEach({ monstruo => monstruo.darPaso()})
 	}
 }
 
@@ -72,7 +59,6 @@ object handlerOnTicks {
 	var property enPausa = false
 
 	method nuevo(onTick, valor) {
-		self.validarOnTick(onTick)
 		const newOnTick = onTick.nuevo(valor)
 		self.agregar(newOnTick)
 		newOnTick.aplicar()
@@ -102,22 +88,9 @@ object handlerOnTicks {
 		self.aplicarVisuales()
 	}
 
-	method agregarOnTickSiNoEsta(_onTick) {
-		if (not self.esTipoOnTick(_onTick)) {
-			onTicks.add(_onTick)
-		}
-	}
-
 	method aplicarVisuales() {
-		game.allVisuals().forEach({objeto => game.addVisual(objeto)})
-	}
-	method validarOnTick(onTick) {
-		if (not self.esTipoOnTick(onTick)) {
-			self.error("Error: "+onTick+" no es un tipo de OnTick válido. Opciones válidas: "+tipos)
-		}
-	}
-	method esTipoOnTick(_onTick) {
-		return tipos.any({onTick => onTick == _onTick})
+		handlerMonstruos.activarVisuales()
+//		game.allVisuals().forEach({objeto => game.addVisual(objeto)})
 	}
 
 }

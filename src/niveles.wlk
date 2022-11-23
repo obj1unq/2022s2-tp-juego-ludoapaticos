@@ -6,26 +6,18 @@ import extras.*
 import handlers.*
 
 
-object nivel1 {
-
-	method nuevo() {
-		return new Nivel1()
-	}
-
-}
-
 class NivelBase { // clase abstracta
 
+
+	method iniciar() {
+		self.base()
+		self.pausaJuego()
+	}
 
 	method base() {
 		self.escenario()
 		self.visuales()
 		self.configuracion()
-	}
-
-	method iniciar() {
-		self.base()
-		self.pausaJuego()
 	}
 
 	method escenario() {
@@ -73,6 +65,10 @@ class NivelBase { // clase abstracta
 	method reanudar() {
 		self.base()
 	}
+
+	method nacimientoMonstruos()
+
+	method movimientoMonstruos()
 }
 
 class Nivel1 inherits NivelBase {
@@ -97,4 +93,56 @@ class Nivel1 inherits NivelBase {
 		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
 	}
 
+	override method nacimientoMonstruos() {
+		return nacimientoMonstruos
+	}
+
+	override method movimientoMonstruos() {
+		return movimientoMonstruos
+	}	
+}
+
+class Nivel2 inherits Nivel1 {
+
+	override method nacimientoMonstruos() {
+		return super()/2
+	}
+
+	override method movimientoMonstruos() {
+		return super()/2
+	}	
+}
+
+class Nivel3 inherits Nivel2 {
+
+	override method nacimientoMonstruos() {
+		return super()/2
+	}
+
+	override method movimientoMonstruos() {
+		return super()/2
+	}	
+}
+
+// factories
+object nivel1 {
+
+	method nuevo() {
+		return new Nivel1()
+	}
+
+}
+
+object nivel2 {
+
+	method nuevo() {
+		return new Nivel2()
+	}
+}
+
+object nivel3 {
+
+	method nuevo() {
+		return new Nivel3()
+	}
 }
