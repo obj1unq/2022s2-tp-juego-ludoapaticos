@@ -13,8 +13,8 @@ program juego {
 		// COMPORTAMIENTO MONSTRUOS
 	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
 	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
-	game.onTick(30000.randomUpTo(60000), "aparece pocion", {=> game.addVisual([ pocionSalud,pocionVeneno ].anyOne().nuevo()) })
-	game.onTick(50000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })
+	game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud,pocionVeneno ].anyOne().nuevo()) })
+	game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })
 		// TECLADO
 		// STOP
 		// PLAY

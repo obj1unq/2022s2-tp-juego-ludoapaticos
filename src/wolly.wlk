@@ -3,25 +3,27 @@ import direcciones.*
 import monstruos.*
 import proyectiles.*
 import extras.*
+import pociones.*
 
 object wolly {
 
 	var property position = game.center()
-	var property image = "wolly.png"
+	var property image = "wolly.png" 
 	var property puntos = 0
+	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 	var vida = 5
 
 	method vida() = vida
-
+	
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
 		proyectilActual = calabaza.nuevo()
 		game.addVisual(proyectilActual)
 		proyectilActual.serDisparadoPor(self)
 	}
 
-	method hayMonstruo() {
-		game.onCollideDo(self, { monstruo => monstruo.daniarA()})
+	method cuandoColisiona() {
+		game.onCollideDo(self, { objeto => objeto.daniarA()})
 	}
 
 	method distanciaDeDisparoDe(_peso) {
@@ -49,29 +51,22 @@ object wolly {
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
 	}
-
+	
+	
 	method recibirDanio(danio) {
 		if (vida <= danio) {
+			vida = 0
 			self.morir()
-			visorVida.longitud(0)
 		} else {
 			vida -= danio
-			visorVida.perderVidas(danio)
 		}
 	}
 	
 	method recuperarVida(cantidad){
-		if(vida + cantidad<=5){
+		if((vida + cantidad) <=5){
 			vida += cantidad
 		} else {vida = 5}
-		visorVida.longitud(vida)
 	}
-	
-//	method perderVida(cantidad){
-//		if (vida - cantidad >0){
-//			vida -= cantidad
-//		} else {self.morir()}
-//	}
 
 	// por polimorfismo
 	method darPaso() {
@@ -89,6 +84,4 @@ object wolly {
 	method desaparecer(){
 		
 	}
-
 }
-
