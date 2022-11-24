@@ -32,7 +32,6 @@ class Monstruo {
 
 	method morir() {
 		enemigo.sumarPuntos(self)
-		game.removeVisual(self)
 		handlerMonstruos.remover(self)
 	}
 
@@ -47,8 +46,6 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
-
-	method acercarseAWolly() {}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {

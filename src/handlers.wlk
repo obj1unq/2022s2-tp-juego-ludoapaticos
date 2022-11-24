@@ -51,7 +51,7 @@ object handlerMonstruos {
 	method desactivarVisuales() {
 		monstruos.forEach({monstruo => game.removeVisual(monstruo)})
 	}
-	method desactivarVisualDe(_monstruo) {
+	method removerVisual(_monstruo) {
 		game.removeVisual(self.get(_monstruo))
 	}
 	method activarVisualDe(_monstruo) {
@@ -64,7 +64,8 @@ object handlerMonstruos {
 		return monstruos.find({monstruo => monstruo == _monstruo})
 	}
 	method remover(monstruo) {
-		monstruos.remover(monstruo)
+		self.removerVisual(monstruo)
+		monstruos.remove(monstruo)
 	}
 
 }
@@ -80,10 +81,6 @@ object handlerOnTicks {
 		newOnTick.aplicar()
 	}
 
-	method aplicarOnTicks() {
-		onTicks.forEach({onTick => onTick.aplicar()})
-	}
-
 	method iniciar(valorAparicionMonstruos, valorAvanceMonstruos) {
 		if (onTicks.isEmpty()) {
 			self.nuevo(aparicionMonstruos, valorAparicionMonstruos)
@@ -92,12 +89,6 @@ object handlerOnTicks {
 	}
 
 	method reanudar() {
-		self.aplicarOnTicks()
+		onTicks.forEach({onTick => onTick.aplicar()})
 	}
-
-//	method aplicarVisuales() {
-//		handlerMonstruos.activarVisuales()
-////		game.allVisuals().forEach({objeto => game.addVisual(objeto)})
-//	}
-
 }

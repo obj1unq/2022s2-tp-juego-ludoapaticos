@@ -9,17 +9,18 @@ import niveles.*
 
 
 object consola {
-	var property nivel = nivel1
-	var property index = 0
-	var property niveles = [nivel1, nivel2, nivel3]
-
+	var nivel = nivel1
+	var index = 0
+	const niveles = [nivel1, nivel2, nivel3]
 
 	method siguiente() {
-		nivel = niveles.get(index + 1)
+		index += 1
+		nivel = niveles.get(index)
 	}
 	
 	method anterior() {
-		nivel = niveles.get(index - 1)
+		index -= 1
+		nivel = niveles.get(index)
 	}
 	
 	method iniciar() {
