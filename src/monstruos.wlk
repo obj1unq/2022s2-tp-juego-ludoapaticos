@@ -48,6 +48,10 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
+	
+	method desaparecer(){
+		
+	}
 
 }
 

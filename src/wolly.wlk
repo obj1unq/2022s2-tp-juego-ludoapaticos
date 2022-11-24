@@ -9,31 +9,15 @@ object wolly {
 	var property position = game.center()
 	var property image = "wolly.png"
 	var property puntos = 0
-	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 	var vida = 5
 
 	method vida() = vida
 
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
-		self.agregar(tipoDeProyectil)
-		self.cargarProyectil()
+		proyectilActual = calabaza.nuevo()
+		game.addVisual(proyectilActual)
 		proyectilActual.serDisparadoPor(self)
-	}
-
-	method sacar(tipoDeProyectil) {
-		self.agregar(tipoDeProyectil)
-	}
-
-	method cargarProyectil() {
-		proyectilActual = game.uniqueCollider(self)
-	}
-
-	method agregar(unaCosa) {
-		self.validarAgregar()
-		const cosa = unaCosa.nuevo()
-		cosa.position(position)
-		game.addVisual(cosa)
 	}
 
 	method hayMonstruo() {
@@ -80,13 +64,14 @@ object wolly {
 		if(vida + cantidad<=5){
 			vida += cantidad
 		} else {vida = 5}
+		visorVida.longitud(vida)
 	}
 	
-	method perderVida(cantidad){
-		if (vida - cantidad >0){
-			vida -= cantidad
-		} else {self.morir()}
-	}
+//	method perderVida(cantidad){
+//		if (vida - cantidad >0){
+//			vida -= cantidad
+//		} else {self.morir()}
+//	}
 
 	// por polimorfismo
 	method darPaso() {
@@ -99,6 +84,10 @@ object wolly {
 	
 	method causarEfecto(){
 		// no hace nada
+	}
+	
+	method desaparecer(){
+		
 	}
 
 }

@@ -7,7 +7,7 @@ class Pocion {
 	const potencia = 1.randomUpTo(3)
 	const position = randomizer.position()
 	
-	method image()= "pocionRoja.png"
+	method image()
 	
 	method position()= position
 
@@ -26,9 +26,17 @@ class Pocion {
 	
 	method serImpactadoPor(arma) {
 	}
+	
+	method desaparecer(){
+		game.removeVisual(self)
+	}
 }
 
 class PocionSalud inherits Pocion{
+	override method image(){
+		return "pocionVida.png"
+	}
+	
 	override method causarEfecto(){
 		personaje.recuperarVida(potencia)
 		super()
@@ -36,8 +44,12 @@ class PocionSalud inherits Pocion{
 }
 
 class PocionVeneno inherits Pocion{
+	
+	override method image(){
+		return "pocionVeneno.png"
+	}
 	override method causarEfecto(){
-		personaje.perderVida(potencia)
+		personaje.recibirDanio(potencia)
 		super()
 	}
 }

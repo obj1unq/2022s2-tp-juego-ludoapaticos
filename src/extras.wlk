@@ -24,6 +24,10 @@ class Visor {
 	method serImpactadoPor(algo){
 		
 	}
+	
+	method desaparecer(){
+		
+	}
 }
 object visorPuntaje inherits Visor{
 	
@@ -40,7 +44,7 @@ object visorPuntaje inherits Visor{
 object visorVida inherits Visor{
 	var property longitud = 5
 	
-	override method image()= "vida"+ wolly.vida() +".png"
+	override method image()= "vida"+ longitud +".png"
 	
 	override method position()=game.at(game.width()-4, game.height()-1)
 	
