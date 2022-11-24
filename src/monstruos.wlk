@@ -11,9 +11,12 @@ class Monstruo {
 	var property image
 	const enemigo = wolly
 
-	method matarA() {
-		enemigo.morir()
+	method daniarA() {
+		enemigo.recibirDanio(self.poderDeDanio())
+		self.morir()
 	}
+
+	method poderDeDanio() = 1
 
 	method serImpactadoPor(arma) {
 		vida -= arma.fuerza()
@@ -45,6 +48,10 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
+	
+	method desaparecer(){
+		
+	}
 
 }
 
@@ -69,6 +76,8 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 
 	override method puntosQueOtorga() = 300
 
+	override method poderDeDanio() = super() + 2
+
 }
 
 class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "fantasmita.png") {
@@ -80,6 +89,8 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 	}
 
 	override method puntosQueOtorga() = 200
+
+	override method poderDeDanio() = super() + 1
 
 }
 
