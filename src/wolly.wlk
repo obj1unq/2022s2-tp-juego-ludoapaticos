@@ -84,4 +84,8 @@ object wolly {
 	method desaparecer(){
 		
 	}
+	
+	method serImpactadoPor(arma){
+		
+	}
 }
