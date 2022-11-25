@@ -4,7 +4,6 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 
-
 object nivel1 {
 
 	method nuevo() {
@@ -15,19 +14,16 @@ object nivel1 {
 
 class NivelBase { // clase abstracta
 
-
 	method iniciar() {
 		self.escenario()
 		self.visuales()
 		self.configuracion()
 	}
 
-
 	method configuracion() {
 		self.teclas()
 		self.terminarJuego()
 	}
-
 
 	method escenario() {
 		game.title("Endless Wollokween")
@@ -37,23 +33,21 @@ class NivelBase { // clase abstracta
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
 		game.addVisual(visorVida)
-
 	}
-
 
 	method teclas() {
 		// Comandos de movimientos de Wolly
-		keyboard.left().onPressDo({ wolly.moverse(oeste) })
-		keyboard.right().onPressDo({ wolly.moverse(este) })
-		keyboard.up().onPressDo({ wolly.moverse(norte) })
-		keyboard.down().onPressDo({ wolly.moverse(sur) })
-		// Comandos de disparo de Wolly
+		keyboard.left().onPressDo({ wolly.moverse(oeste)})
+		keyboard.right().onPressDo({ wolly.moverse(este)})
+		keyboard.up().onPressDo({ wolly.moverse(norte)})
+		keyboard.down().onPressDo({ wolly.moverse(sur)})
+			// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
-		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte) })
-		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste) })
-		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur) })
-		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este) })		
-		// Comandos de acción de Wolly
+		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte)})
+		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste)})
+		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur)})
+		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este)})
+			// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
 
@@ -63,7 +57,6 @@ class NivelBase { // clase abstracta
 
 class Nivel1 inherits NivelBase {
 
-
 	override method escenario() {
 		super()
 		game.height(15)
@@ -71,11 +64,9 @@ class Nivel1 inherits NivelBase {
 		game.boardGround("lava.png")
 	}
 
-
 	override method teclas() {
 		super()
 		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
-
 	}
 
 	override method terminarJuego() {
@@ -83,3 +74,4 @@ class Nivel1 inherits NivelBase {
 	}
 
 }
+
