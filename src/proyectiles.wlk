@@ -48,7 +48,7 @@ class Calabaza {
 	// no hace nada
 	}
 
-	method matarA() {
+	method daniarA() {
 	}
 
 	method serImpactadoPor(arma) {

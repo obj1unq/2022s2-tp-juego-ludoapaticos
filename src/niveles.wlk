@@ -7,8 +7,6 @@ import handlers.*
 
 
 class NivelBase { // clase abstracta
-
-
 	method iniciar() {
 		self.base()
 		self.pausaJuego()
@@ -20,6 +18,11 @@ class NivelBase { // clase abstracta
 		self.configuracion()
 	}
 
+	method configuracion() {
+		self.teclas()
+		self.terminarJuego()
+	}
+
 	method escenario() {
 		game.title("Endless Wollokween")
 	}
@@ -27,6 +30,7 @@ class NivelBase { // clase abstracta
 	method visuales() {
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
+		game.addVisual(visorVida)
 	}
 
 	method configuracion() {
@@ -36,16 +40,16 @@ class NivelBase { // clase abstracta
 
 	method teclas() {
 		// Comandos de movimientos de Wolly
-		keyboard.left().onPressDo({ wolly.moverse(oeste) })
-		keyboard.right().onPressDo({ wolly.moverse(este) })
-		keyboard.up().onPressDo({ wolly.moverse(norte) })
-		keyboard.down().onPressDo({ wolly.moverse(sur) })
+		keyboard.left().onPressDo({ wolly.moverse(oeste)})
+		keyboard.right().onPressDo({ wolly.moverse(este)})
+		keyboard.up().onPressDo({ wolly.moverse(norte)})
+		keyboard.down().onPressDo({ wolly.moverse(sur)})
 		// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
-		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte) })
-		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste) })
-		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur) })
-		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este) })		
+		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte)})
+		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste)})
+		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur)})
+		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este)})
 		// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
@@ -53,7 +57,6 @@ class NivelBase { // clase abstracta
 	method terminarJuego()
 
 	method pausaJuego () {
-		// Comandos de usuario
 		keyboard.p().onPressDo({ pausa.switch() })
 	}
 
@@ -86,7 +89,7 @@ class Nivel1 inherits NivelBase {
 		super()
 		game.height(15)
 		game.width(15)
-		game.ground("lava.png")
+		game.boardGround("lava.png")
 		pausa.nivel(self)
 		handlerVisuales.nivel(self)
 		handlerOnTicks.iniciar(nacimientoMonstruos, movimientoMonstruos)
@@ -98,7 +101,7 @@ class Nivel1 inherits NivelBase {
 	}
 
 	override method terminarJuego() {
-		game.onCollideDo(wolly, { monstruo => monstruo.matarA()})
+		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
 	override method nacimientoMonstruos() {
@@ -111,7 +114,6 @@ class Nivel1 inherits NivelBase {
 }
 
 class Nivel2 inherits Nivel1 {
-
 	override method nacimientoMonstruos() {
 		return super()/2
 	}
@@ -122,7 +124,6 @@ class Nivel2 inherits Nivel1 {
 }
 
 class Nivel3 inherits Nivel2 {
-
 	override method nacimientoMonstruos() {
 		return super()/2
 	}
@@ -134,22 +135,18 @@ class Nivel3 inherits Nivel2 {
 
 // factories
 object nivel1 {
-
 	method nuevo() {
 		return new Nivel1()
 	}
-
 }
 
 object nivel2 {
-
 	method nuevo() {
 		return new Nivel2()
 	}
 }
 
 object nivel3 {
-
 	method nuevo() {
 		return new Nivel3()
 	}

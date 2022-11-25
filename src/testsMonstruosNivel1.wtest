@@ -5,50 +5,137 @@ import direcciones.*
 import proyectiles.*
 import niveles.*
 import extras.*
+import pociones.*
 
-describe "comportamiento de monstruos"{
-	method initialize(){
+describe "comportamiento de monstruos" {
+
+	method initialize() {
 		game.clear()
-		
 	}
+
 	test "creacion de Monstruos" {
-	
 		assert.that(game.allVisuals().isEmpty())
 		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
 		assert.notThat(game.allVisuals().isEmpty())
 	}
-	test "esqueleto muere por 3 impactos de calabaza"{
+
+	test "esqueleto muere por 3 impactos de calabaza" {
 		game.addVisual(esqueleto.nuevo())
 		assert.notThat(game.allVisuals().isEmpty())
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
 		assert.that(game.allVisuals().isEmpty())
 	}
-	
-		test "fantasma muere por 2 impactos de calabaza"{
+
+	test "fantasma muere por 2 impactos de calabaza" {
 		game.addVisual(fantasma.nuevo())
 		assert.notThat(game.allVisuals().isEmpty())
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
 		assert.that(game.allVisuals().isEmpty())
 	}
-	
-	test "zombie muere por impacto de calabaza"{
+
+	test "zombie muere por impacto de calabaza" {
 		game.addVisual(zombie.nuevo())
 		game.addVisual(zombie.nuevo())
-		game.allVisuals().forEach({monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
-		assert.that(game.allVisuals().isEmpty())	
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.that(game.allVisuals().isEmpty())
 	}
-	
-	test "monstruo muere y suma puntos a su enemigo"{
-		
+
+	test "monstruo muere y suma puntos a su enemigo" {
 		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
 		assert.notThat(game.allVisuals().isEmpty())
 		game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo())
-		game.allVisuals().forEach({monstruo => monstruo.morir()})
+		game.allVisuals().forEach({ monstruo => monstruo.morir()})
 		assert.that(game.allVisuals().isEmpty())
 		assert.that(wolly.puntos() != 0)
 	}
+
 }
-	
+
+describe "visores de puntaje y vida" {
+
+	method initialize() {
+		game.clear()
+	}
+
+	test "visor de puntaje refleja el puntaje correcto, luego de matar un zombie,un fantasma y un esqueleto" {
+		assert.equals("0", visorPuntaje.text())
+		game.addVisual(zombie.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.equals("100", visorPuntaje.text())
+		game.addVisual(fantasma.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.equals("300", visorPuntaje.text())
+		game.addVisual(esqueleto.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		game.allVisuals().forEach({ monstruo => monstruo.serImpactadoPor(calabaza.nuevo())})
+		assert.equals("600", visorPuntaje.text())
+	}
+
+	test "visor de vida refleja las cantidad de vidas correcta despues de ser atacado porun zombie, un fantasma y un esqueleto" {
+		assert.equals(5, visorVida.longitud())
+		game.addVisual(wolly)
+		game.addVisual(esqueleto.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		assert.equals("vida2.png", visorVida.image())
+		assert.equals(2, visorVida.longitud())
+		game.addVisual(zombie.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		assert.equals(1, visorVida.longitud())
+		game.addVisual(pocionSalud.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
+		game.addVisual(pocionSalud.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
+		game.addVisual(fantasma.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		assert.notThat(wolly.vida() == 0)
+		assert.notThat(wolly.vida() == 5)
+	}
+
+}
+
+describe "pociones de salud y veneno" {
+
+	method initialize() {
+		game.clear()
+	}
+
+	test "pocion se salud suma vida, mientras wolly no supere 5" {
+		game.addVisual(wolly)
+		assert.equals(5, wolly.vida())
+		game.addVisual(pocionSalud.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
+		assert.equals(5, wolly.vida())
+		game.addVisual(esqueleto.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		assert.equals(2, wolly.vida())
+		game.addVisual(pocionSalud.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
+		assert.notEquals(2, wolly.vida())
+	}
+
+	test "pocion de veneno quita vida a wolly" {
+		game.addVisual(wolly)
+		assert.equals(5, wolly.vida())
+		game.addVisual(pocionVeneno.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
+		assert.notEquals(5, wolly.vida())
+	}
+
+	test "la pocion de veneno mata a wolly cuando tiene 1 de vida" {
+		game.addVisual(wolly)
+		assert.equals(5, wolly.vida())
+		game.addVisual(esqueleto.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		game.addVisual(zombie.nuevo())
+		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
+		game.addVisual(pocionVeneno.nuevo())
+		assert.throwsException({ game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})})
+	}
+
+}
+
