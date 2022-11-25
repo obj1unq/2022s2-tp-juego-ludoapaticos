@@ -45,7 +45,7 @@ class NivelBase { // clase abstracta
 		keyboard.up().onPressDo({ wolly.moverse(norte)})
 		keyboard.down().onPressDo({ wolly.moverse(sur)})
 		// Comandos de disparo de Wolly
-		keyboard.space().onPressDo({ wolly.disparar(calabaza)})
+		keyboard.space().onPressDo({ wolly.disparar()})
 		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte)})
 		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste)})
 		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur)})

@@ -71,6 +71,7 @@ object handlerMonstruos {
 }
 
 object handlerOnTicks {
+	// no se usa factories
 	var property tipos = #{aparicionMonstruos, avanceMonstruos}
 	var property onTicks = #{}
 	var property enPausa = false
@@ -81,6 +82,7 @@ object handlerOnTicks {
 		newOnTick.aplicar()
 	}
 
+	// Delegar en nivel el activar
 	method iniciar(valorAparicionMonstruos, valorAvanceMonstruos) {
 		if (onTicks.isEmpty()) {
 			self.nuevo(aparicionMonstruos, valorAparicionMonstruos)

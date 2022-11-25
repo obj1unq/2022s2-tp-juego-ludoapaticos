@@ -16,7 +16,7 @@ object wolly {
 
 	method vida() = vida
 
-	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
+	method disparar() { 
 		proyectilActual = calabaza.nuevo()
 		game.addVisual(proyectilActual)
 		proyectilActual.serDisparadoPor(self)
