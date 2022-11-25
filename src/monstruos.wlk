@@ -7,14 +7,13 @@ import pociones.*
 
 class Monstruo {
 
-	var  vida
+	var vida
 	var property position
 	var property image
 	const enemigo = wolly
 
-	
-	method vida()=vida
-	
+	method vida() = vida
+
 	method daniarA() {
 		enemigo.recibirDanio(self.poderDeDanio())
 		self.morir()
@@ -24,13 +23,6 @@ class Monstruo {
 
 	method serImpactadoPor(arma) {
 		vida -= arma.fuerza()
-		if (vida <= 0) {
-			self.morir()
-		}
-	}
-
-	method serDaniado() {
-		vida -= self.elementoEnColision().fuerza() // ver como se le llama en los poderes. hacer polimorfismo en personaje y otros monstruos
 		if (vida <= 0) {
 			self.morir()
 		}
@@ -52,9 +44,8 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
-	
-	method desaparecer(){
-		
+
+	method desaparecer() {
 	}
 
 }
@@ -78,9 +69,22 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 		}
 	}
 
+	override method serImpactadoPor(arma) {
+		self.efectoGolpe()
+		super(arma)
+	}
+
 	override method puntosQueOtorga() = 300
 
 	override method poderDeDanio() = super() + 2
+
+	method efectoGolpe() {
+		game.onTick(100, "esqueleto segunda imagen", { image = "esqueletoParca2.png"})
+		game.onTick(200, "esqueleto primera imagen", { image = "esqueletoParca.png"})
+		game.schedule(500, { game.removeTickEvent("esqueleto segunda imagen")})
+		game.schedule(500, { game.removeTickEvent("esqueleto primera imagen")})
+		game.schedule(550, { image = "esqueletoParca.png"})
+	}
 
 }
 
@@ -92,9 +96,22 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 		position = direcciones.anyOne().avanzar(position, 1)
 	}
 
+	override method serImpactadoPor(arma) {
+		self.efectoGolpe()
+		super(arma)
+	}
+
 	override method puntosQueOtorga() = 200
 
 	override method poderDeDanio() = super() + 1
+
+	method efectoGolpe() {
+		game.onTick(100, "fantasmita segunda imagen", { image = "fantasmita2.png"})
+		game.onTick(200, "fantasmita primera imagen", { image = "fantasmita.png"})
+		game.schedule(500, { game.removeTickEvent("fantasmita segunda imagen")})
+		game.schedule(500, { game.removeTickEvent("fantasmita primera imagen")})
+		game.schedule(550, { image = "fantasmita.png"})
+	}
 
 }
 

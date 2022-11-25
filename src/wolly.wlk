@@ -8,14 +8,14 @@ import pociones.*
 object wolly {
 
 	var property position = game.center()
-	var property image = "wolly.png" 
+	var property image = "wolly.png"
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 	var vida = 5
 
 	method vida() = vida
-	
+
 	method disparar(tipoDeProyectil) { // un proyectil puede ser la calabaza
 		proyectilActual = calabaza.nuevo()
 		game.addVisual(proyectilActual)
@@ -51,41 +51,47 @@ object wolly {
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
 	}
-	
-	
+
 	method recibirDanio(danio) {
 		if (vida <= danio) {
 			vida = 0
 			self.morir()
 		} else {
 			vida -= danio
+			game.onTick(200, "wolly segunda imagen", { image = "wolly2.png"})
+			game.onTick(400, "wolly primera imagen", { image = "wolly.png"})
+			game.schedule(1000, { game.removeTickEvent("wolly segunda imagen")})
+			game.schedule(1000, { game.removeTickEvent("wolly primera imagen")})
+			game.schedule(1100, { image = "wolly.png"})
 		}
 	}
-	
-	method recuperarVida(cantidad){
-		if((vida + cantidad) <=5){
+
+	method recuperarVida(cantidad) {
+		if ((vida + cantidad) <= 5) {
 			vida += cantidad
-		} else {vida = 5}
+		} else {
+			vida = 5
+		}
 	}
 
 	// por polimorfismo
 	method darPaso() {
 	// no hace nada
 	}
-	
-	method daniarA(){
-		// no hace nada
+
+	method daniarA() {
+	// no hace nada
 	}
-	
-	method causarEfecto(){
-		// no hace nada
+
+	method causarEfecto() {
+	// no hace nada
 	}
-	
-	method desaparecer(){
-		
+
+	method desaparecer() {
 	}
-	
-	method serImpactadoPor(arma){
-		
+
+	method serImpactadoPor(arma) {
 	}
+
 }
+
