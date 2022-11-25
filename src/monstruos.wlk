@@ -3,14 +3,18 @@ import wolly.*
 import direcciones.*
 import proyectiles.*
 import niveles.*
+import pociones.*
 
 class Monstruo {
 
-	var property vida
+	var  vida
 	var property position
 	var property image
 	const enemigo = wolly
 
+	
+	method vida()=vida
+	
 	method daniarA() {
 		enemigo.recibirDanio(self.poderDeDanio())
 		self.morir()
