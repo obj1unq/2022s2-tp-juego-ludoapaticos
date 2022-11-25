@@ -5,16 +5,13 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import niveles.*
+import consola.*
 import pociones.*
 
+
 program juego {
-	nivel1.nuevo().iniciar()
+	consola.iniciar()
 		// VISUAL
-		// COMPORTAMIENTO MONSTRUOS
-	game.onTick(2000.randomUpTo(6000), "nace Monstruo", {=> game.addVisual([ esqueleto, zombie, fantasma ].anyOne().nuevo()) })
-	game.onTick(1000, "monstruos avanzan", {=> game.allVisuals().forEach({ elemento => elemento.darPaso()}) })
-	game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
-	game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })
 		// TECLADO
 		// STOP
 		// PLAY

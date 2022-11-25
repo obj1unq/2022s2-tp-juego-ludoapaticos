@@ -3,10 +3,10 @@ import wolly.*
 import direcciones.*
 import proyectiles.*
 import niveles.*
+import handlers.*
 import pociones.*
 
 class Monstruo {
-
 	var vida
 	var property position
 	var property image
@@ -30,7 +30,7 @@ class Monstruo {
 
 	method morir() {
 		enemigo.sumarPuntos(self)
-		game.removeVisual(self)
+		handlerMonstruos.remover(self)
 	}
 
 	method elementoEnColision() {
@@ -45,9 +45,7 @@ class Monstruo {
 
 	method darPaso()
 
-	method desaparecer() {
-	}
-
+	method desaparecer() {}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
@@ -85,7 +83,6 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 		game.schedule(500, { game.removeTickEvent("esqueleto primera imagen")})
 		game.schedule(550, { image = "esqueletoParca.png"})
 	}
-
 }
 
 class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "fantasmita.png") {
@@ -112,7 +109,6 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 		game.schedule(500, { game.removeTickEvent("fantasmita primera imagen")})
 		game.schedule(550, { image = "fantasmita.png"})
 	}
-
 }
 
 class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie.png") {
@@ -127,31 +123,24 @@ class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image 
 
 // factories
 object esqueleto {
-
 	method nuevo() {
 		return new Esqueleto()
 	}
-
 }
 
 object fantasma {
-
 	method nuevo() {
 		return new Fantasma()
 	}
-
 }
 
 object zombie {
-
 	method nuevo() {
 		return new Zombie()
 	}
-
 }
 
 object limite {
-
 	method superior() {
 		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
 	}
@@ -167,6 +156,5 @@ object limite {
 	method lateralDer() {
 		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
 	}
-
 }
 
