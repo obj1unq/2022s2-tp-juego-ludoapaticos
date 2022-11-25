@@ -11,7 +11,7 @@ class Pocion {
 	
 	method image()
 	
-	method fuerza()= 1.randomUpTo(3)
+	method fuerza()= [1,2,3].anyOne()
 	
 	method position()= position
 
