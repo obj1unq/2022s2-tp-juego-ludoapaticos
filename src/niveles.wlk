@@ -5,6 +5,7 @@ import direcciones.*
 import extras.*
 import onticks.*
 import handlers.*
+import consola.*
 
 
 class NivelBase { // clase abstracta
@@ -27,11 +28,12 @@ class NivelBase { // clase abstracta
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
 		game.addVisual(visorVida)
+		game.addVisual(visorNivel)
 	}
 
 	method configuracion() {
 		self.teclas()
-		self.terminarJuego()
+		self.colisionesWolly()
 	}
 
 	method teclas() {
@@ -50,7 +52,8 @@ class NivelBase { // clase abstracta
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
 
-	method terminarJuego()
+	method colisionesWolly(){
+	}
 
 	method teclaPausa () {
 		keyboard.p().onPressDo({ pausa.switch() })
@@ -71,7 +74,11 @@ class NivelBase { // clase abstracta
 		game.removeVisual(wolly)
 		game.removeVisual(visorPuntaje)
 	}
-
+	
+	method pasarNivel(){
+		consola.siguiente()
+	}
+	
 	method activarOnTicks()
 }
 
@@ -79,7 +86,7 @@ class Nivel1 inherits NivelBase {
 	const property nacimientoMonstruos  = 2000
 	const property movimientoMonstruos  = 1000
 	const property nacimientoPociones   = 3000
-	const property remocionPociones     = 6000
+	const property remocionPociones     = 5000
 
 	override method escenario() {
 		super()
@@ -97,7 +104,7 @@ class Nivel1 inherits NivelBase {
 		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
 	}
 
-	override method terminarJuego() {
+	override method colisionesWolly() {
 		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
@@ -107,6 +114,7 @@ class Nivel1 inherits NivelBase {
 		handlerOnTicks.nuevo(aparicionPociones, nacimientoPociones)
 		handlerOnTicks.nuevo(desaparicionPociones, remocionPociones)
 	}	
+	
 }
 
 class Nivel2 inherits Nivel1 {
@@ -127,6 +135,10 @@ class Nivel3 inherits Nivel2 {
 	override method movimientoMonstruos() {
 		return super()/2
 	}	
+	
+	override method pasarNivel(){
+		//no hace ada, es el último nivel del juego.
+	}
 }
 
 // factories

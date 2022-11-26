@@ -2,6 +2,7 @@ import monstruos.*
 import wollok.game.*
 import wolly.*
 import pociones.*
+import consola.*
 
 class Visor {
 
@@ -50,6 +51,13 @@ object visorVida inherits Visor {
 
 	override method position() = game.at(game.width() - 4, game.height() - 1)
 
+}
+
+object visorNivel inherits Visor {
+	
+	override method image() = "" + consola.nivel() + ".png"
+	
+	override method position() = game.at(7, game.height() - 1)
 }
 
 object randomizer {
