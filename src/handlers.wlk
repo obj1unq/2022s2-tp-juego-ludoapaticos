@@ -19,6 +19,39 @@ object pausa {
 	}
 }
 
+class Handler {
+	const property factories = []
+	var property elementos = #{}
+
+	method nuevo() {// Crea un elemento nuevo en el juego
+		const elemento = factories.anyOne().nuevo()
+		self.agregar(elemento)
+		return elemento
+	}
+	method nuevo(elemento) { // Crea un nuevo 'elemento' dado en el juego
+		self.validarExistencia(elemento)
+		self.agregar(elemento)
+		return elemento
+	}
+	method agregar(elemento) {
+		elementos.add(elemento)
+		self.activarVisualDe(elemento)
+	}
+	method validarExistencia(_elemento) = elementos.any({elemento => elemento == _elemento})
+	method activarVisuales() {elementos.forEach({elemento => game.addVisual(elemento)})}
+	method activarVisualDe(elemento) {game.addVisual(elemento)}
+	method removerVisuales() {elementos.forEach({elemento => game.removeVisual(elemento)})}
+	method removerVisualDe(elemento) {game.removeVisual(elemento)}
+	method remover()
+	method remover(elemento) {
+		self.removerVisualDe(elemento)
+		elementos.remove(elemento)
+	}
+	method hayElementosCreados() = not elementos.isEmpty()
+
+	method estaCreado(_elemento) = elementos.any({elemento => elemento == _elemento})
+}
+
 object handlerVisuales {
 	var property nivel
 	method activar() {
@@ -28,54 +61,33 @@ object handlerVisuales {
 	}
 	method desactivar() {
 		nivel.desactivarVisuales()
-		handlerMonstruos.desactivarVisuales()
-		handlerPociones.desactivarVisuales()
+		handlerMonstruos.removerVisuales()
+		handlerPociones.removerVisuales()
 	}
 }
 
-object handlerMonstruos {
-	const property factories = [esqueleto, zombie, fantasma]
-	var property monstruos = #{} // Son los monstruos actuales en el juego
+object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]){
+	var property monstruos = elementos
 
-	method nuevo() { // Crea un monstruo random nuevo en el juego
-		const monstruo = factories.anyOne().nuevo()
-		monstruos.add(monstruo)
-		self.activarVisualDe(monstruo)
-		return monstruo
-	}
-	method nuevo(monstruo) { // Crea un nuevo monstruo dado en el juego
-		monstruos.add(monstruo)
-		self.activarVisualDe(monstruo)
-		return monstruo
-	}
-	method activarVisuales() {
-		monstruos.forEach({monstruo => game.addVisual(monstruo)})
-	}
-	method desactivarVisuales() {
-		monstruos.forEach({monstruo => game.removeVisual(monstruo)})
-	}
-	method removerVisual(_monstruo) {
-		game.removeVisual(self.get(_monstruo))
-	}
-	method activarVisualDe(_monstruo) {
-		game.addVisual(self.get(_monstruo))
-	}
 	method darPasos() {
 		monstruos.forEach({ monstruo => monstruo.darPaso()})
 	}
-	method get(_monstruo) {
-		return monstruos.find({monstruo => monstruo == _monstruo})
-	}
-	method remover(monstruo) {
-		self.removerVisual(monstruo)
-		monstruos.remove(monstruo)
-	}
 
+	// Polimorfismo
+	override method remover() {}
 }
 
-object handlerOnTicks {
+object handlerPociones inherits Handler(factories=[pocionSalud, pocionVeneno, cofre]){
+	var property pociones = elementos
+
+	override method remover() {
+		pociones.forEach({pocion => pocion.desaparecer()})
+	}
+}
+
+object handlerOnTicks inherits Handler {
+	var property onTicks = elementos
 	var property nivel
-	var property onTicks = #{}
 
 	method nuevo(onTick, valor) {
 		if (not self.estaCreado(onTick)) {
@@ -90,7 +102,7 @@ object handlerOnTicks {
 	}
 
 	method activar() {
-		if (not self.hayOnTickCreados()) {
+		if (not self.hayElementosCreados()) {
 			nivel.activarOnTicks()
 		} else { self.reanudar() }
 	}
@@ -99,49 +111,11 @@ object handlerOnTicks {
 		onTicks.forEach({onTick => onTick.aplicar()})
 	}
 
-	method hayOnTickCreados() {
-		return not onTicks.isEmpty()
-	}
-
-	method estaCreado(_onTick) {
-		return onTicks.any({onTick => onTick == _onTick}) 
-	}
+	// Polimorfismo
+	override method nuevo() = null
+	override method nuevo(elem) = null
+	override method agregar(elem) {}
+	override method remover() {}
+	override method remover(elem) {}
 }
 
-
-object handlerPociones {
-	const property factories = [pocionSalud, pocionVeneno, cofre]
-	var property pociones = #{}
-
-	method nuevo() { // Crea una pocion random nuevo en el juego
-		const pocion = factories.anyOne().nuevo()
-		pociones.add(pocion)
-		self.activarVisualDe(pocion)
-		return pocion
-	}
-
-	method remover() {
-		pociones.forEach({pocion => pocion.desaparecer()})
-	}
-
-	method remover(_pocion) {
-		self.removerVisualDe(_pocion)
-		pociones.remove(_pocion)
-	}
-
-	method activarVisualDe(_pocion) {
-		game.addVisual(_pocion)
-	}
-
-	method removerVisualDe(_pocion) {
-		game.removeVisual(_pocion)
-	}
-
-	method activarVisuales() {
-		pociones.forEach({pocion => self.activarVisualDe(pocion)})
-	}
-
-	method desactivarVisuales() {
-		pociones.forEach({pocion => self.removerVisualDe(pocion)})
-	}
-}
