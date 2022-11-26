@@ -5,6 +5,7 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import handlers.*
+import pociones.*
 
 // Reificación (programación) o cosificación; técnica de
 // programación orientada a objetos que consiste en tener
@@ -55,6 +56,6 @@ object desaparecePocion {
 	method nuevo(_valor) {
 		return new OnTick( nombre="desaparece pocion"
 						 , valor=_valor
-						 , bloque={=> handlerPociones.remover()})
+						 , bloque={=> handlerPociones.desaparecer()})
 	}
 }

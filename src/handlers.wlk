@@ -23,10 +23,12 @@ object handlerVisuales {
 	method activar() {
 		nivel.visuales()
 		handlerMonstruos.activarVisuales()
+		handlerPociones.activarVisuales()
 	}
 	method desactivar() {
 		nivel.desactivarVisuales()
 		handlerMonstruos.desactivarVisuales()
+		handlerPociones.desactivarVisuales()
 	}
 }
 
@@ -108,6 +110,22 @@ object handlerPociones {
 
 	method remover() {
 		pociones.forEach({pocion => pocion.remover()})
+	}
+
+	method activarVisualDe(_pocion) {
+		game.addVisual(_pocion)
+	}
+
+	method removerVisualDe(_pocion) {
+		game.removeVisual(_pocion)
+	}
+
+	method activarVisuales() {
+		pociones.forEach({pocion => self.activarVisualDe(pocion)})
+	}
+
+	method desactivarVisuales() {
+		pociones.forEach({pocion => self.removerVisualDe(pocion)})
 	}
 }
 //game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
