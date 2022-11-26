@@ -31,11 +31,11 @@ object handlerVisuales {
 }
 
 object handlerMonstruos {
-	const property tipos = [esqueleto, zombie, fantasma]
+	const property factories = [esqueleto, zombie, fantasma]
 	var property monstruos = #{} // Son los monstruos actuales en el juego
 
 	method nuevo() { // Crea un monstruo random nuevo en el juego
-		const monstruo = tipos.anyOne().nuevo()
+		const monstruo = factories.anyOne().nuevo()
 		monstruos.add(monstruo)
 		self.activarVisualDe(monstruo)
 		return monstruo
@@ -74,7 +74,6 @@ object handlerOnTicks {
 	// no se usa factories
 	var property tipos = #{aparicionMonstruos, avanceMonstruos}
 	var property onTicks = #{}
-	var property enPausa = false
 
 	method nuevo(onTick, valor) {
 		const newOnTick = onTick.nuevo(valor)
@@ -94,3 +93,22 @@ object handlerOnTicks {
 		onTicks.forEach({onTick => onTick.aplicar()})
 	}
 }
+
+
+object handlerPociones {
+	const property factories = [pocionSalud, pocionVeneno, cofre]
+	var property pociones = #{}
+
+	method nuevo() { // Crea una pocion random nuevo en el juego
+		const pocion = factories.anyOne().nuevo()
+		pociones.add(pocion)
+		self.activarVisualDe(pocion)
+		return pocion
+	}
+
+	method remover() {
+		pociones.forEach({pocion => pocion.remover()})
+	}
+}
+//game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
+//game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })

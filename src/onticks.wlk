@@ -6,7 +6,9 @@ import direcciones.*
 import extras.*
 import handlers.*
 
-
+// Reificación (programación) o cosificación; técnica de
+// programación orientada a objetos que consiste en tener
+// un tipo de datos para una abstracción 
 class OnTick {
 	var property nombre
 	var property valor = null
@@ -42,12 +44,17 @@ object aparecePocion {
 	method nuevo(_valor) {
 		return new OnTick( nombre="aparece pocion"
 						 , valor=self.tiempoRandomCon(3000)
-						 , bloque={=> handlerMonstruos.darPasos()})
+						 , bloque={=> handlerPociones.nuevo()})
 	}
 	method tiempoRandomCon(_valor) {
 		return _valor.randomUpTo(_valor*2)
 	}
 }
 
-game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
-	game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })
+object desaparecePocion {
+	method nuevo(_valor) {
+		return new OnTick( nombre="desaparece pocion"
+						 , valor=_valor
+						 , bloque={=> handlerPociones.remover()})
+	}
+}
