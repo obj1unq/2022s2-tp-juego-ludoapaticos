@@ -5,6 +5,7 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import onticks.*
+import pociones.*
 
 
 object pausa {
@@ -21,7 +22,7 @@ object pausa {
 object handlerVisuales {
 	var property nivel
 	method activar() {
-		nivel.visuales()
+		nivel.activarVisuales()
 		handlerMonstruos.activarVisuales()
 		handlerPociones.activarVisuales()
 	}
@@ -73,8 +74,7 @@ object handlerMonstruos {
 }
 
 object handlerOnTicks {
-	// no se usa factories
-	var property tipos = #{aparicionMonstruos, avanceMonstruos}
+	var property nivel
 	var property onTicks = #{}
 
 	method nuevo(onTick, valor) {
@@ -83,16 +83,18 @@ object handlerOnTicks {
 		newOnTick.aplicar()
 	}
 
-	// Delegar en nivel el activar
-	method iniciar(valorAparicionMonstruos, valorAvanceMonstruos) {
-		if (onTicks.isEmpty()) {
-			self.nuevo(aparicionMonstruos, valorAparicionMonstruos)
-			self.nuevo(avanceMonstruos, valorAvanceMonstruos)
+	method activar() {
+		if (not self.hayOnTickCreados()) {
+			nivel.activarOnTicks()
 		} else { self.reanudar() }
 	}
 
 	method reanudar() {
 		onTicks.forEach({onTick => onTick.aplicar()})
+	}
+
+	method hayOnTickCreados() {
+		return not onTicks.isEmpty()
 	}
 }
 
@@ -109,7 +111,12 @@ object handlerPociones {
 	}
 
 	method remover() {
-		pociones.forEach({pocion => pocion.remover()})
+		pociones.forEach({pocion => pocion.desaparecer()})
+	}
+
+	method remover(_pocion) {
+		self.removerVisualDe(_pocion)
+		pociones.remove(_pocion)
 	}
 
 	method activarVisualDe(_pocion) {
@@ -128,5 +135,3 @@ object handlerPociones {
 		pociones.forEach({pocion => self.removerVisualDe(pocion)})
 	}
 }
-//game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
-//game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })

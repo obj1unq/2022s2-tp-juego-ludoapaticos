@@ -24,7 +24,7 @@ class OnTick {
 // factories
 object aparicionMonstruos {
 	method nuevo(_valor) {
-		return new OnTick( nombre="nacimiento Monstruos"
+		return new OnTick( nombre="nacimiento Monstruo"
 						 , valor=self.tiempoRandomCon(_valor)
 						 , bloque={=> handlerMonstruos.nuevo()})
 	}
@@ -35,16 +35,16 @@ object aparicionMonstruos {
 
 object avanceMonstruos {
 	method nuevo(_valor) {
-		return new OnTick( nombre="avance de monstruos"
+		return new OnTick( nombre="avance de monstruo"
 						 , valor=_valor
 						 , bloque={=> handlerMonstruos.darPasos()})
 	}
 }
 
-object aparecePocion {
+object aparicionPociones {
 	method nuevo(_valor) {
 		return new OnTick( nombre="aparece pocion"
-						 , valor=self.tiempoRandomCon(3000)
+						 , valor=self.tiempoRandomCon(_valor)
 						 , bloque={=> handlerPociones.nuevo()})
 	}
 	method tiempoRandomCon(_valor) {
@@ -52,10 +52,10 @@ object aparecePocion {
 	}
 }
 
-object desaparecePocion {
+object desaparicionPociones {
 	method nuevo(_valor) {
 		return new OnTick( nombre="desaparece pocion"
 						 , valor=_valor
-						 , bloque={=> handlerPociones.desaparecer()})
+						 , bloque={=> handlerPociones.remover()})
 	}
 }
