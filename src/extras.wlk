@@ -24,9 +24,6 @@ class Visor {
 	method serImpactadoPor(algo) {
 	}
 
-	method desaparecer() {
-	}
-
 }
 
 object visorPuntaje inherits Visor {

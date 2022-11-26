@@ -94,9 +94,6 @@ object wolly {
 	// no hace nada
 	}
 
-	method desaparecer() {
-	}
-
 	method serImpactadoPor(arma) {
 	}
 
