@@ -78,6 +78,12 @@ object handlerOnTicks {
 	var property onTicks = #{}
 
 	method nuevo(onTick, valor) {
+		if (not self.estaCreado(onTick)) {
+			self.agregar(onTick, valor)
+		}
+	}
+
+	method agregar(onTick, valor) {
 		const newOnTick = onTick.nuevo(valor)
 		onTicks.add(newOnTick)
 		newOnTick.aplicar()
@@ -95,6 +101,10 @@ object handlerOnTicks {
 
 	method hayOnTickCreados() {
 		return not onTicks.isEmpty()
+	}
+
+	method estaCreado(_onTick) {
+		return onTicks.any({onTick => onTick == _onTick}) 
 	}
 }
 
