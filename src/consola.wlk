@@ -24,7 +24,7 @@ object consola {
 	}
 	
 	method iniciar() {
-		nivel.nuevo().iniciar()
+		nivel.nuevo().activar()
 	}
 	
 	

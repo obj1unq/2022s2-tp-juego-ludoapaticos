@@ -5,8 +5,11 @@ import proyectiles.*
 import direcciones.*
 import extras.*
 import handlers.*
+import pociones.*
 
-
+// Reificación (programación) o cosificación; técnica de
+// programación orientada a objetos que consiste en tener
+// un tipo de datos para una abstracción 
 class OnTick {
 	var property nombre
 	var property valor = null
@@ -21,7 +24,7 @@ class OnTick {
 // factories
 object aparicionMonstruos {
 	method nuevo(_valor) {
-		return new OnTick( nombre="nacimiento Monstruos"
+		return new OnTick( nombre="nacimiento Monstruo"
 						 , valor=self.tiempoRandomCon(_valor)
 						 , bloque={=> handlerMonstruos.nuevo()})
 	}
@@ -32,22 +35,27 @@ object aparicionMonstruos {
 
 object avanceMonstruos {
 	method nuevo(_valor) {
-		return new OnTick( nombre="avance de monstruos"
+		return new OnTick( nombre="avance de monstruo"
 						 , valor=_valor
 						 , bloque={=> handlerMonstruos.darPasos()})
 	}
 }
 
-object aparecePocion {
+object aparicionPociones {
 	method nuevo(_valor) {
 		return new OnTick( nombre="aparece pocion"
-						 , valor=self.tiempoRandomCon(3000)
-						 , bloque={=> handlerMonstruos.darPasos()})
+						 , valor=self.tiempoRandomCon(_valor)
+						 , bloque={=> handlerPociones.nuevo()})
 	}
 	method tiempoRandomCon(_valor) {
 		return _valor.randomUpTo(_valor*2)
 	}
 }
 
-game.onTick(3000.randomUpTo(6000), "aparece pocion", {=> game.addVisual([ pocionSalud, pocionVeneno, cofre ].anyOne().nuevo()) })
-	game.onTick(100000, "desaparece pocion", {=> game.allVisuals().forEach({ elemento => elemento.desaparecer()}) })
+object desaparicionPociones {
+	method nuevo(_valor) {
+		return new OnTick( nombre="desaparece pocion"
+						 , valor=_valor
+						 , bloque={=> handlerPociones.remover()})
+	}
+}

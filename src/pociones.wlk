@@ -2,6 +2,7 @@ import wollok.game.*
 import wolly.*
 import extras.*
 import monstruos.*
+import handlers.*
 
 class Pocion {
 
@@ -15,11 +16,11 @@ class Pocion {
 	method position() = position
 
 	method causarEfecto() {
-		game.removeVisual(self)
+		handlerPociones.remover(self)
 	}
 
 	method desaparecer() {
-		game.removeVisual(self)
+		handlerPociones.remover(self)
 	}
 
 	// por polimorfismo

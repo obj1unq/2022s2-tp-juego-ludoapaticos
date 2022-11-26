@@ -3,31 +3,27 @@ import wolly.*
 import proyectiles.*
 import direcciones.*
 import extras.*
+import onticks.*
 import handlers.*
 
 
 class NivelBase { // clase abstracta
-	method iniciar() {
+	method activar() {
 		self.base()
-		self.pausaJuego()
+		self.teclaPausa()
 	}
 
 	method base() {
 		self.escenario()
-		self.visuales()
+		self.activarVisuales()
 		self.configuracion()
-	}
-
-	method configuracion() {
-		self.teclas()
-		self.terminarJuego()
 	}
 
 	method escenario() {
 		game.title("Endless Wollokween")
 	}
 
-	method visuales() {
+	method activarVisuales() {
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
 		game.addVisual(visorVida)
@@ -56,13 +52,13 @@ class NivelBase { // clase abstracta
 
 	method terminarJuego()
 
-	method pausaJuego () {
+	method teclaPausa () {
 		keyboard.p().onPressDo({ pausa.switch() })
 	}
 
 	method pausar() {
 		game.clear()
-		self.pausaJuego()
+		self.teclaPausa()
 		handlerVisuales.activar()
 	}
 
@@ -76,14 +72,14 @@ class NivelBase { // clase abstracta
 		game.removeVisual(visorPuntaje)
 	}
 
-	method nacimientoMonstruos()
-
-	method movimientoMonstruos()
+	method activarOnTicks()
 }
 
 class Nivel1 inherits NivelBase {
-	const property nacimientoMonstruos = 2000
-	const property movimientoMonstruos = 1000
+	const property nacimientoMonstruos  = 2000
+	const property movimientoMonstruos  = 1000
+	const property nacimientoPociones   = 3000
+	const property remocionPociones     = 6000
 
 	override method escenario() {
 		super()
@@ -91,8 +87,9 @@ class Nivel1 inherits NivelBase {
 		game.width(15)
 		game.boardGround("lava.png")
 		pausa.nivel(self)
+		handlerOnTicks.nivel(self)
 		handlerVisuales.nivel(self)
-		handlerOnTicks.iniciar(nacimientoMonstruos, movimientoMonstruos)
+		self.activarOnTicks()
 	}
 
 	override method teclas() {
@@ -104,12 +101,11 @@ class Nivel1 inherits NivelBase {
 		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
-	override method nacimientoMonstruos() {
-		return nacimientoMonstruos
-	}
-
-	override method movimientoMonstruos() {
-		return movimientoMonstruos
+	override method activarOnTicks() {
+		handlerOnTicks.nuevo(aparicionMonstruos, nacimientoMonstruos)
+		handlerOnTicks.nuevo(avanceMonstruos, movimientoMonstruos)
+		handlerOnTicks.nuevo(aparicionPociones, nacimientoPociones)
+		handlerOnTicks.nuevo(desaparicionPociones, remocionPociones)
 	}	
 }
 
