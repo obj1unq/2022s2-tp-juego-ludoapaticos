@@ -87,9 +87,6 @@ object fuego {
 	method daniarA() {
 	}
 
-	method desaparecer() {
-	}
-
 	method darPaso() {
 	}
 

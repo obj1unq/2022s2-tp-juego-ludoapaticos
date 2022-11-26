@@ -44,8 +44,6 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
-
-	method desaparecer() {}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
