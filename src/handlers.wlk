@@ -6,10 +6,11 @@ import direcciones.*
 import extras.*
 import onticks.*
 import pociones.*
+import consola.*
 
 
 object pausa {
-	var property nivel
+	var property nivel = consola.nivel()
 	var property enPausa = false
 	// Sistema on/off (switch)
 	method switch() {
@@ -20,7 +21,7 @@ object pausa {
 }
 
 object handlerVisuales {
-	var property nivel
+	var property nivel = consola.nivel()
 	method activar() {
 		nivel.activarVisuales()
 		handlerMonstruos.activarVisuales()
@@ -44,9 +45,10 @@ object handlerMonstruos {
 		return monstruo
 	}
 	method nuevo(monstruo) { // Crea un nuevo monstruo dado en el juego
-		monstruos.add(monstruo)
-		self.activarVisualDe(monstruo)
-		return monstruo
+		const monstruo1 = monstruo.nuevo()
+		monstruos.add(monstruo1)
+		self.activarVisualDe(monstruo1)
+		return monstruo1
 	}
 	method activarVisuales() {
 		monstruos.forEach({monstruo => game.addVisual(monstruo)})
@@ -74,7 +76,7 @@ object handlerMonstruos {
 }
 
 object handlerOnTicks {
-	var property nivel
+	var property nivel = consola.nivel()
 	var property onTicks = #{}
 
 	method nuevo(onTick, valor) {

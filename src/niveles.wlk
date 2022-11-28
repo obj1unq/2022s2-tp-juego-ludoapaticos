@@ -8,7 +8,7 @@ import handlers.*
 import consola.*
 
 
-class NivelBase { // clase abstracta
+class NivelBase { 
 	method activar() {
 		self.base()
 		self.teclaPausa()
@@ -76,10 +76,18 @@ class NivelBase { // clase abstracta
 	}
 	
 	method pasarNivel(){
+		self.vaciarNivel()
 		consola.siguiente()
 	}
 	
 	method activarOnTicks()
+	
+		method vaciarNivel(){
+		game.clear()
+		handlerPociones.pociones(#{})
+		handlerMonstruos.monstruos(#{})
+		wolly.puntos(0)
+	}
 }
 
 class Nivel1 inherits NivelBase {

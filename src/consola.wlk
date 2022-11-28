@@ -17,7 +17,6 @@ object consola {
 	method siguiente() {
 		index += 1
 		nivel = niveles.get(index)
-		game.clear()
 		self.iniciar()
 	}
 

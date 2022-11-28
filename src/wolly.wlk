@@ -11,10 +11,11 @@ object wolly {
 
 	var property position = game.center()
 	var property image = "wolly.png"
-	var puntos = 0
+	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 	var vida = 5
+	const nivel = consola.nivel()
 
 	method vida() = vida
 
@@ -51,7 +52,7 @@ object wolly {
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
 		if (puntos > 1000){
-			consola.siguiente()
+			nivel.pasarNivel()
 		}
 	}
 
