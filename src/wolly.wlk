@@ -36,7 +36,13 @@ object wolly {
 		return 6 / _peso
 	}
 
-	method morir() = game.stop()
+//	method morir() = game.stop()
+
+	method morir() {
+		game.clear()
+		game.addVisual(cartelFinal)
+		game.schedule(10000, {game.stop()})
+	}
 
 	method moverse(direccion) {
 		if (self.puedeMover(direccion)) {

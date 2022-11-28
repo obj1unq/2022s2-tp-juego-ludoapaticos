@@ -74,3 +74,10 @@ object randomizer {
 
 }
 
+object cartelFinal inherits Visor {
+	
+	override method image() = "fin.png"
+	
+	override method position() = game.center()
+}
+
