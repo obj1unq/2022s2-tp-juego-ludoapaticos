@@ -29,9 +29,9 @@ object consola {
 	}
 	method configurar(_nivel) {
 		pausa.nivel(_nivel)
-		wolly.nivel(_nivel)
 		handlerOnTicks.nivel(_nivel)
 		handlerVisuales.nivel(_nivel)
+		wolly.nivel(_nivel)
 	}
 
 }

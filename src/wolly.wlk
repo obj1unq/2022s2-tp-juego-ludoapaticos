@@ -14,14 +14,10 @@ object wolly {
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
+	var property nivel
 	var vida = 5
-	const nivel = consola.nivel()
 
 	method vida() = vida
-
-	method puntos() = puntos
-
-	method nivel() = consola.nivel()
 
 	method disparar() {
 		proyectilActual = calabaza.nuevo()

@@ -10,7 +10,7 @@ import consola.*
 
 
 object pausa {
-	var property nivel = consola.nivel()
+	var property nivel
 	var property enPausa = false
 	// Sistema on/off (switch)
 	method switch() {
@@ -21,7 +21,7 @@ object pausa {
 }
 
 object handlerVisuales {
-	var property nivel = consola.nivel()
+	var property nivel
 	method activar() {
 		nivel.activarVisuales()
 		handlerMonstruos.activarVisuales()
@@ -76,7 +76,7 @@ object handlerMonstruos {
 }
 
 object handlerOnTicks {
-	var property nivel = consola.nivel()
+	var property nivel
 	var property onTicks = #{}
 
 	method nuevo(onTick, valor) {
