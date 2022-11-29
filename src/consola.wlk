@@ -17,7 +17,6 @@ object consola {
 	method siguiente() {
 		index += 1
 		nivel = niveles.get(index)
-		self.iniciar()
 	}
 
 	method anterior() {
@@ -27,6 +26,12 @@ object consola {
 
 	method iniciar() {
 		nivel.nuevo().activar()
+	}
+	method configurar(_nivel) {
+		pausa.nivel(_nivel)
+		wolly.nivel(_nivel)
+		handlerOnTicks.nivel(_nivel)
+		handlerVisuales.nivel(_nivel)
 	}
 
 }
