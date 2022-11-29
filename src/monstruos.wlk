@@ -44,6 +44,10 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
+	
+	method causarEfecto(){
+	//por polimorfismo, no hace nada
+	}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
