@@ -26,11 +26,21 @@ Intenta hacer que wolly alcance la mayor cantdad de puntos!
 
 CONTROLES:
 
+TECLAS QUE INDICAN LA DIRECCIÓN HACIA LA QUE APUNTA WOLLY
+
 ![teclaWASD](https://user-images.githubusercontent.com/88062413/204916404-32172f83-a74a-414b-a59f-b7b28466a3ca.png)
+
+TECLAS DE MOVIMIENTO
 
 ![teclasDireccion](https://user-images.githubusercontent.com/88062413/204916453-1eebc7ea-7871-489f-aa50-44508c6821ff.png)
 
+TECLA DE DISPARO
 
+SPACE
+
+TECLA INICIO DE JUEGO Y MENSAJE DE PERSONAJE
+
+![teclaEnter](https://user-images.githubusercontent.com/88062413/204921656-aa19f604-814c-4f50-8a0d-ec2e6490ff1e.png)
 
 
 
