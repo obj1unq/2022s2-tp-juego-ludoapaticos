@@ -72,6 +72,10 @@ class Cofre inherits Pocion {
 		game.allVisuals().forEach({ elemento => elemento.serImpactadoPor(self)})
 		game.schedule(500, { game.removeVisual(fuego)})
 	}
+	
+	method romperse(){
+		
+	}
 
 }
 

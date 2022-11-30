@@ -23,14 +23,17 @@ class Monstruo {
 
 	method serImpactadoPor(arma) {
 		vida -= arma.fuerza()
+		arma.romperse()
 		if (vida <= 0) {
 			self.morir()
 		}
+		
 	}
 
 	method morir() {
-		enemigo.sumarPuntos(self)
 		handlerMonstruos.remover(self)
+		enemigo.sumarPuntos(self)
+		
 	}
 
 	method elementoEnColision() {

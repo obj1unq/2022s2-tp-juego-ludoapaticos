@@ -14,6 +14,6 @@ program juego {
 		// VISUAL
 		// TECLADO
 		// STOP
-		// PLAY
+		// PLAY  
 	game.start()
 }

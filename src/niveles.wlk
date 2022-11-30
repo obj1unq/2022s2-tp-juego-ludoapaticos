@@ -73,6 +73,8 @@ class NivelBase {
 	method desactivarVisuales() {
 		game.removeVisual(wolly)
 		game.removeVisual(visorPuntaje)
+		game.addVisual(visorVida)
+		game.addVisual(visorNivel)
 	}
 	
 	method pasarNivel() {
