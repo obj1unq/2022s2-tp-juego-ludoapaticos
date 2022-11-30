@@ -47,6 +47,7 @@ object handlerVisuales {
 	}
 	method fin() {
 		self.activar()
+		game.removeVisual(visorVida)
 		game.addVisual(cartelFinal)
 	}
 }

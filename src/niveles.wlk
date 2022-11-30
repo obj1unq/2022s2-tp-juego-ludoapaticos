@@ -145,13 +145,6 @@ class Nivel2 inherits Nivel1 {
 		return super() / 2
 	}
 
-	override method nacimientoPociones() {
-		return super() * 2
-	}
-
-	override method remocionPociones() {
-		return super() / 2
-	}
 
 }
 
@@ -166,10 +159,6 @@ class Nivel3 inherits Nivel2 {
 	}
 
 	override method nacimientoPociones() {
-		return super() * 2
-	}
-
-	override method remocionPociones() {
 		return super() / 2
 	}
 

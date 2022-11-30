@@ -38,7 +38,7 @@ object wolly {
 
 	method morir() {
 		handlerJuego.fin()
-		game.schedule(10000, {game.stop()})
+		game.schedule(5000, {game.stop()})
 	}
 
 	method moverse(direccion) {
