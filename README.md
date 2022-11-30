@@ -24,6 +24,15 @@ Los monstruos con los que Wolly se enfrenta pueden ser de tres distintos tipos z
 para lograr esto, o para hacerlo más difícil, Wolly cuenta también con la aparición de unos objetos mágicos en el mapa, pociones de vida de color rojo, cofres que al abrirlos liberan un hechizo y eliminan a todos los enemigos del mapa y pociones de veneno de color verde que lo dañan y hasta pueden llevarlo a la muerte.
 Intenta hacer que wolly alcance la mayor cantdad de puntos!
 
+CONTROLES:
+
+![teclaWASD](https://user-images.githubusercontent.com/88062413/204916404-32172f83-a74a-414b-a59f-b7b28466a3ca.png)
+
+![teclasDireccion](https://user-images.githubusercontent.com/88062413/204916453-1eebc7ea-7871-489f-aa50-44508c6821ff.png)
+
+
+
+
 
 ## Otros
 
