@@ -54,7 +54,7 @@ object wolly {
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
 		if (puntos > 1000){
-			nivel.pasarNivel()
+			game.schedule(600, {nivel.pasarNivel()})
 		}
 	}
 
