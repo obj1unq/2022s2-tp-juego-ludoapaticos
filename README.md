@@ -8,8 +8,13 @@
 - Ezequiel Rigo
 
 ## Capturas
+![capturaInicio](https://user-images.githubusercontent.com/88062413/204876104-25dc6de3-4efa-4040-926e-5fddcb9ae15e.png)
 
-(agregar)
+![capturaJuego](https://user-images.githubusercontent.com/88062413/204876130-70130ad3-da55-4525-a2a3-e4ff23d73253.png)
+
+![capturaJuego2](https://user-images.githubusercontent.com/88062413/204876145-92acf5e9-4665-45dd-81bb-8c802d12c455.png)
+
+![capturaFinDeJuego](https://user-images.githubusercontent.com/88062413/204876174-69ac58d2-434b-4d27-8fc6-ca6b92a5ed2b.png)
 
 ## Reglas de Juego / Instrucciones
 
