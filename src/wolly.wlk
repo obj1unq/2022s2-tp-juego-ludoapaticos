@@ -6,6 +6,7 @@ import extras.*
 import pociones.*
 import consola.*
 import niveles.*
+import handlers.*
 
 object wolly {
 
@@ -39,8 +40,7 @@ object wolly {
 //	method morir() = game.stop()
 
 	method morir() {
-		game.clear()
-		game.addVisual(cartelFinal)
+		handlerJuego.fin()
 		game.schedule(10000, {game.stop()})
 	}
 

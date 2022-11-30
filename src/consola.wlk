@@ -30,5 +30,10 @@ object consola {
 		nivel.nuevo().activar()
 	}
 
+	method start() {
+		self.iniciar()
+		handlerJuego.iniciar()
+	}
+
 }
 
