@@ -70,7 +70,7 @@ class NivelBase {
 		self.escenario()
 		self.configuracion()
 	}
-	
+
 	method reanudarAlMorir() {
 		self.escenario()
 	}
@@ -101,25 +101,25 @@ class NivelBase {
 
 class Nivel1 inherits NivelBase {
 
-	const property nacimientoMonstruos = 2000
-	const property movimientoMonstruos = 1000
-	const property nacimientoPociones = 3000
-	const property remocionPociones = 5000
+//	const nacimientoMonstruos = 2000
+//	const movimientoMonstruos = 1000
+//	const nacimientoPociones = 3000
+//	const remocionPociones = 6000
+
+	method nacimientoMonstruos() = 3000
+
+	method movimientoMonstruos() = 2000
+
+	method nacimientoPociones() = 3000
+
+	method remocionPociones() = 6000
 
 	override method escenario() {
 		super()
 		game.height(15)
 		game.width(15)
-
 		consola.configurar(self)
 		self.activarOnTicks()
-	}
-	
-
-
-	override method teclas() {
-		super()
-		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
 	}
 
 	override method colisionesWolly() {
@@ -127,10 +127,10 @@ class Nivel1 inherits NivelBase {
 	}
 
 	override method activarOnTicks() {
-		handlerOnTicks.nuevo(aparicionMonstruos, nacimientoMonstruos)
-		handlerOnTicks.nuevo(avanceMonstruos, movimientoMonstruos)
-		handlerOnTicks.nuevo(aparicionPociones, nacimientoPociones)
-		handlerOnTicks.nuevo(desaparicionPociones, remocionPociones)
+		handlerOnTicks.nuevo(aparicionMonstruos, self.nacimientoMonstruos())
+		handlerOnTicks.nuevo(avanceMonstruos, self.movimientoMonstruos())
+		handlerOnTicks.nuevo(aparicionPociones, self.nacimientoPociones())
+		handlerOnTicks.nuevo(desaparicionPociones, self.remocionPociones())
 	}
 
 }
@@ -186,11 +186,11 @@ class PantallaInicio inherits NivelBase {
 		game.height(15)
 		game.width(15)
 	}
-	
+
 	method image() = "pantallaInicio.png"
 
 	override method activarVisuales() {
-		game.addVisualIn(self,game.origin())
+		game.addVisualIn(self, game.origin())
 	}
 
 	override method teclas() {
