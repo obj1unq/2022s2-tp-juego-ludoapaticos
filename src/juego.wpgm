@@ -10,10 +10,5 @@ import pociones.*
 
 
 program juego {
-	consola.iniciar()
-		// VISUAL
-		// TECLADO
-		// STOP
-		// PLAY  
-	game.start()
+	consola.start()
 }
