@@ -20,6 +20,19 @@ object pausa {
 	}
 }
 
+object handlerJuego {
+	method iniciar(){
+		game.start()
+	}
+	method borrar() {
+		game.clear()
+	}
+	method fin() {
+		self.borrar()
+		handlerVisuales.fin()
+	}
+}
+
 object handlerVisuales {
 	var property nivel
 	method activar() {
@@ -31,6 +44,10 @@ object handlerVisuales {
 		nivel.desactivarVisuales()
 		handlerMonstruos.desactivarVisuales()
 		handlerPociones.desactivarVisuales()
+	}
+	method fin() {
+		self.activar()
+		game.addVisual(cartelFinal)
 	}
 }
 

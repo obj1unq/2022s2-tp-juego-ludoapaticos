@@ -34,5 +34,10 @@ object consola {
 		wolly.nivel(_nivel)
 	}
 
+	method start() {
+		self.iniciar()
+		handlerJuego.iniciar()
+	}
+
 }
 

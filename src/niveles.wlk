@@ -69,6 +69,10 @@ class NivelBase {
 		self.escenario()
 		self.configuracion()
 	}
+	
+	method reanudarAlMorir() {
+		self.escenario()
+	}
 
 	method desactivarVisuales() {
 		game.removeVisual(wolly)

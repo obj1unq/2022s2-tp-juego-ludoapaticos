@@ -6,6 +6,7 @@ import extras.*
 import pociones.*
 import consola.*
 import niveles.*
+import handlers.*
 
 object wolly {
 
@@ -33,7 +34,12 @@ object wolly {
 		return 6 / _peso
 	}
 
-	method morir() = game.stop()
+//	method morir() = game.stop()
+
+	method morir() {
+		handlerJuego.fin()
+		game.schedule(10000, {game.stop()})
+	}
 
 	method moverse(direccion) {
 		if (self.puedeMover(direccion)) {
