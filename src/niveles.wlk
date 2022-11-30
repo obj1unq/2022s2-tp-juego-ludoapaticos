@@ -8,7 +8,7 @@ import handlers.*
 import consola.*
 
 
-class NivelBase { // clase abstracta
+class NivelBase { 
 	method activar() {
 		self.base()
 		self.teclaPausa()
@@ -77,39 +77,48 @@ class NivelBase { // clase abstracta
 	method desactivarVisuales() {
 		game.removeVisual(wolly)
 		game.removeVisual(visorPuntaje)
+		game.addVisual(visorVida)
+		game.addVisual(visorNivel)
 	}
 	
-	method pasarNivel(){
+	method pasarNivel() {
+		self.vaciarNivel()
 		consola.siguiente()
+		consola.iniciar()
 	}
 	
 	method activarOnTicks()
+	
+	method vaciarNivel(){
+		game.clear()
+		handlerPociones.pociones(#{})
+		handlerMonstruos.monstruos(#{})
+		wolly.puntos(0)
+	}
 }
 
 class Nivel1 inherits NivelBase {
-	const property nacimientoMonstruos  = 2000
-	const property movimientoMonstruos  = 1000
-	const property nacimientoPociones   = 3000
-	const property remocionPociones     = 5000
+	const property nacimientoMonstruos = 2000
+	const property movimientoMonstruos = 1000
+	const property nacimientoPociones  = 3000
+	const property remocionPociones    = 5000
 
 	override method escenario() {
 		super()
 		game.height(15)
 		game.width(15)
 		game.boardGround("lava.png")
-		pausa.nivel(self)
-		handlerOnTicks.nivel(self)
-		handlerVisuales.nivel(self)
+		consola.configurar(self)
 		self.activarOnTicks()
 	}
 
 	override method teclas() {
 		super()
-		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
+		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo()) })
 	}
 
 	override method colisionesWolly() {
-		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
+		game.onCollideDo(wolly, { monstruo => monstruo.daniarA() })
 	}
 
 	override method activarOnTicks() {
@@ -128,6 +137,13 @@ class Nivel2 inherits Nivel1 {
 
 	override method movimientoMonstruos() {
 		return super()/2
+	}
+	override method nacimientoPociones() {
+		return super()*2
+	}
+
+	override method remocionPociones() {
+		return super()/2
 	}	
 }
 
@@ -138,10 +154,18 @@ class Nivel3 inherits Nivel2 {
 
 	override method movimientoMonstruos() {
 		return super()/2
-	}	
-	
+	}
+
+	override method nacimientoPociones() {
+		return super()*2
+	}
+
+	override method remocionPociones() {
+		return super()/2
+	}
+
 	override method pasarNivel(){
-		//no hace ada, es el último nivel del juego.
+		//no hace nada, es el último nivel del juego.
 	}
 }
 
@@ -150,16 +174,19 @@ object nivel1 {
 	method nuevo() {
 		return new Nivel1()
 	}
+	method id() = "1"
 }
 
 object nivel2 {
 	method nuevo() {
 		return new Nivel2()
 	}
+	method id() = "2"
 }
 
 object nivel3 {
 	method nuevo() {
 		return new Nivel3()
 	}
+	method id() = "3"
 }

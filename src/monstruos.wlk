@@ -23,14 +23,17 @@ class Monstruo {
 
 	method serImpactadoPor(arma) {
 		vida -= arma.fuerza()
+		arma.romperse()
 		if (vida <= 0) {
 			self.morir()
 		}
+		
 	}
 
 	method morir() {
-		enemigo.sumarPuntos(self)
 		handlerMonstruos.remover(self)
+		enemigo.sumarPuntos(self)
+		
 	}
 
 	method elementoEnColision() {
@@ -44,6 +47,10 @@ class Monstruo {
 	method puntosQueOtorga()
 
 	method darPaso()
+	
+	method causarEfecto(){
+	//por polimorfismo, no hace nada
+	}
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {

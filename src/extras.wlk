@@ -52,7 +52,7 @@ object visorVida inherits Visor {
 
 object visorNivel inherits Visor {
 	
-	override method image() = "" + consola.nivel() + ".png"
+	override method image() = "nivel" + consola.nivel().id() + ".png"
 	
 	override method position() = game.at(7, game.height() - 1)
 }

@@ -6,6 +6,7 @@ import direcciones.*
 import extras.*
 import onticks.*
 import pociones.*
+import consola.*
 
 
 object pausa {
@@ -61,9 +62,10 @@ object handlerMonstruos {
 		return monstruo
 	}
 	method nuevo(monstruo) { // Crea un nuevo monstruo dado en el juego
-		monstruos.add(monstruo)
-		self.activarVisualDe(monstruo)
-		return monstruo
+		const monstruo1 = monstruo.nuevo()
+		monstruos.add(monstruo1)
+		self.activarVisualDe(monstruo1)
+		return monstruo1
 	}
 	method activarVisuales() {
 		monstruos.forEach({monstruo => game.addVisual(monstruo)})
