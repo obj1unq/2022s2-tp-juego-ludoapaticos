@@ -54,7 +54,7 @@ object wolly {
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
 		if (puntos > 1000){
-			game.schedule(600, {nivel.pasarNivel()})
+			game.schedule(700, {nivel.pasarNivel()})
 		}
 	}
 
@@ -69,11 +69,11 @@ object wolly {
 	}
 	
 	method efectoRecibirGolpe(){
-		game.onTick(200, "wolly segunda imagen", { image = "wolly2.png"})
-		game.onTick(400, "wolly primera imagen", { image = "wolly.png"})
-		game.schedule(1000, { game.removeTickEvent("wolly segunda imagen")})
-		game.schedule(1000, { game.removeTickEvent("wolly primera imagen")})
-		game.schedule(1100, { image = "wolly.png"})
+		game.onTick(100, "wolly segunda imagen", { image = "wolly2.png"})
+		game.onTick(200, "wolly primera imagen", { image = "wolly.png"})
+		game.schedule(500, { game.removeTickEvent("wolly segunda imagen")})
+		game.schedule(500, { game.removeTickEvent("wolly primera imagen")})
+		game.schedule(600, { image = "wolly.png"})
 	}
 
 	method recuperarVida(cantidad) {
