@@ -7,8 +7,8 @@ import onticks.*
 import handlers.*
 import consola.*
 
+class NivelBase {
 
-class NivelBase { 
 	method activar() {
 		self.base()
 		self.teclaPausa()
@@ -22,6 +22,7 @@ class NivelBase {
 
 	method escenario() {
 		game.title("Endless Wollokween")
+		game.boardGround("lava.png")
 	}
 
 	method activarVisuales() {
@@ -42,21 +43,21 @@ class NivelBase {
 		keyboard.right().onPressDo({ wolly.moverse(este)})
 		keyboard.up().onPressDo({ wolly.moverse(norte)})
 		keyboard.down().onPressDo({ wolly.moverse(sur)})
-		// Comandos de disparo de Wolly
+			// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar()})
 		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte)})
 		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste)})
 		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur)})
 		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este)})
-		// Comandos de acción de Wolly
+			// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
 
-	method colisionesWolly(){
+	method colisionesWolly() {
 	}
 
-	method teclaPausa () {
-		keyboard.p().onPressDo({ pausa.switch() })
+	method teclaPausa() {
+		keyboard.p().onPressDo({ pausa.switch()})
 	}
 
 	method pausar() {
@@ -76,45 +77,49 @@ class NivelBase {
 		game.addVisual(visorVida)
 		game.addVisual(visorNivel)
 	}
-	
+
 	method pasarNivel() {
 		self.vaciarNivel()
 		consola.siguiente()
 		consola.iniciar()
 	}
-	
+
 	method activarOnTicks()
-	
-	method vaciarNivel(){
+
+	method vaciarNivel() {
 		game.clear()
 		handlerPociones.pociones(#{})
 		handlerMonstruos.monstruos(#{})
 		wolly.puntos(0)
 	}
+
 }
 
 class Nivel1 inherits NivelBase {
+
 	const property nacimientoMonstruos = 2000
 	const property movimientoMonstruos = 1000
-	const property nacimientoPociones  = 3000
-	const property remocionPociones    = 5000
+	const property nacimientoPociones = 3000
+	const property remocionPociones = 5000
 
 	override method escenario() {
 		super()
 		game.height(15)
 		game.width(15)
-		game.boardGround("lava.png")
+
 		consola.configurar(self)
 		self.activarOnTicks()
 	}
+	
+
 
 	override method teclas() {
 		super()
-		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo()) })
+		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
 	}
 
 	override method colisionesWolly() {
-		game.onCollideDo(wolly, { monstruo => monstruo.daniarA() })
+		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
 	override method activarOnTicks() {
@@ -122,67 +127,118 @@ class Nivel1 inherits NivelBase {
 		handlerOnTicks.nuevo(avanceMonstruos, movimientoMonstruos)
 		handlerOnTicks.nuevo(aparicionPociones, nacimientoPociones)
 		handlerOnTicks.nuevo(desaparicionPociones, remocionPociones)
-	}	
-	
+	}
+
 }
 
 class Nivel2 inherits Nivel1 {
+
 	override method nacimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
 
 	override method movimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
+
 	override method nacimientoPociones() {
-		return super()*2
+		return super() * 2
 	}
 
 	override method remocionPociones() {
-		return super()/2
-	}	
+		return super() / 2
+	}
+
 }
 
 class Nivel3 inherits Nivel2 {
+
 	override method nacimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
 
 	override method movimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
 
 	override method nacimientoPociones() {
-		return super()*2
+		return super() * 2
 	}
 
 	override method remocionPociones() {
-		return super()/2
+		return super() / 2
 	}
 
-	override method pasarNivel(){
-		//no hace nada, es el último nivel del juego.
+	override method pasarNivel() {
+	// no hace nada, es el último nivel del juego.
 	}
+
+}
+
+class PantallaInicio inherits NivelBase {
+
+	override method escenario() {
+		super()
+		game.height(15)
+		game.width(15)
+	}
+	
+	method image() = "pantallaInicio.png"
+
+	override method activarVisuales() {
+		game.addVisualIn(self,game.origin())
+	}
+
+	override method teclas() {
+		keyboard.enter().onPressDo({ self.pasarNivel()})
+	}
+
+	override method teclaPausa() {
+	}
+
+	override method activarOnTicks() {
+	}
+
 }
 
 // factories
 object nivel1 {
+
 	method nuevo() {
 		return new Nivel1()
 	}
+
 	method id() = "1"
+
 }
 
 object nivel2 {
+
 	method nuevo() {
 		return new Nivel2()
 	}
+
 	method id() = "2"
+
 }
 
 object nivel3 {
+
 	method nuevo() {
 		return new Nivel3()
 	}
+
 	method id() = "3"
+
 }
+
+object pantallaInicio {
+
+	method nuevo() {
+		return new PantallaInicio()
+	}
+
+	method id() = "0"
+
+}
+

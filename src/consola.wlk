@@ -8,9 +8,9 @@ import niveles.*
 
 object consola {
 
-	var nivel = nivel1
+	var nivel = pantallaInicio
 	var index = 0
-	const niveles = [ nivel1, nivel2, nivel3 ]
+	const niveles = [pantallaInicio, nivel1, nivel2, nivel3 ]
 
 	method nivel() = nivel
 
