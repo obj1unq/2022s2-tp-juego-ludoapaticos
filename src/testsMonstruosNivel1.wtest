@@ -157,7 +157,7 @@ describe "cofre explosivo"{
 		assert.notThat(game.allVisuals().isEmpty())
 		game.addVisual(cofre.nuevo())
 		game.allVisuals().forEach({elemento=> elemento.causarEfecto()})
-		assert.that(handlerMonstruos.monstruos().isEmpty())
+		assert.that(not handlerMonstruos.hayElementosCreados())
 	}
 	
 }
