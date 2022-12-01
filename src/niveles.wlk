@@ -32,6 +32,13 @@ class NivelBase {
 		game.addVisual(visorNivel)
 	}
 
+	method desactivarVisuales() {
+		game.removeVisual(wolly)
+		game.removeVisual(visorPuntaje)
+		game.removeVisual(visorVida)
+		game.removeVisual(visorNivel)
+	}
+
 	method configuracion() {
 		self.teclas()
 		self.colisionesWolly()
@@ -75,13 +82,6 @@ class NivelBase {
 		self.escenario()
 	}
 
-	method desactivarVisuales() {
-		game.removeVisual(wolly)
-		game.removeVisual(visorPuntaje)
-		game.addVisual(visorVida)
-		game.addVisual(visorNivel)
-	}
-
 	method pasarNivel() {
 		self.vaciarNivel()
 		consola.siguiente()
@@ -92,8 +92,8 @@ class NivelBase {
 
 	method vaciarNivel() {
 		game.clear()
-		handlerPociones.remover()
-		handlerMonstruos.remover()
+		handlerPociones.clear()
+		handlerMonstruos.clear()
 		wolly.puntos(0)
 	}
 

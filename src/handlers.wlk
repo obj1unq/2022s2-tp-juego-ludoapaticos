@@ -32,6 +32,25 @@ object handlerJuego {
 	}
 }
 
+object handlerVisuales {
+	var property nivel = null
+	method activar() {
+		nivel.activarVisuales()
+		handlerMonstruos.activarVisuales()
+		handlerPociones.activarVisuales()
+	}
+	method desactivar() {
+		nivel.desactivarVisuales()
+		handlerMonstruos.removerVisuales()
+		handlerPociones.removerVisuales()
+	}
+	method fin() {
+		self.activar()
+		game.removeVisual(visorVida)
+		game.addVisual(cartelFinal)
+	}
+}
+
 class Handler {
 	const property factories = []
 	var property elementos = #{}
@@ -62,24 +81,8 @@ class Handler {
 	method hayElementosCreados() = not elementos.isEmpty()
 
 	method estaCreado(_elemento) = elementos.any({elemento => elemento == _elemento})
-}
-
-object handlerVisuales {
-	var property nivel = null
-	method activar() {
-		nivel.activarVisuales()
-		handlerMonstruos.activarVisuales()
-		handlerPociones.activarVisuales()
-	}
-	method desactivar() {
-		nivel.desactivarVisuales()
-		handlerMonstruos.removerVisuales()
-		handlerPociones.removerVisuales()
-	}
-	method fin() {
-		self.activar()
-		game.removeVisual(visorVida)
-		game.addVisual(cartelFinal)
+	method clear() {
+		elementos.clear()
 	}
 }
 
