@@ -24,23 +24,35 @@ class Calabaza {
 	method serDisparadoPor(personaje) {
 		self.lanzador(personaje)
 		self.moverse(distancia)
-		game.schedule(300, { game.removeVisual(self)})
+		
 	}
 
 	method moverse(distanciaAMover) {
 		if (distanciaAMover != 0) {
 			self.position(direccion.avanzar(position, 1))
-			self.impactar()
-			self.moverse(distanciaAMover - 1)
+			if (self.hayParaImpactar()){	self.impactar()}
+			else{
+				self.moverse(distanciaAMover - 1)}
+		} else {
+			self.romperse()
 		}
 	}
 
 	method lanzador(personaje) {
 		lanzador = personaje
 	}
-
+	
+	method hayParaImpactar(){
+		return not game.colliders(self).isEmpty()
+	}
+	
 	method impactar() {
 		game.colliders(self).forEach({ cosa => cosa.serImpactadoPor(self)})
+
+	}
+	
+	method romperse(){
+		game.schedule(300, { game.removeVisual(self)})
 	}
 
 	// POR POLIMORFISMO

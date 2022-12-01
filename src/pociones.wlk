@@ -15,9 +15,7 @@ class Pocion {
 
 	method position() = position
 
-	method causarEfecto() {
-		handlerPociones.remover(self)
-	}
+	method causarEfecto() 
 
 	method desaparecer() {
 		handlerPociones.remover(self)
@@ -43,7 +41,7 @@ class PocionSalud inherits Pocion {
 	}
 
 	override method causarEfecto() {
-		super()
+		self.desaparecer()
 		personaje.recuperarVida(self.fuerza())
 	}
 
@@ -56,7 +54,7 @@ class PocionVeneno inherits Pocion {
 	}
 
 	override method causarEfecto() {
-		super()
+		self.desaparecer()
 		personaje.recibirDanio(self.fuerza())
 	}
 
@@ -69,10 +67,14 @@ class Cofre inherits Pocion {
 	override method fuerza() = 300
 
 	override method causarEfecto() {
-		super()
+		self.desaparecer()
 		game.addVisual(fuego)
 		game.allVisuals().forEach({ elemento => elemento.serImpactadoPor(self)})
 		game.schedule(500, { game.removeVisual(fuego)})
+	}
+	
+	method romperse(){
+		
 	}
 
 }
@@ -85,9 +87,6 @@ object fuego {
 
 	// por polimorfismo
 	method daniarA() {
-	}
-
-	method desaparecer() {
 	}
 
 	method darPaso() {

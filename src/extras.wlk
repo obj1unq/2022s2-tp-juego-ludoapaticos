@@ -2,6 +2,7 @@ import monstruos.*
 import wollok.game.*
 import wolly.*
 import pociones.*
+import consola.*
 
 class Visor {
 
@@ -21,9 +22,6 @@ class Visor {
 	}
 
 	method serImpactadoPor(algo) {
-	}
-
-	method desaparecer() {
 	}
 
 }
@@ -52,6 +50,13 @@ object visorVida inherits Visor {
 
 }
 
+object visorNivel inherits Visor {
+	
+	override method image() = "nivel" + consola.nivel().id() + ".png"
+	
+	override method position() = game.at(7, game.height() - 1)
+}
+
 object randomizer {
 
 	method position() {
@@ -67,5 +72,12 @@ object randomizer {
 		}
 	}
 
+}
+
+object cartelFinal inherits Visor {
+	
+	override method image() = "fin.png"
+	
+	override method position() = game.center()
 }
 

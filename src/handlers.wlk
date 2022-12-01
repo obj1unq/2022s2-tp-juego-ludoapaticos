@@ -6,7 +6,7 @@ import direcciones.*
 import extras.*
 import onticks.*
 import pociones.*
-
+import consola.*
 
 object pausa {
 	var property nivel = null
@@ -16,6 +16,19 @@ object pausa {
 		if (enPausa) { nivel.reanudar() } 
 		else { nivel.pausar() }
 		enPausa = not enPausa
+	}
+}
+
+object handlerJuego {
+	method iniciar(){
+		game.start()
+	}
+	method borrar() {
+		game.clear()
+	}
+	method fin() {
+		self.borrar()
+		handlerVisuales.fin()
 	}
 }
 
@@ -64,6 +77,11 @@ object handlerVisuales {
 		handlerMonstruos.removerVisuales()
 		handlerPociones.removerVisuales()
 	}
+	method fin() {
+		self.activar()
+		game.removeVisual(visorVida)
+		game.addVisual(cartelFinal)
+	}
 }
 
 object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]){
@@ -82,7 +100,6 @@ object handlerPociones inherits Handler(factories=[pocionSalud, pocionVeneno, co
 }
 
 object handlerOnTicks inherits Handler {
-//	var property onTicks = #{}
 	var property nivel = null
 
 	method nuevo(onTick, valor) {

@@ -5,9 +5,10 @@ import direcciones.*
 import extras.*
 import onticks.*
 import handlers.*
+import consola.*
 
+class NivelBase {
 
-class NivelBase { // clase abstracta
 	method activar() {
 		self.base()
 		self.teclaPausa()
@@ -21,17 +22,19 @@ class NivelBase { // clase abstracta
 
 	method escenario() {
 		game.title("Endless Wollokween")
+		game.boardGround("lava.png")
 	}
 
 	method activarVisuales() {
 		game.addVisual(wolly)
 		game.addVisual(visorPuntaje)
 		game.addVisual(visorVida)
+		game.addVisual(visorNivel)
 	}
 
 	method configuracion() {
 		self.teclas()
-		self.terminarJuego()
+		self.colisionesWolly()
 	}
 
 	method teclas() {
@@ -40,20 +43,21 @@ class NivelBase { // clase abstracta
 		keyboard.right().onPressDo({ wolly.moverse(este)})
 		keyboard.up().onPressDo({ wolly.moverse(norte)})
 		keyboard.down().onPressDo({ wolly.moverse(sur)})
-		// Comandos de disparo de Wolly
+			// Comandos de disparo de Wolly
 		keyboard.space().onPressDo({ wolly.disparar()})
 		keyboard.w().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(norte)})
 		keyboard.a().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(oeste)})
 		keyboard.s().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(sur)})
 		keyboard.d().onPressDo({ wolly.ultimoSentidoDeDireccionVisto(este)})
-		// Comandos de acción de Wolly
+			// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!")})
 	}
 
-	method terminarJuego()
+	method colisionesWolly() {
+	}
 
-	method teclaPausa () {
-		keyboard.p().onPressDo({ pausa.switch() })
+	method teclaPausa() {
+		keyboard.p().onPressDo({ pausa.switch()})
 	}
 
 	method pausar() {
@@ -67,83 +71,167 @@ class NivelBase { // clase abstracta
 		self.configuracion()
 	}
 
+	method reanudarAlMorir() {
+		self.escenario()
+	}
+
 	method desactivarVisuales() {
 		game.removeVisual(wolly)
 		game.removeVisual(visorPuntaje)
+		game.addVisual(visorVida)
+		game.addVisual(visorNivel)
+	}
+
+	method pasarNivel() {
+		self.vaciarNivel()
+		consola.siguiente()
+		consola.iniciar()
 	}
 
 	method activarOnTicks()
+
+	method vaciarNivel() {
+		game.clear()
+		handlerPociones.pociones(#{})
+		handlerMonstruos.monstruos(#{})
+		wolly.puntos(0)
+	}
+
 }
 
 class Nivel1 inherits NivelBase {
-	const property nacimientoMonstruos  = 2000
-	const property movimientoMonstruos  = 1000
-	const property nacimientoPociones   = 3000
-	const property remocionPociones     = 6000
+
+//	const nacimientoMonstruos = 2000
+//	const movimientoMonstruos = 1000
+//	const nacimientoPociones = 3000
+//	const remocionPociones = 6000
+
+	method nacimientoMonstruos() = 3000
+
+	method movimientoMonstruos() = 2000
+
+	method nacimientoPociones() = 3000
+
+	method remocionPociones() = 6000
 
 	override method escenario() {
 		super()
 		game.height(15)
 		game.width(15)
-		game.boardGround("lava.png")
-		pausa.nivel(self)
-		handlerOnTicks.nivel(self)
-		handlerVisuales.nivel(self)
+		consola.configurar(self)
 		self.activarOnTicks()
 	}
 
-	override method teclas() {
-		super()
-		keyboard.c().onPressDo({ game.addVisual(calabaza.nuevo())})
-	}
-
-	override method terminarJuego() {
+	override method colisionesWolly() {
 		game.onCollideDo(wolly, { monstruo => monstruo.daniarA()})
 	}
 
 	override method activarOnTicks() {
-		handlerOnTicks.nuevo(aparicionMonstruos, nacimientoMonstruos)
-		handlerOnTicks.nuevo(avanceMonstruos, movimientoMonstruos)
-		handlerOnTicks.nuevo(aparicionPociones, nacimientoPociones)
-		handlerOnTicks.nuevo(desaparicionPociones, remocionPociones)
-	}	
+		handlerOnTicks.nuevo(aparicionMonstruos, self.nacimientoMonstruos())
+		handlerOnTicks.nuevo(avanceMonstruos, self.movimientoMonstruos())
+		handlerOnTicks.nuevo(aparicionPociones, self.nacimientoPociones())
+		handlerOnTicks.nuevo(desaparicionPociones, self.remocionPociones())
+	}
+
 }
 
 class Nivel2 inherits Nivel1 {
+
 	override method nacimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
 
 	override method movimientoMonstruos() {
-		return super()/2
-	}	
+		return super() / 2
+	}
+
+
 }
 
 class Nivel3 inherits Nivel2 {
+
 	override method nacimientoMonstruos() {
-		return super()/2
+		return super() / 2
 	}
 
 	override method movimientoMonstruos() {
-		return super()/2
-	}	
+		return super() / 2
+	}
+
+	override method nacimientoPociones() {
+		return super() / 2
+	}
+
+	override method pasarNivel() {
+	// no hace nada, es el último nivel del juego.
+	}
+
+}
+
+class PantallaInicio inherits NivelBase {
+
+	override method escenario() {
+		super()
+		game.height(15)
+		game.width(15)
+	}
+
+	method image() = "pantallaInicio.png"
+
+	override method activarVisuales() {
+		game.addVisualIn(self, game.origin())
+	}
+
+	override method teclas() {
+		keyboard.enter().onPressDo({ self.pasarNivel()})
+	}
+
+	override method teclaPausa() {
+	}
+
+	override method activarOnTicks() {
+	}
+
 }
 
 // factories
 object nivel1 {
+
 	method nuevo() {
 		return new Nivel1()
 	}
+
+	method id() = "1"
+
 }
 
 object nivel2 {
+
 	method nuevo() {
 		return new Nivel2()
 	}
+
+	method id() = "2"
+
 }
 
 object nivel3 {
+
 	method nuevo() {
 		return new Nivel3()
 	}
+
+	method id() = "3"
+
 }
+
+object pantallaInicio {
+
+	method nuevo() {
+		return new PantallaInicio()
+	}
+
+	method id() = "0"
+
+}
+

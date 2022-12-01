@@ -4,6 +4,9 @@ import monstruos.*
 import proyectiles.*
 import extras.*
 import pociones.*
+import consola.*
+import niveles.*
+import handlers.*
 
 object wolly {
 
@@ -12,11 +15,12 @@ object wolly {
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
+	var property nivel
 	var vida = 5
 
 	method vida() = vida
 
-	method disparar() { 
+	method disparar() {
 		proyectilActual = calabaza.nuevo()
 		game.addVisual(proyectilActual)
 		proyectilActual.serDisparadoPor(self)
@@ -30,12 +34,11 @@ object wolly {
 		return 6 / _peso
 	}
 
-	method morir() = game.stop()
+//	method morir() = game.stop()
 
-	method validarAgregar() {
-		if (not game.colliders(self).isEmpty()) {
-			self.error("Hay algo sobre mí que no me deja accionar.")
-		}
+	method morir() {
+		handlerJuego.fin()
+		game.schedule(5000, {game.stop()})
 	}
 
 	method moverse(direccion) {
@@ -50,6 +53,9 @@ object wolly {
 
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
+		if (puntos > 1000){
+			game.schedule(700, {nivel.pasarNivel()})
+		}
 	}
 
 	method recibirDanio(danio) {
@@ -58,12 +64,16 @@ object wolly {
 			self.morir()
 		} else {
 			vida -= danio
-			game.onTick(200, "wolly segunda imagen", { image = "wolly2.png"})
-			game.onTick(400, "wolly primera imagen", { image = "wolly.png"})
-			game.schedule(1000, { game.removeTickEvent("wolly segunda imagen")})
-			game.schedule(1000, { game.removeTickEvent("wolly primera imagen")})
-			game.schedule(1100, { image = "wolly.png"})
+			self.efectoRecibirGolpe()
 		}
+	}
+	
+	method efectoRecibirGolpe(){
+		game.onTick(100, "wolly segunda imagen", { image = "wolly2.png"})
+		game.onTick(200, "wolly primera imagen", { image = "wolly.png"})
+		game.schedule(500, { game.removeTickEvent("wolly segunda imagen")})
+		game.schedule(500, { game.removeTickEvent("wolly primera imagen")})
+		game.schedule(600, { image = "wolly.png"})
 	}
 
 	method recuperarVida(cantidad) {
@@ -85,9 +95,6 @@ object wolly {
 
 	method causarEfecto() {
 	// no hace nada
-	}
-
-	method desaparecer() {
 	}
 
 	method serImpactadoPor(arma) {

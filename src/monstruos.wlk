@@ -23,14 +23,17 @@ class Monstruo {
 
 	method serImpactadoPor(arma) {
 		vida -= arma.fuerza()
+		arma.romperse()
 		if (vida <= 0) {
 			self.morir()
 		}
+		
 	}
 
 	method morir() {
-		enemigo.sumarPuntos(self)
 		handlerMonstruos.remover(self)
+		enemigo.sumarPuntos(self)
+		
 	}
 
 	method elementoEnColision() {
@@ -40,32 +43,32 @@ class Monstruo {
 	method fuerza() {
 		return 0
 	}
-
-	method puntosQueOtorga()
-
-	method darPaso()
-
-	method desaparecer() {}
-}
-
-class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
-
-	override method darPaso() {
-		self.acercarseAWolly()
-	}
-
+	
 	method acercarseAWolly() {
 		if (wolly.position().x() < self.position().x()) {
 			position = oeste.avanzar(position, 1)
-		} else {
+		} else if (wolly.position().x() > self.position().x()){
 			position = este.avanzar(position, 1)
-		}
+		} else {}
 		if (wolly.position().y() < self.position().y()) {
 			position = sur.avanzar(position, 1)
-		} else {
+		} else if (wolly.position().y() > self.position().y()){
 			position = norte.avanzar(position, 1)
-		}
+		} else {}
 	}
+
+	method puntosQueOtorga()
+
+	method darPaso(){
+		self.acercarseAWolly()
+	}
+	
+	method causarEfecto(){
+	//por polimorfismo, no hace nada
+	}
+}
+
+class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
 
 	override method serImpactadoPor(arma) {
 		self.efectoGolpe()
@@ -87,12 +90,6 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 
 class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image = "fantasmita.png") {
 
-	const direcciones = [ norte, este, sur, oeste ]
-
-	override method darPaso() {
-		position = direcciones.anyOne().avanzar(position, 1)
-	}
-
 	override method serImpactadoPor(arma) {
 		self.efectoGolpe()
 		super(arma)
@@ -112,10 +109,6 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 }
 
 class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie.png") {
-
-	override method darPaso() {
-		position = oeste.avanzar(position, 1)
-	}
 
 	override method puntosQueOtorga() = 100
 
