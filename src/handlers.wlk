@@ -90,7 +90,9 @@ object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]
 	}
 
 	// Polimorfismo
-	override method remover() {}
+	override method remover() {
+		elementos.forEach({monstruo => self.remover(monstruo)})
+	}
 }
 
 object handlerPociones inherits Handler(factories=[pocionSalud, pocionVeneno, cofre]){
