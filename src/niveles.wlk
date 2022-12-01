@@ -92,8 +92,8 @@ class NivelBase {
 
 	method vaciarNivel() {
 		game.clear()
-		handlerPociones.pociones(#{})
-		handlerMonstruos.monstruos(#{})
+		handlerPociones.remover()
+		handlerMonstruos.remover()
 		wolly.puntos(0)
 	}
 
