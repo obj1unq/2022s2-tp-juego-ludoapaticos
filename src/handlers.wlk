@@ -41,8 +41,8 @@ class Handler {
 		self.agregar(elemento)
 		return elemento
 	}
-	method nuevo(elemento) { // Crea un nuevo 'elemento' dado en el juego
-		self.validarExistencia(elemento)
+	method nuevo(_elemento) { // Crea un nuevo 'elemento' dado en el juego
+		const elemento = _elemento.nuevo()
 		self.agregar(elemento)
 		return elemento
 	}
@@ -50,7 +50,6 @@ class Handler {
 		elementos.add(elemento)
 		self.activarVisualDe(elemento)
 	}
-	method validarExistencia(_elemento) = elementos.any({elemento => elemento == _elemento})
 	method activarVisuales() {elementos.forEach({elemento => self.activarVisualDe(elemento)})}
 	method activarVisualDe(elemento) {game.addVisual(elemento)}
 	method removerVisuales() {elementos.forEach({elemento => self.removerVisualDe(elemento)})}
