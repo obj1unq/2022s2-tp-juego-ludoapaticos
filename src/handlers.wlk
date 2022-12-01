@@ -9,7 +9,7 @@ import pociones.*
 
 
 object pausa {
-	var property nivel
+	var property nivel = null
 	var property enPausa = false
 	// Sistema on/off (switch)
 	method switch() {
@@ -38,9 +38,9 @@ class Handler {
 		self.activarVisualDe(elemento)
 	}
 	method validarExistencia(_elemento) = elementos.any({elemento => elemento == _elemento})
-	method activarVisuales() {elementos.forEach({elemento => game.addVisual(elemento)})}
+	method activarVisuales() {elementos.forEach({elemento => self.activarVisualDe(elemento)})}
 	method activarVisualDe(elemento) {game.addVisual(elemento)}
-	method removerVisuales() {elementos.forEach({elemento => game.removeVisual(elemento)})}
+	method removerVisuales() {elementos.forEach({elemento => self.removerVisualDe(elemento)})}
 	method removerVisualDe(elemento) {game.removeVisual(elemento)}
 	method remover()
 	method remover(elemento) {
@@ -53,7 +53,7 @@ class Handler {
 }
 
 object handlerVisuales {
-	var property nivel
+	var property nivel = null
 	method activar() {
 		nivel.activarVisuales()
 		handlerMonstruos.activarVisuales()
@@ -67,10 +67,8 @@ object handlerVisuales {
 }
 
 object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]){
-	var property monstruos = elementos
-
 	method darPasos() {
-		monstruos.forEach({ monstruo => monstruo.darPaso()})
+		elementos.forEach({ monstruo => monstruo.darPaso()})
 	}
 
 	// Polimorfismo
@@ -78,16 +76,14 @@ object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]
 }
 
 object handlerPociones inherits Handler(factories=[pocionSalud, pocionVeneno, cofre]){
-	var property pociones = elementos
-
 	override method remover() {
-		pociones.forEach({pocion => pocion.desaparecer()})
+		elementos.forEach({pocion => pocion.desaparecer()})
 	}
 }
 
 object handlerOnTicks inherits Handler {
-	var property onTicks = elementos
-	var property nivel
+//	var property onTicks = #{}
+	var property nivel = null
 
 	method nuevo(onTick, valor) {
 		if (not self.estaCreado(onTick)) {
@@ -97,7 +93,7 @@ object handlerOnTicks inherits Handler {
 
 	method agregar(onTick, valor) {
 		const newOnTick = onTick.nuevo(valor)
-		onTicks.add(newOnTick)
+		elementos.add(newOnTick)
 		newOnTick.aplicar()
 	}
 
@@ -108,10 +104,11 @@ object handlerOnTicks inherits Handler {
 	}
 
 	method reanudar() {
-		onTicks.forEach({onTick => onTick.aplicar()})
+		elementos.forEach({onTick => onTick.aplicar()})
 	}
 
 	// Polimorfismo
+	override method factories() {}
 	override method nuevo() = null
 	override method nuevo(elem) = null
 	override method agregar(elem) {}
