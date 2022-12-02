@@ -23,11 +23,15 @@ class Monstruo {
 	method poderDeDanio() = 1
 
 	method serImpactadoPor(arma) {
-		vida = (vida - arma.fuerza()).max(0)
+		self.disminuirVida(arma.fuerza())
 		self.morirSiDebe()
     	arma.finEventoDelDisparo()
 	}
-	
+
+	method disminuirVida(danio) {
+	    vida = (vida - danio).max(0)
+	}
+
 	method morirSiDebe(){
 		if (self.debeMorir()){
 			self.morir()

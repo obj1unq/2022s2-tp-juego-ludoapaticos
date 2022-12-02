@@ -98,7 +98,7 @@ class SonidoEvento {
 	const objetoSonido = game.sound(nombreArchivo + ".mp3")
 	
 	method sonar(){
-		objetoSonido.play()
+		game.onTick(10000000, "sonar", {=>objetoSonido.play()})
 	}
 	
 }
