@@ -9,7 +9,7 @@ import pociones.*
 import consola.*
 
 object pausa {
-	var property nivel = null
+	var property nivel   = null
 	var property enPausa = false
 	// Sistema on/off (switch)
 	method switch() {
@@ -20,12 +20,9 @@ object pausa {
 }
 
 object handlerJuego {
-	method iniciar(){
-		game.start()
-	}
-	method borrar() {
-		game.clear()
-	}
+	method iniciar() { game.start() }
+	method borrar()  { game.clear()	}
+	method parar()   { game.stop()  }
 	method fin() {
 		self.borrar()
 		handlerVisuales.fin()
@@ -53,7 +50,7 @@ object handlerVisuales {
 
 class Handler {
 	const property factories = []
-	var property elementos = #{}
+	var property elementos   = #{}
 
 	method nuevo() {// Crea un elemento nuevo en el juego
 		const elemento = factories.anyOne().nuevo()
@@ -69,37 +66,34 @@ class Handler {
 		elementos.add(elemento)
 		self.activarVisualDe(elemento)
 	}
-	method activarVisuales() {elementos.forEach({elemento => self.activarVisualDe(elemento)})}
-	method activarVisualDe(elemento) {game.addVisual(elemento)}
-	method removerVisuales() {elementos.forEach({elemento => self.removerVisualDe(elemento)})}
-	method removerVisualDe(elemento) {game.removeVisual(elemento)}
+	method hayElementosCreados() = not elementos.isEmpty()
+	method estaCreado(_elemento) = elementos.any({elemento => elemento == _elemento})
+	method clear() { elementos.clear() }
+	method activarVisuales() { elementos.forEach({elemento => self.activarVisualDe(elemento)}) }
+	method activarVisualDe(elemento) { game.addVisual(elemento) }
+	method removerVisuales() { elementos.forEach({elemento => self.removerVisualDe(elemento)}) }
+	method removerVisualDe(elemento) { game.removeVisual(elemento) }
 	method remover()
 	method remover(elemento) {
 		self.removerVisualDe(elemento)
 		elementos.remove(elemento)
 	}
-	method hayElementosCreados() = not elementos.isEmpty()
-
-	method estaCreado(_elemento) = elementos.any({elemento => elemento == _elemento})
-	method clear() {
-		elementos.clear()
-	}
 }
 
 object handlerMonstruos inherits Handler(factories=[esqueleto, zombie, fantasma]){
 	method darPasos() {
-		elementos.forEach({ monstruo => monstruo.darPaso()})
+		elementos.forEach({ monstruo => monstruo.darPaso() })
 	}
 
 	// Polimorfismo
 	override method remover() {
-		elementos.forEach({monstruo => self.remover(monstruo)})
+		elementos.forEach({ monstruo => self.remover(monstruo) })
 	}
 }
 
 object handlerPociones inherits Handler(factories=[pocionSalud, pocionVeneno, cofre]){
 	override method remover() {
-		elementos.forEach({pocion => pocion.desaparecer()})
+		elementos.forEach({ pocion => pocion.desaparecer() })
 	}
 }
 
@@ -125,15 +119,15 @@ object handlerOnTicks inherits Handler {
 	}
 
 	method reanudar() {
-		elementos.forEach({onTick => onTick.aplicar()})
+		elementos.forEach({ onTick => onTick.aplicar() })
 	}
 
-	// Polimorfismo
-	override method factories() {}
-	override method nuevo() = null
-	override method nuevo(elem) = null
+	//  por Polimorfismo
+	override method factories()   {}
+	override method nuevo()       = null
+	override method nuevo(elem)   = null
 	override method agregar(elem) {}
-	override method remover() {}
+	override method remover()     {}
 	override method remover(elem) {}
 }
 

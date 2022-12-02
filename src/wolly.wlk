@@ -9,16 +9,18 @@ import niveles.*
 import handlers.*
 
 object wolly {
-
 	var property position = game.center()
-	var property image = "wolly.png"
-	var property puntos = 0
+	var property image    = "wolly.png"
+	var property puntos   = 0
+	var property nivel = nivel1
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual = cuchillos
 	var property nivel
+
 	var vida = 5
 
 	method vida() = vida
+	
 
 	method disparar() {
 		const proyectiles = proyectilActual.nuevo()
@@ -26,16 +28,15 @@ object wolly {
 	}
 
 	method cuandoColisiona() {
-		game.onCollideDo(self, { objeto => objeto.daniarA()})
+		game.onCollideDo(self, {objeto => objeto.daniarA()} )
 	}
 
 	
 
-//	method morir() = game.stop()
 
 	method morir() {
 		handlerJuego.fin()
-		game.schedule(5000, {game.stop()})
+		game.schedule(5000, {handlerJuego.parar()} )
 	}
 
 	method moverse(direccion) {
@@ -45,58 +46,50 @@ object wolly {
 	}
 
 	method puedeMover(direccion) {
-		return direccion.avanzar(position, 1).y() <= limite.superior().y() and direccion.avanzar(position, 1).y() >= limite.inferior().y() and direccion.avanzar(position, 1).x() >= limite.lateralIzq().x() and direccion.avanzar(position, 1).x() <= limite.lateralDer().x()
+		return direccion.avanzar(position, 1).y() <= limite.superior().y()   and
+			   direccion.avanzar(position, 1).y() >= limite.inferior().y()   and
+			   direccion.avanzar(position, 1).x() >= limite.lateralIzq().x() and
+			   direccion.avanzar(position, 1).x() <= limite.lateralDer().x()
 	}
 
 	method sumarPuntos(monstruo) {
 		puntos += monstruo.puntosQueOtorga()
-		if (puntos > 1000){
-			game.schedule(700, {nivel.pasarNivel()})
-		}
+		nivel.pasarAlSiguienteNivelSiPuede()
 	}
 
 	method recibirDanio(danio) {
-		if (vida <= danio) {
-			vida = 0
-			self.morir()
-		} else {
-			vida -= danio
-			self.efectoRecibirGolpe()
-		}
+		vida = (vida - danio).max(0)
+		self.morirSiDebe()
 	}
 	
 	method efectoRecibirGolpe(){
-		game.onTick(100, "wolly segunda imagen", { image = "wolly2.png"})
-		game.onTick(200, "wolly primera imagen", { image = "wolly.png"})
-		game.schedule(500, { game.removeTickEvent("wolly segunda imagen")})
-		game.schedule(500, { game.removeTickEvent("wolly primera imagen")})
-		game.schedule(600, { image = "wolly.png"})
+		game.onTick(100, "wolly segunda imagen", {image = "wolly2.png"} )
+		game.onTick(200, "wolly primera imagen", {image = "wolly.png"} )
+		game.schedule(500, {game.removeTickEvent("wolly segunda imagen")} )
+		game.schedule(500, {game.removeTickEvent("wolly primera imagen")} )
+		game.schedule(600, {image = "wolly.png"} )
 	}
 
-	method recuperarVida(cantidad) {
-		if ((vida + cantidad) <= 5) {
-			vida += cantidad
-		} else {
-			vida = 5
-		}
-	}
 
-	// por polimorfismo
-	method darPaso() {
-	// no hace nada
-	}
 
-	method daniarA() {
-	// no hace nada
-	}
-
-	method causarEfecto() {
-	// no hace nada
-	}
 
 	method serImpactadoPor(arma) {
 		arma.continuarDisparo()
-	}
 
+	method recuperarVida(cantidad) { vida = (vida + cantidad).min(5) }
+	
+	method morirSiDebe() {
+		if (self.debeMorir()) {
+			self.morir()
+		} else {self.efectoRecibirGolpe()}
+	}
+	
+	method debeMorir() = vida == 0
+
+	// Polimorfismo
+	method darPaso()      {}
+	method daniarA()      {} 
+	method causarEfecto() {} 
+	method serImpactadoPor(arma) {}
 }
 

@@ -7,17 +7,12 @@ import extras.*
 import handlers.*
 import pociones.*
 
-// Reificación (programación) o cosificación; técnica de
-// programación orientada a objetos que consiste en tener
-// un tipo de datos para una abstracción 
 class OnTick {
 	var property nombre
 	var property valor = null
 	var property bloque
 
-	method aplicar() {
-		game.onTick(valor, nombre, bloque)
-	}
+	method aplicar() { game.onTick(valor, nombre, bloque) }
 }
 
 

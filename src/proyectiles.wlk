@@ -13,6 +13,7 @@ object calabaza {
 
 object manzanaDoble {
 
+
 	method nuevo() {
 		return [ manzana.nuevo(), manzanaOpuesta.nuevo() ]
 	}
@@ -157,6 +158,7 @@ class Proyectil  {
 	
 
 
+
 	// POR POLIMORFISMO
 	method darPaso() {
 	// no hace nada
@@ -171,3 +173,4 @@ class Proyectil  {
 	}
 
 }
+

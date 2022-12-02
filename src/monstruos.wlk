@@ -23,11 +23,22 @@ class Monstruo {
 	method poderDeDanio() = 1
 
 	method serImpactadoPor(arma) {
-		vida -= arma.fuerza()
-		if (vida <= 0) {
+
+		vida = (vida - arma.fuerza()).max(0)
+		arma.romperse()
+		self.morirSiDebe()
+    arma.finEventoDelDisparo()
+	}
+	
+	method morirSiDebe(){
+		if (self.debeMorir()){
 			self.morir()
 		}
-		arma.finEventoDelDisparo()
+	}
+	
+	method debeMorir(){
+		return vida == 0
+
 	}
 
 	method morir() {
@@ -49,9 +60,7 @@ class Monstruo {
 
 	method darPaso()
 	
-	method causarEfecto(){
-	//por polimorfismo, no hace nada
-	}
+	method causarEfecto() {} //por polimorfismo, no hace nada
 }
 
 class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image = "esqueletoParca.png") {
@@ -79,8 +88,7 @@ class Esqueleto inherits Monstruo(vida = 30, position = limite.inferior(), image
 	}
 
 	override method puntosQueOtorga() = 300
-
-	override method poderDeDanio() = super() + 2
+	override method poderDeDanio()    = super() + 2
 
 	method efectoGolpe() {
 		game.onTick(100, "esqueleto segunda imagen", { image = "esqueletoParca2.png"})
@@ -105,62 +113,37 @@ class Fantasma inherits Monstruo(vida = 20, position = limite.superior(), image 
 	}
 
 	override method puntosQueOtorga() = 200
-
 	override method poderDeDanio() = super() + 1
 
 	method efectoGolpe() {
-		game.onTick(100, "fantasmita segunda imagen", { image = "fantasmita2.png"})
-		game.onTick(200, "fantasmita primera imagen", { image = "fantasmita.png"})
-		game.schedule(500, { game.removeTickEvent("fantasmita segunda imagen")})
-		game.schedule(500, { game.removeTickEvent("fantasmita primera imagen")})
-		game.schedule(550, { image = "fantasmita.png"})
+		game.onTick(100, "fantasmita segunda imagen", {image = "fantasmita2.png"} )
+		game.onTick(200, "fantasmita primera imagen", {image = "fantasmita.png"} )
+		game.schedule(500, {game.removeTickEvent("fantasmita segunda imagen")} )
+		game.schedule(500, {game.removeTickEvent("fantasmita primera imagen")} )
+		game.schedule(550, {image = "fantasmita.png"} )
 	}
 }
 
 class Zombie inherits Monstruo(vida = 10, position = limite.lateralDer(), image = "Zombie.png") {
-
 	override method darPaso() {
 		position = oeste.avanzar(position, 1)
 	}
 
 	override method puntosQueOtorga() = 100
-
 }
 
 // factories
 object esqueleto {
-	method nuevo() {
-		return new Esqueleto()
-	}
+	method nuevo() = new Esqueleto()
 }
 
 object fantasma {
-	method nuevo() {
-		return new Fantasma()
-	}
+	method nuevo() = new Fantasma()
 }
 
 object zombie {
-	method nuevo() {
-		return new Zombie()
-	}
+	method nuevo() = new Zombie()
 }
 
-object limite {
-	method superior() {
-		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
-	}
 
-	method inferior() {
-		return game.at(0.randomUpTo(game.width() - 1), 0)
-	}
-
-	method lateralIzq() {
-		return game.at(0, 0.randomUpTo(game.height() - 1))
-	}
-
-	method lateralDer() {
-		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
-	}
-}
 
