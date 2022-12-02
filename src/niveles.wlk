@@ -41,6 +41,7 @@ class NivelBase {
 	method configuracion() {
 		self.teclas()
 		self.colisionesWolly()
+		self.armaDeWolly()
 	}
 
 	method teclas() {
@@ -58,7 +59,10 @@ class NivelBase {
 		// Comandos de acción de Wolly
 		keyboard.enter().onPressDo({ game.say(wolly, "¡A cazar monstruos!") })
 	}
-
+	
+	method armaDeWolly(){
+		
+	}
 
 	method teclaPausa() {
 		keyboard.p().onPressDo({ pausa.switch() })
@@ -140,6 +144,10 @@ class Nivel1 inherits NivelBase {
 		handlerOnTicks.nuevo(desaparicionPociones, self.remocionPociones())
 		handlerOnTicks.nuevo(musicaDeFondo, self.musicaEnFondo())
 	}
+	
+	override method armaDeWolly(){
+		wolly.proyectilActual(calabaza)
+	}
 
 }
 
@@ -148,17 +156,24 @@ class Nivel2 inherits Nivel1 {
 	override method nacimientoMonstruos()    = super() / 2
 	override method movimientoMonstruos()    = super() / 2
 
+	override method armaDeWolly(){
+		wolly.proyectilActual(manzanaDoble)
+	}
 }
 
 class Nivel3 inherits Nivel2 {
-	override method puntosParaPasarDeNivel() = null
+	override method puntosParaPasarDeNivel() = 0
 	override method nacimientoMonstruos()    = super() / 2
 	override method movimientoMonstruos()    = super() / 2
 	override method nacimientoPociones()     = super() / 2
 
 
   override method pasarNivel() {}
-	// no hace nada, es el último nivel del juego.
+  
+  override method armaDeWolly(){
+		wolly.proyectilActual(cuchillos)
+	}
+
 }
 
 class PantallaInicio inherits NivelBase {

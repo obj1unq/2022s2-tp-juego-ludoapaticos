@@ -84,7 +84,7 @@ class Proyectil  {
 	const property direccion
 	var  distanciaPorRecorrer = 0
 	const property alcance = 3
-	const property fuerza
+	const property fuerza 
 	const property velocidad
 	const property id 
 	
