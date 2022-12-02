@@ -112,7 +112,11 @@ class Proyectil  {
 	}
 	
 	method puedeImpactar(){
-		if (not self.loQueHayAca().isEmpty()) { self.impactar()} else {self.continuarDisparo()}
+		if (not self.loQueHayAca().isEmpty()) {
+			self.impactar()
+		} else {
+			self.continuarDisparo()
+		}
 	}
 	
 	method loQueHayAca(){
