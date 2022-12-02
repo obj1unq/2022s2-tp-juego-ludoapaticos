@@ -23,12 +23,19 @@ class Monstruo {
 	method poderDeDanio() = 1
 
 	method serImpactadoPor(arma) {
-		vida -= arma.fuerza()
+		vida = (vida - arma.fuerza()).max(0)
 		arma.romperse()
-		if (vida <= 0) {
+		self.morirSiDebe()
+	}
+	
+	method morirSiDebe(){
+		if (self.debeMorir()){
 			self.morir()
 		}
-		
+	}
+	
+	method debeMorir(){
+		return vida == 0
 	}
 
 	method morir() {
@@ -135,21 +142,5 @@ object zombie {
 	method nuevo() = new Zombie()
 }
 
-object limite {
-	method superior() {
-		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
-	}
 
-	method inferior() {
-		return game.at(0.randomUpTo(game.width() - 1), 0)
-	}
-
-	method lateralIzq() {
-		return game.at(0, 0.randomUpTo(game.height() - 1))
-	}
-
-	method lateralDer() {
-		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
-	}
-}
 

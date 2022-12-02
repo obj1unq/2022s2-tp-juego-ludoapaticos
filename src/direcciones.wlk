@@ -1,3 +1,5 @@
+import wollok.game.*
+
 //factories
 object norte {
 	var property siguiente = oeste
@@ -41,4 +43,22 @@ object este {
 		return _position.right(cantidad)
 	}
 
+}
+
+object limite {
+	method superior() {
+		return game.at(0.randomUpTo(game.width() - 1), game.height() - 1)
+	}
+
+	method inferior() {
+		return game.at(0.randomUpTo(game.width() - 1), 0)
+	}
+
+	method lateralIzq() {
+		return game.at(0, 0.randomUpTo(game.height() - 1))
+	}
+
+	method lateralDer() {
+		return game.at(game.width() - 1, 0.randomUpTo(game.height() - 1))
+	}
 }
