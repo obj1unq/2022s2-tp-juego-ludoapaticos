@@ -57,3 +57,11 @@ object desaparicionPociones {
 						 , bloque={=> handlerPociones.remover()})
 	}
 }
+
+object musicaDeFondo {
+	method nuevo(_valor) {
+		return new OnTick( nombre="musica de fondo"
+						 , valor=_valor
+						 , bloque={=> musicaFondo.sonarOPausar()})
+	}
+}

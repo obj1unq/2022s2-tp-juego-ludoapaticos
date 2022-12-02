@@ -59,3 +59,62 @@ object cartelFinal inherits Visor {
 	override method position() = game.center()
 }
 
+class Musica {
+	const property nombreArchivo = null
+	const objetoSonido = game.sound(nombreArchivo + ".mp3")
+	const property loop = null
+	
+	method reproducido() = objetoSonido.played()
+	
+	method pausado() = objetoSonido.paused()
+	
+	method loopear() = objetoSonido.shouldLoop(loop)
+	
+	method sonarOPausar() {
+		if (not self.reproducido()) objetoSonido.play() else self.pausarOContinuar() 
+	}
+	
+	method pausarOContinuar() {
+		if (not self.pausado()) objetoSonido.pause() else objetoSonido.resume() 
+	}
+//		self.fondo().shouldLoop(true)
+//		self.fondo().play()
+}
+
+class SonidoEvento {
+	const nombreArchivo = null
+	
+	const objetoSonido = game.sound(nombreArchivo + ".mp3")
+	
+	method sonar(){
+		objetoSonido.play()
+	}
+	
+}
+
+object musicaFondo inherits Musica (nombreArchivo = "halloween", loop = true) {
+	
+}
+object sonidoDisparo {
+	method nuevo(){
+		return new SonidoEvento(nombreArchivo = "proyectil")
+	}
+}
+
+object sonidoBeberPocion {
+	method nuevo(){
+		return new SonidoEvento(nombreArchivo = "pocion")
+	}
+}
+
+object sonidoCofre {
+	method nuevo(){
+		return new SonidoEvento(nombreArchivo = "cofre")
+	}
+}
+
+object sonidoMuerteMonstruo {
+	method nuevo(){
+		return new SonidoEvento(nombreArchivo = "monstruoMuere")
+	}
+}

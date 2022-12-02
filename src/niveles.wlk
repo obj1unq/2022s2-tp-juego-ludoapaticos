@@ -119,6 +119,8 @@ class Nivel1 inherits NivelBase {
 	method remocionPociones()    = 6000
 
 	override method puntosParaPasarDeNivel() = 10000
+	method remocionPociones() = 11999
+	method musicaEnFondo() = 1
 
 	override method escenario() {
 		super()
@@ -137,6 +139,7 @@ class Nivel1 inherits NivelBase {
 		handlerOnTicks.nuevo(avanceMonstruos, self.movimientoMonstruos())
 		handlerOnTicks.nuevo(aparicionPociones, self.nacimientoPociones())
 		handlerOnTicks.nuevo(desaparicionPociones, self.remocionPociones())
+		handlerOnTicks.nuevo(musicaDeFondo, self.musicaEnFondo())
 	}
 
 }
@@ -154,7 +157,15 @@ class Nivel3 inherits Nivel2 {
 	override method movimientoMonstruos()    = super() / 2
 	override method nacimientoPociones()     = super() / 2
 
-	override method pasarNivel() {}
+	override method nacimientoMonstruos() {
+		return super() / 2
+	}
+
+	override method nacimientoPociones() {
+		return super() / 2
+	}
+ 
+  override method pasarNivel() {}
 	// no hace nada, es el último nivel del juego.
 }
 

@@ -47,10 +47,9 @@ class Calabaza {
 	}
 
 	// Polimorfismo
-	method darPaso() {}// no hace nada
+	method darPaso() {} // no hace nada
 	method daniarA() {}
-	method serImpactadoPor(arma) {}
-
+	method serImpactadoPor(arma) { arma.romperse() }
 }
 
 //factories
