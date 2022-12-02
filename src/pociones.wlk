@@ -35,6 +35,7 @@ class Pocion {
 	}
 
 	method serImpactadoPor(arma) {
+		arma.continuarDisparo()
 	}
 
 }
@@ -81,6 +82,9 @@ class Cofre inherits Pocion {
 	method romperse(){
 		
 	}
+	method continuarDisparo(){
+		
+	}
 	
 	override method hacerSonido(){
 		sonidoCofre.nuevo().sonar()
@@ -102,6 +106,7 @@ object fuego {
 	}
 
 	method serImpactadoPor(arma) {
+		arma.continuarDisparo()
 	}
 
 }

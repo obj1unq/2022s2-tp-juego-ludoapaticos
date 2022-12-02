@@ -9,10 +9,21 @@ class Visor {
 	method position()
 	method textColor() = "ff0000ff"
 
-	// Polimorfismo
-	method daniarA() {}
-	method darPaso() {}
-	method serImpactadoPor(algo) {}
+	method textColor() {
+		return "ff0000ff"
+	}
+
+	// por polimorfismo
+	method daniarA() {
+	}
+
+	method darPaso() {
+	}
+
+	method serImpactadoPor(algo) {
+		algo.continuarDisparo()
+	}
+
 }
 
 object visorPuntaje inherits Visor {

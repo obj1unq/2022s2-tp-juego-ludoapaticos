@@ -6,6 +6,7 @@ import proyectiles.*
 import niveles.*
 import extras.*
 import pociones.*
+import handlers.*
 
 describe "comportamiento de monstruos" {
 
@@ -13,26 +14,40 @@ describe "comportamiento de monstruos" {
 		game.clear()
 	}
 
-	test "test Efecto Disparo" {
+	test "test Disparo" {
 		wolly.proyectilActual(calabaza)
 		wolly.disparar()
+		assert.notThat(game.allVisuals().isEmpty())
+	}
+	
+	test "colliders"{
+		const proyectil = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		const proyectil1 = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		game.addVisual(proyectil)
+		game.addVisual(proyectil1)
+		game.removeVisual(proyectil1)
+		assert.equals([], proyectil.loQueHayAca())
+	}
+
+	test "impactar zombie"{
+		handlerMonstruos.nuevo(zombie)
+		assert.notThat(game.allVisuals().isEmpty())
+		const proyectil = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		game.allVisuals().forEach({ cosa => cosa.serImpactadoPor(proyectil)})
 		assert.that(game.allVisuals().isEmpty())
 	}
 	
-
-//	test "impacto Disparo a zombie"{
-//		const zombie1= new Zombie() 
-//		game.addVisualIn(zombie1, game.at(2,2))
-//		game.addVisualIn(wolly, game.at(1,1))
-//		wolly.proyectilActual(calabaza)
-//		wolly.disparar()
-//		assert.equals(0, zombie1.vida())
-//	}
-//	
-//	test" impacto Disparo a fantasma"{
-//		
-//		
-//	}
+	
+	test "impactar posiones"{
+		const pocion= new PocionSalud() 
+		const pocion1 = new PocionVeneno()
+		const proyectil = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		game.allVisuals().forEach({ cosa => cosa.serImpactadoPor(proyectil)})
+		assert.equals([pocion,pocion1], game.allVisuals())
+	}
 	
 }
+
+	
+
 
