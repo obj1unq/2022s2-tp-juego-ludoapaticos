@@ -2,15 +2,6 @@ import wollok.game.*
 import wolly.*
 import direcciones.*
 
-//factories
-object calabaza {
-
-	method nuevo() {
-		return new Calabaza()
-	}
-
-}
-
 class Calabaza {
 
 	const property peso = 2
@@ -55,16 +46,13 @@ class Calabaza {
 		game.schedule(300, { game.removeVisual(self)})
 	}
 
-	// POR POLIMORFISMO
-	method darPaso() {
-	// no hace nada
-	}
+	// Polimorfismo
+	method darPaso() {} // no hace nada
+	method daniarA() {}
+	method serImpactadoPor(arma) { arma.romperse() }
+}
 
-	method daniarA() {
-	}
-
-	method serImpactadoPor(arma) {
-		arma.romperse()
-	}
-
+//factories
+object calabaza {
+	method nuevo() = new Calabaza()
 }

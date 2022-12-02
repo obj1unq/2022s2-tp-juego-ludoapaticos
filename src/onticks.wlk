@@ -15,9 +15,7 @@ class OnTick {
 	var property valor = null
 	var property bloque
 
-	method aplicar() {
-		game.onTick(valor, nombre, bloque)
-	}
+	method aplicar() { game.onTick(valor, nombre, bloque) }
 }
 
 

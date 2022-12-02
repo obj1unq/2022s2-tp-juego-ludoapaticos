@@ -1,6 +1,5 @@
 //factories
 object norte {
-
 	var property siguiente = oeste
 	var property anterior = este
 	var property opuesto = sur
@@ -12,7 +11,6 @@ object norte {
 }
 
 object oeste {
-
 	var property siguiente = sur
 	var property anterior = norte
 	var property opuesto = este
@@ -24,7 +22,6 @@ object oeste {
 }
 
 object sur {
-
 	var property siguiente = este
 	var property anterior = oeste
 	var property opuesto = norte
@@ -36,7 +33,6 @@ object sur {
 }
 
 object este {
-
 	var property siguiente = norte
 	var property anterior = sur
 	var property opuesto = oeste
