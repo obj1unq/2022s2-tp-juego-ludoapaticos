@@ -64,7 +64,7 @@ class Calabaza {
 	}
 
 	method serImpactadoPor(arma) {
+		arma.romperse()
 	}
 
 }
-

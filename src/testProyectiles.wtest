@@ -1,0 +1,38 @@
+import wollok.game.*
+import monstruos.*
+import wolly.*
+import direcciones.*
+import proyectiles.*
+import niveles.*
+import extras.*
+import pociones.*
+
+describe "comportamiento de monstruos" {
+
+	method initialize() {
+		game.clear()
+	}
+
+	test "test Efecto Disparo" {
+		wolly.proyectilActual(calabaza)
+		wolly.disparar()
+		assert.that(game.allVisuals().isEmpty())
+	}
+	
+
+//	test "impacto Disparo a zombie"{
+//		const zombie1= new Zombie() 
+//		game.addVisualIn(zombie1, game.at(2,2))
+//		game.addVisualIn(wolly, game.at(1,1))
+//		wolly.proyectilActual(calabaza)
+//		wolly.disparar()
+//		assert.equals(0, zombie1.vida())
+//	}
+//	
+//	test" impacto Disparo a fantasma"{
+//		
+//		
+//	}
+	
+}
+

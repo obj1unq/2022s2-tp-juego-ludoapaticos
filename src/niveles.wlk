@@ -112,7 +112,9 @@ class Nivel1 inherits NivelBase {
 
 	method nacimientoPociones() = 3000
 
-	method remocionPociones() = 6000
+	method remocionPociones() = 11999
+	
+	method musicaEnFondo() = 1
 
 	override method escenario() {
 		super()
@@ -131,6 +133,7 @@ class Nivel1 inherits NivelBase {
 		handlerOnTicks.nuevo(avanceMonstruos, self.movimientoMonstruos())
 		handlerOnTicks.nuevo(aparicionPociones, self.nacimientoPociones())
 		handlerOnTicks.nuevo(desaparicionPociones, self.remocionPociones())
+		handlerOnTicks.nuevo(musicaDeFondo, self.musicaEnFondo())
 	}
 
 }
@@ -151,10 +154,6 @@ class Nivel2 inherits Nivel1 {
 class Nivel3 inherits Nivel2 {
 
 	override method nacimientoMonstruos() {
-		return super() / 2
-	}
-
-	override method movimientoMonstruos() {
 		return super() / 2
 	}
 
