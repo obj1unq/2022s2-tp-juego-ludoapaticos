@@ -14,8 +14,8 @@ object wolly {
 	var property puntos   = 0
 	var property nivel = nivel1
 	var property ultimoSentidoDeDireccionVisto = norte
-	var property proyectilActual = cuchillos
-	var property nivel
+	var property proyectilActual = calabaza
+
 
 	var vida = 5
 
@@ -75,7 +75,7 @@ object wolly {
 
 	method serImpactadoPor(arma) {
 		arma.continuarDisparo()
-
+	}
 	method recuperarVida(cantidad) { vida = (vida + cantidad).min(5) }
 	
 	method morirSiDebe() {
@@ -90,6 +90,6 @@ object wolly {
 	method darPaso()      {}
 	method daniarA()      {} 
 	method causarEfecto() {} 
-	method serImpactadoPor(arma) {}
+
 }
 

@@ -25,7 +25,6 @@ class Monstruo {
 	method serImpactadoPor(arma) {
 
 		vida = (vida - arma.fuerza()).max(0)
-		arma.romperse()
 		self.morirSiDebe()
     arma.finEventoDelDisparo()
 	}
