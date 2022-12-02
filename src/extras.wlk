@@ -9,20 +9,10 @@ class Visor {
 	method position()
 	method textColor() = "ff0000ff"
 
-	method textColor() {
-		return "ff0000ff"
-	}
-
-	// por polimorfismo
-	method daniarA() {
-	}
-
-	method darPaso() {
-	}
-
-	method serImpactadoPor(algo) {
-		algo.continuarDisparo()
-	}
+	// Polimorfismo
+	method daniarA() {}
+	method darPaso() {}
+	method serImpactadoPor(algo) { algo.continuarDisparo() }
 
 }
 
@@ -88,8 +78,6 @@ class Musica {
 	method pausarOContinuar() {
 		if (not self.pausado()) objetoSonido.pause() else objetoSonido.resume() 
 	}
-//		self.fondo().shouldLoop(true)
-//		self.fondo().play()
 }
 
 class SonidoEvento {
@@ -106,6 +94,7 @@ class SonidoEvento {
 object musicaFondo inherits Musica (nombreArchivo = "halloween", loop = true) {
 	
 }
+
 object sonidoDisparo {
 	method nuevo(){
 		return new SonidoEvento(nombreArchivo = "proyectil")
