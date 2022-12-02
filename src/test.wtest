@@ -1,0 +1,153 @@
+import wollok.game.*
+import monstruos.*
+import wolly.*
+import direcciones.*
+import proyectiles.*
+import niveles.*
+import extras.*
+import pociones.*
+import handlers.*
+import niveles.*
+import consola.*
+
+describe "comportamiento de monstruos" {
+
+	method initialize() {
+		game.clear()
+		consola.nivel(nivel1)
+		consola.nivel().nuevo()
+
+		
+		
+	}
+
+	test "creacion de Monstruos" {
+		game.clear()
+		assert.that(game.allVisuals().isEmpty())
+		handlerMonstruos.nuevo()
+		assert.notThat(game.allVisuals().isEmpty())
+	}
+
+	test "esqueleto es dañado por impactos de calabaza" {
+		const esqueleto1 = handlerMonstruos.nuevo(esqueleto)
+		const calabaza1 = calabaza.nuevo().first()		
+		esqueleto1.position(norte.avanzar(wolly.position(),1))
+		game.addVisual(wolly)	
+		assert.notThat(game.allVisuals().isEmpty())
+		calabaza1.serDisparadoPor(wolly)
+		esqueleto1.serImpactadoPor(calabaza1)
+		calabaza1.serDisparadoPor(wolly)
+		esqueleto1.serImpactadoPor(calabaza1)
+		assert.equals(10,esqueleto1.vida())
+	}
+
+	test "fantasma es dañado por impactos de calabaza" {
+		const fantasma1 = handlerMonstruos.nuevo(fantasma)
+		const calabaza1 = calabaza.nuevo().first()		
+		fantasma1.position(norte.avanzar(wolly.position(),1))
+		game.addVisual(wolly)	
+		assert.notThat(game.allVisuals().isEmpty())
+		calabaza1.serDisparadoPor(wolly)
+		fantasma1.serImpactadoPor(calabaza1)
+		assert.equals(10,fantasma1.vida())
+	}
+
+}
+
+describe "visores de puntaje y vida" {
+
+	method initialize() {
+		game.clear()
+		consola.nivel(nivel1)
+		consola.nivel().nuevo()
+		consola.iniciar()
+	}
+
+	test "visor de puntaje refleja el puntaje correcto" {
+
+		assert.equals("0", visorPuntaje.text())
+		const zombie1 = handlerMonstruos.nuevo(zombie)
+		zombie1.morir()
+		assert.equals("100",visorPuntaje.text())
+
+	}
+
+	test "visor de vida refleja las cantidad de vidas correcta despues de ser atacado  un fantasma y un zombie" {
+		assert.equals(5, visorVida.cantidad())
+		const fantasma1 = handlerMonstruos.nuevo(fantasma)
+		const zombie1 = handlerMonstruos.nuevo(zombie)
+		fantasma1.daniarA()
+		assert.equals(3, visorVida.cantidad())
+		zombie1.daniarA()
+		assert.equals(2, visorVida.cantidad())
+	}
+
+}
+
+describe "pociones de salud y veneno" {
+
+	method initialize() {
+		game.clear()
+		consola.nivel(nivel1)
+		consola.nivel().nuevo()
+		consola.iniciar()
+	}
+
+	test "pocion se salud suma vida, mientras wolly no supere 5" {
+
+		assert.equals(5, wolly.vida())
+		const pocion1 = handlerPociones.nuevo(pocionSalud)
+		pocion1.causarEfecto()
+		assert.equals(5, wolly.vida())
+		const esqueleto1 = handlerMonstruos.nuevo(esqueleto)
+		esqueleto1.daniarA()
+		assert.equals(2, wolly.vida())
+		const pocion2 = handlerPociones.nuevo(pocionSalud)
+		pocion2.causarEfecto()
+		assert.notEquals(2, wolly.vida())
+	}
+
+	test "pocion de veneno daña vida a wolly" {
+
+		assert.equals(5, wolly.vida())
+		const pocion1 = handlerPociones.nuevo(pocionVeneno)
+		pocion1.causarEfecto()
+		assert.notEquals(5, wolly.vida())
+	}
+
+	test "la pocion de veneno mata a wolly" {
+		assert.equals(5, wolly.vida())
+		const esqueleto1 = handlerMonstruos.nuevo(esqueleto)
+		esqueleto1.daniarA()
+		const zombie1 = handlerMonstruos.nuevo(zombie)
+		zombie1.daniarA()
+		const pocion1 = handlerPociones.nuevo(pocionVeneno)
+		pocion1.causarEfecto()
+		assert.equals(0,wolly.vida())
+	}
+
+}
+
+describe "cofre mágico"{
+	
+
+	
+	method initialize(){
+		game.clear()
+		consola.nivel(nivel1)
+		consola.nivel().nuevo()
+		consola.iniciar()
+
+	}
+	
+	test "el cofre al explotar elimina a todos los monstruos"{
+		const zombie1 = handlerMonstruos.nuevo(zombie)
+		const fantasma1 =handlerMonstruos.nuevo(fantasma)
+		const esqueleto1 =handlerMonstruos.nuevo(esqueleto)
+		assert.notThat(game.allVisuals().isEmpty())
+		const cofre1 = handlerPociones.nuevo(cofre)
+		cofre1.causarEfecto()
+		assert.that(not handlerMonstruos.hayElementosCreados())
+	}
+	
+}
