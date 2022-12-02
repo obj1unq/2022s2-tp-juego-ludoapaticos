@@ -19,7 +19,7 @@ class Pocion {
 
 	method desaparecer() {
 		handlerPociones.remover(self)
-		self.hacerSonido()
+		
 	}
 	
 	method hacerSonido(){
@@ -49,6 +49,7 @@ class PocionSalud inherits Pocion {
 	override method causarEfecto() {
 		self.desaparecer()
 		personaje.recuperarVida(self.fuerza())
+		self.hacerSonido()
 	}
 
 }
@@ -74,20 +75,22 @@ class Cofre inherits Pocion {
 
 	override method causarEfecto() {
 		self.desaparecer()
+		self.hacerSonido()
 		game.addVisual(fuego)
 		game.allVisuals().forEach({ elemento => elemento.serImpactadoPor(self)})
-		game.schedule(500, { game.removeVisual(fuego)})
+		game.schedule(300, { game.removeVisual(fuego)})
 	}
 	
-	method romperse(){
-		
-	}
 	method continuarDisparo(){
-		
+
 	}
+	
 	
 	override method hacerSonido(){
 		sonidoCofre.nuevo().sonar()
+	}
+	method finEventoDelDisparo(){
+	
 	}
 
 }

@@ -14,7 +14,7 @@ object wolly {
 	var property puntos   = 0
 	var property nivel = nivel1
 	var property ultimoSentidoDeDireccionVisto = norte
-	var property proyectilActual = calabaza
+	var property proyectilActual = null
 
 
 	var vida = 5
