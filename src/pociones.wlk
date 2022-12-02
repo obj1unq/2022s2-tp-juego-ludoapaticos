@@ -19,6 +19,11 @@ class Pocion {
 
 	method desaparecer() {
 		handlerPociones.remover(self)
+		self.hacerSonido()
+	}
+	
+	method hacerSonido(){
+		sonidoBeberPocion.nuevo().sonar()
 	}
 
 	// por polimorfismo
@@ -75,6 +80,10 @@ class Cofre inherits Pocion {
 	
 	method romperse(){
 		
+	}
+	
+	override method hacerSonido(){
+		sonidoCofre.nuevo().sonar()
 	}
 
 }

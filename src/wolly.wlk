@@ -24,6 +24,7 @@ object wolly {
 		proyectilActual = calabaza.nuevo()
 		game.addVisual(proyectilActual)
 		proyectilActual.serDisparadoPor(self)
+		sonidoDisparo.nuevo().sonar()
 	}
 
 	method cuandoColisiona() {
