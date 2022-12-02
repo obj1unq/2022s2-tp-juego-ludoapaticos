@@ -163,7 +163,6 @@ class Nivel2 inherits Nivel1 {
 
 class Nivel3 inherits Nivel2 {
 	override method puntosParaPasarDeNivel() = 0
-	override method nacimientoMonstruos()    = super() / 2
 	override method movimientoMonstruos()    = super() / 2
 	override method nacimientoPociones()     = super() / 2
 
