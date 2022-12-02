@@ -73,11 +73,13 @@ object wolly {
 	}
 
 	method recuperarVida(cantidad) { vida = (vida + cantidad).min(5) }
+	
 	method morirSiDebe() {
 		if (self.debeMorir()) {
 			self.morir()
 		} else {self.efectoRecibirGolpe()}
 	}
+	
 	method debeMorir() = vida == 0
 
 	// Polimorfismo
