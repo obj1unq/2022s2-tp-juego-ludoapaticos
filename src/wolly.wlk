@@ -83,9 +83,9 @@ object wolly {
 	method debeMorir() = vida == 0
 
 	// Polimorfismo
-	method darPaso()      {} // no hace nada
-	method daniarA()      {} // no hace nada
-	method causarEfecto() {} // no hace nada
+	method darPaso()      {}
+	method daniarA()      {} 
+	method causarEfecto() {} 
 	method serImpactadoPor(arma) {}
 }
 
