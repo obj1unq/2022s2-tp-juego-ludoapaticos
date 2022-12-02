@@ -12,7 +12,7 @@ object wolly {
 	var property position = game.center()
 	var property image    = "wolly.png"
 	var property puntos   = 0
-	var property nivel = nivel1
+	var property nivel = null
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual = null
 
