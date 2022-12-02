@@ -23,7 +23,7 @@ object manzanaDoble {
 object manzana {
 
 	method nuevo() {
-		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto(), fuerza = 15, velocidad = 250, id = "comun")
+		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto(), fuerza = 15, velocidad = 150, id = "comun")
 	}
 
 }
@@ -31,7 +31,7 @@ object manzana {
 object manzanaOpuesta {
 
 	method nuevo() {
-		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto().opuesto(), fuerza = 15, velocidad = 250, id = "opuesta")
+		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto().opuesto(), fuerza = 15, velocidad = 150, id = "opuesta")
 	}
 
 }
