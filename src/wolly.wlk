@@ -14,26 +14,22 @@ object wolly {
 	var property image = "wolly.png"
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
-	var property proyectilActual
+	var property proyectilActual = calabaza
 	var property nivel
 	var vida = 5
 
 	method vida() = vida
 
 	method disparar() {
-		proyectilActual = calabaza.nuevo()
-		game.addVisual(proyectilActual)
-		proyectilActual.serDisparadoPor(self)
-		sonidoDisparo.nuevo().sonar()
+		const proyectiles = proyectilActual.nuevo()
+		proyectiles.forEach({ proyectil => proyectil.serDisparadoPor(self)})
 	}
 
 	method cuandoColisiona() {
 		game.onCollideDo(self, { objeto => objeto.daniarA()})
 	}
 
-	method distanciaDeDisparoDe(_peso) {
-		return 6 / _peso
-	}
+	
 
 //	method morir() = game.stop()
 

@@ -28,7 +28,7 @@ class Monstruo {
 		if (vida <= 0) {
 			self.morir()
 		}
-		
+		arma.finEventoDelDisparo()
 	}
 
 	method morir() {
