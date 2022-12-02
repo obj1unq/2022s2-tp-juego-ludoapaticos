@@ -122,7 +122,7 @@ object handlerOnTicks inherits Handler {
 		elementos.forEach({ onTick => onTick.aplicar() })
 	}
 
-	// Polimorfismo
+	//  por Polimorfismo
 	override method factories()   {}
 	override method nuevo()       = null
 	override method nuevo(elem)   = null

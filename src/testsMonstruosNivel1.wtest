@@ -7,6 +7,8 @@ import niveles.*
 import extras.*
 import pociones.*
 import handlers.*
+import niveles.*
+import consola.*
 
 describe "comportamiento de monstruos" {
 
@@ -78,15 +80,15 @@ describe "visores de puntaje y vida" {
 	}
 
 	test "visor de vida refleja las cantidad de vidas correcta despues de ser atacado porun zombie, un fantasma y un esqueleto" {
-		assert.equals(5, visorVida.longitud())
+		assert.equals(5, visorVida.cantidad())
 		game.addVisual(wolly)
 		handlerMonstruos.nuevo(esqueleto)
 		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
 		assert.equals("vida2.png", visorVida.image())
-		assert.equals(2, visorVida.longitud())
+		assert.equals(2, visorVida.cantidad())
 		handlerMonstruos.nuevo(zombie)
 		game.allVisuals().forEach({ monstruo => monstruo.daniarA()})
-		assert.equals(1, visorVida.longitud())
+		assert.equals(1, visorVida.cantidad())
 		game.addVisual(pocionSalud.nuevo())
 		game.allVisuals().forEach({ monstruo => monstruo.causarEfecto()})
 		game.addVisual(pocionSalud.nuevo())
