@@ -8,7 +8,7 @@ import niveles.*
 
 object consola {
 
-	var nivel = pantallaInicio
+	var property nivel = pantallaInicio
 	var index = 0
 	const niveles = [pantallaInicio, nivel1, nivel2, nivel3 ]
 

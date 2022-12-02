@@ -11,13 +11,14 @@ import handlers.*
 object wolly {
 	var property position = game.center()
 	var property image    = "wolly.png"
-	var property nivel    = null
 	var property puntos   = 0
+	var property nivel = nivel1
 	var property ultimoSentidoDeDireccionVisto = norte
 	var property proyectilActual
 	var vida = 5
 
 	method vida() = vida
+	
 
 	method disparar() {
 		proyectilActual = calabaza.nuevo()
@@ -59,7 +60,6 @@ object wolly {
 	}
 
 	method recibirDanio(danio) {
-//		self.validarDanio(danio)
 		vida = (vida - danio).max(0)
 		self.morirSiDebe()
 	}
