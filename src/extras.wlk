@@ -22,6 +22,7 @@ class Visor {
 	}
 
 	method serImpactadoPor(algo) {
+		algo.continuarDisparo()
 	}
 
 }

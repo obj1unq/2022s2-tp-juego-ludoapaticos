@@ -14,7 +14,7 @@ object wolly {
 	var property image = "wolly.png"
 	var property puntos = 0
 	var property ultimoSentidoDeDireccionVisto = norte
-	var property proyectilActual = calabaza
+	var property proyectilActual = cuchillos
 	var property nivel
 	var vida = 5
 
@@ -95,6 +95,7 @@ object wolly {
 	}
 
 	method serImpactadoPor(arma) {
+		arma.continuarDisparo()
 	}
 
 }

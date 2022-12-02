@@ -13,22 +13,30 @@ describe "comportamiento de monstruos" {
 		game.clear()
 	}
 
-	test "test Efecto Disparo" {
+	test "test Disparo" {
 		wolly.proyectilActual(calabaza)
 		wolly.disparar()
-		assert.that(game.allVisuals().isEmpty())
+		assert.equals([calabaza], game.allVisuals())
 	}
 	
+	test "colliders"{
+		const proyectil = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100)
+		const proyectil1 = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100)
+		game.addVisual(proyectil)
+		game.addVisual(proyectil1)
+		game.removeVisual(proyectil1)
+		assert.equals([], proyectil.loQueHayAca())
+	}
 
-//	test "impacto Disparo a zombie"{
-//		const zombie1= new Zombie() 
-//		game.addVisualIn(zombie1, game.at(2,2))
-//		game.addVisualIn(wolly, game.at(1,1))
-//		wolly.proyectilActual(calabaza)
-//		wolly.disparar()
-//		assert.equals(0, zombie1.vida())
-//	}
-//	
+	test "impacto Disparo a zombie"{
+		const zombie1= new Zombie() 
+		game.addVisualIn(zombie1, game.at(2,2))
+		game.addVisualIn(wolly, game.at(1,1))
+		wolly.proyectilActual(calabaza)
+		wolly.disparar()
+		assert.equals(0, zombie1.vida())
+	}
+	
 //	test" impacto Disparo a fantasma"{
 //		
 //		

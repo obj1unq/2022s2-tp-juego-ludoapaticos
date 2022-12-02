@@ -6,7 +6,7 @@ import direcciones.*
 object calabaza {
 
 	method nuevo() {
-		return #{ new Proyectil( imagen = "calabazaProyectil", direccion =  wolly.ultimoSentidoDeDireccionVisto(), fuerza = 10, velocidad = 200) }
+		return [ new Proyectil( imagen = "calabazaProyectil", direccion =  wolly.ultimoSentidoDeDireccionVisto(), fuerza = 10, velocidad = 200, id = "") ]
 	}
 
 }
@@ -14,7 +14,7 @@ object calabaza {
 object manzanaDoble {
 
 	method nuevo() {
-		return #{ manzana.nuevo(), manzanaOpuesta.nuevo() }
+		return [ manzana.nuevo(), manzanaOpuesta.nuevo() ]
 	}
 
 }
@@ -22,7 +22,7 @@ object manzanaDoble {
 object manzana {
 
 	method nuevo() {
-		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto(), fuerza = 15, velocidad = 250)
+		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto(), fuerza = 15, velocidad = 250, id = "comun")
 	}
 
 }
@@ -30,7 +30,7 @@ object manzana {
 object manzanaOpuesta {
 
 	method nuevo() {
-		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto().opuesto(), fuerza = 15, velocidad = 250)
+		return new Proyectil(imagen = "manzanita", direccion = wolly.ultimoSentidoDeDireccionVisto().opuesto(), fuerza = 15, velocidad = 250, id = "opuesta")
 	}
 
 }
@@ -38,7 +38,7 @@ object manzanaOpuesta {
 object cuchilloNorte {
 
 	method nuevo() {
-		return new Proyectil(imagen = "cuchilloNorteG", direccion = norte, fuerza = 20, velocidad = 350)
+		return new Proyectil(imagen = "cuchilloNorteG", direccion = norte, fuerza = 20, velocidad = 100, id = "norte")
 	}
 
 }
@@ -46,7 +46,7 @@ object cuchilloNorte {
 object cullichoEste {
 
 	method nuevo() {
-		return new Proyectil(imagen = "cuchilloEsteG", direccion = este, fuerza = 20, velocidad = 350)
+		return new Proyectil(imagen = "cuchilloEsteG", direccion = este, fuerza = 20, velocidad = 100, id = "este")
 	}
 
 }
@@ -54,7 +54,7 @@ object cullichoEste {
 object cullichoSur {
 
 	method nuevo() {
-		return new Proyectil(imagen = "cuchilloSurG", direccion = sur, fuerza = 20, velocidad = 350)
+		return new Proyectil(imagen = "cuchilloSurG", direccion = sur, fuerza = 20, velocidad = 100, id = "sur")
 	}
 
 }
@@ -62,7 +62,7 @@ object cullichoSur {
 object cullichoOeste {
 
 	method nuevo() {
-		return new Proyectil(imagen = "cuchilloOesteG", direccion = oeste, fuerza = 20, velocidad = 350)
+		return new Proyectil(imagen = "cuchilloOesteG", direccion = oeste, fuerza = 20, velocidad = 100, id = "oeste")
 	}
 
 }
@@ -70,7 +70,7 @@ object cullichoOeste {
 object cuchillos {
 
 	method nuevo() {
-		return #{ cuchilloNorte.nuevo(), cullichoEste.nuevo(), cullichoSur.nuevo(), cullichoOeste.nuevo() }
+		return [ cuchilloNorte.nuevo(), cullichoEste.nuevo(), cullichoSur.nuevo(), cullichoOeste.nuevo() ]
 	}
 
 }
@@ -85,8 +85,9 @@ class Proyectil  {
 	const property alcance = 3
 	const property fuerza
 	const property velocidad
+	const property id 
 	
-	method distnaciaPorRecorrer() = distanciaPorRecorrer
+	method distanciaPorRecorrer() = distanciaPorRecorrer
 	
 	method image(){
 		return imagen + ".png"
@@ -101,13 +102,12 @@ class Proyectil  {
 	}
 
 	method eventoDelDisparo() {
-		game.onTick(self.velocidad(), "movimientoDisparo", {=> self.proyectar()})
+		game.onTick(self.velocidad(), "movimientoDisparo" + id, {=> self.proyectar()})
 	}
 
 	method proyectar() {
 		distanciaPorRecorrer += 1
 		self.puedeImpactar()
-		
 	}
 	
 	method puedeImpactar(){
@@ -146,12 +146,13 @@ class Proyectil  {
 	}
 	
 	method limiteDelDisparo() {
-		return self.distnaciaPorRecorrer() == alcance
+		return self.distanciaPorRecorrer() == alcance
 	}
 	
 	method finEventoDelDisparo() {
+		game.removeTickEvent("movimientoDisparo" + id)
 		game.removeVisual(self)
-		game.removeTickEvent("movimientoDisparo")
+		
 	}
 	
 
@@ -166,8 +167,7 @@ class Proyectil  {
 	}
 
 	method serImpactadoPor(arma) {
-		self.loQueHayAca().forEach({cosa => game.removeVisual(cosa)})
-		self.finEventoDelDisparo()
+		arma.continuarDisparo()
 	}
 
 }
