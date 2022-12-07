@@ -8,6 +8,7 @@ import pociones.*
 import extras.*
 
 class Monstruo {
+	var property sonar = false
 	var vida
 	var property position
 	var property image
@@ -44,10 +45,11 @@ class Monstruo {
 	}
 
 	method morir() {
+		const sonidoMuerte = sonidoMuerteMonstruo.nuevo()
+		sonidoMuerte.puedeSonar(sonar)
 		handlerMonstruos.remover(self)
 		enemigo.sumarPuntos(self)
-		sonidoMuerteMonstruo.nuevo().sonar()
-		
+		sonidoMuerte.sonar()
 	}
 
 	method elementoEnColision() {

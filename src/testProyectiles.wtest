@@ -36,6 +36,7 @@ describe "comportamiento de monstruos" {
 
 	test "impactar zombie"{
 	    const zombieNuevo = handlerMonstruos.nuevo(zombie)
+	    zombieNuevo.sonar(true)
 	    zombieNuevo.position(game.at(wolly.position().x(), wolly.position().y()))
 	    assert.equals(#{zombieNuevo}, game.allVisuals().asSet())
 	    game.addVisual(wolly)
