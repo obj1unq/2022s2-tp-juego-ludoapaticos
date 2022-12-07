@@ -1,8 +1,14 @@
 import wollok.game.*
-import pepita.*
+import monstruos.*
+import wolly.*
+import proyectiles.*
+import direcciones.*
+import extras.*
+import niveles.*
+import consola.*
+import pociones.*
+
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
-	game.start()
+	consola.start()
 }

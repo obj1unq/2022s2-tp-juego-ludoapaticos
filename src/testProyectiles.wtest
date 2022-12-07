@@ -1,0 +1,67 @@
+import wollok.game.*
+import monstruos.*
+import wolly.*
+import direcciones.*
+import proyectiles.*
+import niveles.*
+import extras.*
+import pociones.*
+import handlers.*
+import consola.*
+
+describe "comportamiento de monstruos" {
+
+	method initialize() {
+		game.clear()
+		consola.configurar(nivel1)
+		const nivelNuevo = nivel1.nuevo()
+		nivelNuevo.activar()
+		game.clear()
+	}
+
+	test "test Disparo" {
+		wolly.proyectilActual(calabaza)
+		wolly.disparar()
+		assert.notThat(game.allVisuals().isEmpty())
+	}
+	
+	test "colliders"{
+		const proyectil = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		const proyectil1 = new Proyectil(imagen = manzana, direccion = norte, fuerza = 10, velocidad = 100, id = "comun")
+		game.addVisual(proyectil)
+		game.addVisual(proyectil1)
+		game.removeVisual(proyectil1)
+		assert.equals([], proyectil.loQueHayAca())
+	}
+
+	test "impactar zombie"{
+	    const zombieNuevo = handlerMonstruos.nuevo(zombie)
+	    zombieNuevo.sonar(true)
+	    zombieNuevo.position(game.at(wolly.position().x(), wolly.position().y()))
+	    assert.equals(#{zombieNuevo}, game.allVisuals().asSet())
+	    game.addVisual(wolly)
+	    assert.equals(#{zombieNuevo, wolly}, game.allVisuals().asSet())
+	    assert.equals(zombieNuevo, game.uniqueCollider(wolly))
+	    zombieNuevo.position(game.at(wolly.position().x(), wolly.position().y() + 1))
+	    assert.equals(#{zombieNuevo}, game.getObjectsIn(game.at(wolly.position().x(), wolly.position().y() + 1)).asSet())
+	    const proyectil = wolly.proyectilActual().nuevo().first()
+	    assert.equals(#{zombieNuevo}, game.getObjectsIn(game.at(wolly.position().x(), wolly.position().y() + 1)).asSet())
+	    proyectil.position(proyectil.avanzarUno())
+	    game.addVisual(proyectil)
+	    zombieNuevo.disminuirVida(proyectil.fuerza())
+	    zombieNuevo.morirSiDebe()
+	    game.removeVisual(proyectil)
+	    assert.equals(0, zombieNuevo.vida())
+	    assert.equals(#{wolly}, game.allVisuals().asSet())
+	}
+	
+	
+	test "impactar pociones"{
+		assert.that(true)
+	}
+	
+}
+
+	
+
+
