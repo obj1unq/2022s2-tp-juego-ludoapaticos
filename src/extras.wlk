@@ -81,14 +81,15 @@ class Musica {
 }
 
 class SonidoEvento {
+	
+	var property puedeSonar = false
 	const nombreArchivo = null
 	
 	const objetoSonido = game.sound(nombreArchivo + ".mp3")
 	
 	method sonar(){
-		game.onTick(10000000, "sonar", {=>objetoSonido.play()})
+		if (puedeSonar){ game.onTick(10000000, "sonar", {=>objetoSonido.play()})} else {objetoSonido.play() }
 	}
-	
 }
 
 object musicaFondo inherits Musica (nombreArchivo = "halloween", loop = true) {
